@@ -5,10 +5,10 @@ date: "`r Sys.Date()`"
 bibliography: references.bib
 csl: apa.csl
 output:
-  html_notebook: default
   html_document:
     theme: readable 
     df_print: paged
+  html_notebook: default
   word_document: default
   pdf_document: default
   md_document: github_document
