@@ -1,0 +1,36 @@
+# Introduction {#intro}
+
+P1: Paragraph discussing the importance and need for ecosystem carbon balance estimates and projections. 
+•	What are the important considerations (e.g. LULC change, disturbances, climate variability and change)?
+•	Why are these estimates needed (e.g. meeting local to global ghg-reduction targets).
+•	What are the existing limitations of current approaches other than the CBM and LUCAS models?
+P2: Review of the CBM-CFS2 approach and its major limitations.
+P3: Review of the LUCAS approach and its major limitations.
+P4: Describe in high-level terms what the aim of this study was.
+
+
+This research describes a new approach to estimating land use and land cover change and their effect on ecosystem carbon dynamics by linking the CBM-CFS3 and LUCAS models to produce spatially explicit projections of ecosystem carbon balance in forested ecosystems of the conterminous United States.
+
+The LUCAS model (Land Use and Carbon Scenario Simulator) is a spatially explicit state-and-transition simulation model (Daniel et al, 2016; Daniel et al., 2018) developed to assess the impact of land use and land cover change, ecosystem disturbance, and climate change on carbon stocks and fluxes. LUCAS has been used to explore and impacts of a range of plausible future scenarios on land use and carbon stocks (Sleeter et al., 2018, Sleeter et al., 2019). LUCAS runs within the SyncroSim software modeling environment (http://syncrosim.com).
+
+The CBM-CFS3 model (Carbon Budget Model of the Canadian Forest Sector v3) is an IPCC Tier 3 spatially referenced model of carbon stocks and fluxes which can be applied at multiple scales (Kurz et al., 2009). The CBM-CFS3 model estimates the impacts of a range of land-use and disturbances on carbon stocks and fluxes. The approach relies on the conversion of merchantable volume curves (user supplied) into carbon biomass through the use of expansion factors. Turnover of live carbon and decay and decomposition of dead organic matter (DOM) are specified for each forest type and/or at a regional scale. CBM-CFS3 has been applied and adapted in many other countries using regionally-specific parameters. It's transparent approach and robust methodology make it an idea model to adapt for the U.S. forest sector.
+
+You can label chapter and section titles using `{#label}` after them, e.g., we can reference Chapter \@ref(intro). If you do not manually label them, there will be automatic labels anyway, e.g., Chapter \@ref(methods).
+
+Figures and tables with captions will be placed in `figure` and `table` environments, respectively.
+
+```{r nice-fig, fig.cap='Here is a nice figure!', out.width='80%', fig.asp=.75, fig.align='center'}
+par(mar = c(4, 4, .1, .1))
+plot(pressure, type = 'b', pch = 19)
+```
+
+Reference a figure by its code chunk label with the `fig:` prefix, e.g., see Figure \@ref(fig:nice-fig). Similarly, you can reference tables generated from `knitr::kable()`, e.g., see Table \@ref(tab:nice-tab).
+
+```{r nice-tab, tidy=FALSE}
+knitr::kable(
+  head(iris, 20), caption = 'Here is a nice table!',
+  booktabs = TRUE
+)
+```
+
+You can write citations, too. For example, we are using the **bookdown** package [@R-bookdown] in this sample book, which was built on top of R Markdown and **knitr** [@xie2015].
