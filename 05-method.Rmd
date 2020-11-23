@@ -1,7 +1,13 @@
-```{r}
+```{r, libraries, echo=F}
+library(raster)
+library(sf)
 library(tidyverse)
 library(DT)
 library(scales)
+library(stringi)
+library(hrbrthemes)
+library(RColorBrewer)
+library(viridis)
 ```
 
 # Methods
@@ -10,15 +16,167 @@ To estimate carbon stocks and fluxes for CONUS, we linked the CBM-CFS3 spatially
 
 ## LUCAS state-and-transition simulation model
 
-The LUCAS state-and-transition simulation model (STSM) was stratified using EPA level III ecoregions [@omernik1987ecoregions], U.S. states, and land management boundaries. We defined a total of XX unique state classes which were based on the combination of classes from the National Land Cover Database [@homer2015completion] and the U.S. Forest Service species type-groups []. We defined a total of XX transition pathways which span seven major categories of LULC change and disturbance. The model was run on an annual timestep for the period 2001-2020 at a spatial resolution of 1-km x 1-km. Below we discuss the major aspects of the LUCAS STSM and the methods used to parameterize the model. For a general description of STSM models see @daniel2016state. 
+The LUCAS state-and-transition simulation model (STSM) was stratified using EPA level III ecoregions [@omernik1987ecoregions], U.S. states, and land management boundaries. We defined a total of 43 unique state classes which were based on the combination of classes from the National Land Cover Database [@homer2015completion] and the U.S. Forest Service species type-groups [@Ruefenacht2008foresttypes]. We defined a total of XX transition pathways which span seven major categories of LULC change and disturbance. The model was run on an annual timestep for the period 2001-2020 at a spatial resolution of 1-km x 1-km. Below we discuss the major aspects of the LUCAS STSM and the methods used to parameterize the model. For a general description of STSM models see @daniel2016state. 
 
 ### State class map
 
-The conterminous U.S (CONUS) was partitioned into a regular grid of 1-km x 1-km cells where each cell was assigned to a discrete land-use/land-cover classes (LULC). The initial land cover map was based on the 2001 National Land Cover Database (NLCD). We further modified the classification system to partition the three NLCD forest classes into forest type-groups based on the U.S. Forest Service classification system. All cells mapped with a forest type-group in the USFS map were assumed to be forest cover and were recoded accordingly in our final state class map. In total, the LUCAS STSM contained 61 unique LULC classes (Fig 1).
+The conterminous U.S (CONUS) was partitioned into a regular grid of 1-km x 1-km cells where each cell was assigned to a discrete land-use/land-cover classes (LULC). The initial land cover map was based on the 2001 National Land Cover Database (NLCD). We further modified the classification system to partition the three NLCD forest classes into forest type-groups based on the U.S. Forest Service classification system. All cells mapped with a forest type-group in the USFS map were assumed to be forest cover and were recoded accordingly in our final state class map. The forest type-groups map contained 28 forest types which were generally classified as eastern and western hardwoods or softwoods. In total, the LUCAS STSM contained 43 unique LULC classes which are shown in \@ref(fig:statemap).
+
+```{r, statemap, cache=T, echo=F, warning=F, message=F, fig.width=8, fig.height=8, fig.cap="State class map developed by merging the 2001 National Land Cover Database and U.S. Forest Service forest type-groups maps."}
+land_poly = st_read("data/vector/ne_10m_land.shp", quiet=T)
+states_poly = st_read("data/vector/states.shp", quiet=T)
+stateTypes = read_csv("data/raster/state-class-types.csv")
+statemap = raster("data/raster/ic-state-class.tif")
+statemap4k = aggregate(statemap, fact=4, fun="modal", na.rm=T)
+statemap_df = as.data.frame(statemap4k, xy=T) %>%
+  rename("ID"="ic.state.class") %>%
+  filter(!is.na(ID)) %>%
+  left_join(stateTypes) %>%
+  select(-Color, -Legend, -Description, -IsAutoName) %>%
+  mutate(StateLabelYID = ifelse(StateLabelYID=="All", NA, StateLabelYID)) %>%
+  mutate(ID = ifelse(ID<100, paste0(0,ID), ID)) %>%
+  mutate(CodeName=paste(ID,StateLabelXID,StateLabelYID, sep=" ")) %>%
+  mutate(CodeName = str_remove(CodeName, " NA")) %>%
+  mutate(CodeName = str_remove(CodeName, "Forest ")) %>%
+  mutate(CodeName = str_remove(CodeName, " Group"))
+
+state_labels = sort(unique(statemap_df$CodeName))
+state_pal = c("#5475A8", "#ffffff", "#E8D1D1", "#E29E8C", "#ff0000", "#B50000", "#000000", "#D2CDC0", "#DCCA8F", "#FDE9AA", "#FBF65D", "#CA9146", "#C8E6F8", "#64B3D5",
+              "#64B3D5", "DarkSlategray", "DarkOliveGreen", "seagreen", "#b2b2b2", "darkgreen", "#343434", "#a80084", "DarkSeaGreen", "SteelBlue", "Turquoise4", "#ffff73", "#e6e600", "#734c00", "forestgreen", "#ffff73",
+              "MediumSeagreen", "#aaff00", "#73ffdf", "#00a884", "#004da8", "#828282", "#70a800", "#aaff00", "#73ffdf", "#00a884", "#002673", "#686868", "red")
+
+ggplot() +
+  geom_sf(data=land_poly, aes(geometry=geometry), fill="grey99", color=NA) +
+  geom_tile(data=statemap_df, aes(x=x, y=y, fill=ID), show.legend = T) +
+  geom_sf(data=states_poly, aes(geometry=geometry), fill=NA, color="grey20", size=0.2) +
+  scale_fill_manual(values=state_pal,
+                    labels=state_labels,
+                    guide = guide_legend(direction = "vertical",
+                                         keyheight = unit(2, units = "mm"),
+                                         keywidth = unit(4, units = "mm"),
+                                         title.position = 'top',
+                                         title.hjust = 0,
+                                         label.hjust = 0,
+                                         nrow = 11,
+                                         byrow = F,
+                                         reverse = F)) +
+  coord_sf(crs = "+proj=aea +lat_1=29.5 +lat_2=45.5 +lat_0=23 +lon_0=-96 +x_0=0 +y_0=0 +ellps=GRS80 +units=m +no_defs",
+           xlim=c(min(statemap_df$x), max(statemap_df$x)),
+           ylim=c(min(statemap_df$y), max(statemap_df$y))) +
+  theme_ipsum_rc() +
+  labs(fill="State Class", x="Longitude", y="Latitude") +
+  theme(legend.position = "bottom",
+        legend.text = element_text(size=8),
+        legend.key.height = unit(2, "mm"),
+        legend.key.width = unit(4, "mm"),
+        panel.border = element_rect(size=0.2, fill=NA),
+        panel.background = element_rect(fill="grey90"),
+        axis.text.x = element_text(size=8),
+        axis.text.y = element_text(size=8),
+        axis.ticks.length = unit(2, "mm"))
+
+```
 
 ### Forest age
 
-Forest age was estimated using a spatially explicit map of aboveground live biomass [@wilson2013imputing] and a map of forest canopy cover. The live biomass map was used to look-up forest age for each forest type-group using the state attribute tables derived from the CBM-CFS3 reference simulations described below. Mean canopy cover was calculated for each forest type-group and ages were scaled around the mean so as to avoid assigning ages to forest stands with low canopy cover.
+Forest age was estimated using a spatially explicit map of aboveground live biomass [@wilson2013imputing] and a map of forest canopy cover from the National Land Cover Database. The live biomass map was used to look-up forest age for each forest type-group using the state attribute tables derived from the CBM-CFS3 reference simulations (described below). Mean canopy cover was calculated for each forest type-group and ages were scaled around the mean so as to avoid assigning ages to forest stands with low canopy cover.
+
+
+```{r, agemap, cache=T, echo=F, warning=F, message=F, fig.width=8, fig.cap="State class map developed by merging the 2001 National Land Cover Database and U.S. Forest Service forest type-groups maps."}
+agemap = raster("data/raster/ic-imputed-age.tif")
+agemap4k = aggregate(agemap, fact=4, fun="modal", na.rm=T)
+agemap_df = as.data.frame(agemap4k, xy=T) %>%
+  rename("Age"="ic.imputed.age") %>%
+  filter(!is.na(Age)) 
+
+no_classes <- 8
+labels <- c()
+quantiles <- quantile(agemap_df$Age, probs = seq(0, 1, length.out = no_classes + 1))
+
+# here I define custom labels (the default ones would be ugly)
+labels <- c()
+for(idx in 1:length(quantiles)){
+  labels <- c(labels, paste0(round(quantiles[idx], 2), 
+                             " – ", 
+                             round(quantiles[idx + 1], 2)))
+}
+# I need to remove the last label because that would be something like "66.62 - NA"
+labels <- labels[1:length(labels)-1]
+
+# here I actually create a new 
+# variable on the dataset with the quantiles
+agemap_df$Age_quantiles <- cut(agemap_df$Age, 
+                                     breaks = quantiles, 
+                                     labels = labels, 
+                                     include.lowest = T)
+
+# here I define equally spaced pretty breaks - they will be surrounded by the minimum value at the beginning and the maximum value at the end. One could also use something like c(39,39.5,41,42.5,43), this totally depends on the data and your personal taste.
+pretty_breaks <- c(9,15,21,28,37,49,73)
+# find the extremes
+minVal <- min(agemap_df$Age, na.rm = T)
+maxVal <- max(agemap_df$Age, na.rm = T)
+# compute labels
+labels <- c()
+brks <- c(minVal, pretty_breaks, maxVal)
+# round the labels (actually, only the extremes)
+for(idx in 1:length(brks)){
+  labels <- c(labels,round(brks[idx + 1], 2))
+}
+
+labels <- labels[1:length(labels)-1]
+# define a new variable on the data set just as above
+agemap_df$brks <- cut(agemap_df$Age, 
+                     breaks = brks, 
+                     include.lowest = TRUE, 
+                     labels = labels)
+
+brks_scale <- levels(agemap_df$brks)
+labels_scale <- rev(brks_scale)
+
+p = ggplot() +
+  geom_sf(data=land_poly, aes(geometry=geometry), fill="grey99", color=NA) +
+  geom_tile(data=agemap_df, aes(x=x, y=y, fill=brks), show.legend = T) +
+  geom_sf(data=states_poly, aes(geometry=geometry), fill=NA, color="grey20", size=0.2) +
+  coord_sf(crs = "+proj=aea +lat_1=29.5 +lat_2=45.5 +lat_0=23 +lon_0=-96 +x_0=0 +y_0=0 +ellps=GRS80 +units=m +no_defs",
+           xlim=c(min(statemap_df$x), max(statemap_df$x)),
+           ylim=c(min(statemap_df$y), max(statemap_df$y))) +
+  theme(legend.position = "bottom") +
+  theme_ipsum_rc() +
+  labs(x=NULL, y=NULL) +
+  theme(
+    legend.position = c(0.22,0.08),
+    legend.text.align = 0,
+    legend.text = element_text(size = 7, hjust = 0, color = "#4e4d47"),
+    legend.title = element_text(size = 8),
+    plot.margin = unit(c(.5,.5,.2,.5), "cm"),
+    panel.spacing = unit(c(-.1,0.2,.2,0.2), "cm"),
+    panel.border = element_rect(size=0.2, fill=NA),
+    panel.background = element_rect(fill="grey90"),
+    axis.text.x = element_text(size=8),
+    axis.text.y = element_text(size=8),
+    axis.ticks.length = unit(2, "mm"),
+    legend.background = element_rect(fill="white", color=NA)) +
+scale_fill_manual(
+  values = rev(viridis(8, direction=-1)),
+  breaks = rev(brks_scale),
+  name = "Forest age",
+  drop = FALSE,
+  labels = labels_scale,
+  guide = guide_legend(
+    direction = "horizontal",
+    keyheight = unit(2, units = "mm"),
+    keywidth = unit(70/length(labels), units = "mm"),
+    title.position = 'top',
+    title.hjust = 0,
+    label.hjust = 1,
+    nrow = 1,
+    byrow = T,
+    reverse = T,
+    label.position = "bottom"))
+
+p
+
+```
 
 ### LULC and disturbance transitions
 

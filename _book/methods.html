@@ -1,0 +1,326 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+<head>
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>Chapter 6 Methods | Spatially explicit estimates of carbon stocks and fluxes for the United States: a new approach linking the LUCAS and CBM-CFS3 models</title>
+  <meta name="description" content="This is a minimal example of using the bookdown package to write a book. The output format for this example is bookdown::gitbook." />
+  <meta name="generator" content="bookdown 0.21 and GitBook 2.6.7" />
+
+  <meta property="og:title" content="Chapter 6 Methods | Spatially explicit estimates of carbon stocks and fluxes for the United States: a new approach linking the LUCAS and CBM-CFS3 models" />
+  <meta property="og:type" content="book" />
+  
+  
+  <meta property="og:description" content="This is a minimal example of using the bookdown package to write a book. The output format for this example is bookdown::gitbook." />
+  <meta name="github-repo" content="rstudio/bookdown-demo" />
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="Chapter 6 Methods | Spatially explicit estimates of carbon stocks and fluxes for the United States: a new approach linking the LUCAS and CBM-CFS3 models" />
+  
+  <meta name="twitter:description" content="This is a minimal example of using the bookdown package to write a book. The output format for this example is bookdown::gitbook." />
+  
+
+<meta name="author" content="Benjamin M. Sleeter" />
+
+
+<meta name="date" content="2020-11-23" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  
+  
+<link rel="prev" href="conclusion.html"/>
+<link rel="next" href="references.html"/>
+<script src="libs/jquery-2.2.3/jquery.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+
+<link href="libs/anchor-sections-1.0/anchor-sections.css" rel="stylesheet" />
+<script src="libs/anchor-sections-1.0/anchor-sections.js"></script>
+<script src="libs/htmlwidgets-1.5.2/htmlwidgets.js"></script>
+<link href="libs/datatables-css-0.0.0/datatables-crosstalk.css" rel="stylesheet" />
+<script src="libs/datatables-binding-0.16/datatables.js"></script>
+<link href="libs/dt-core-1.10.20/css/jquery.dataTables.min.css" rel="stylesheet" />
+<link href="libs/dt-core-1.10.20/css/jquery.dataTables.extra.css" rel="stylesheet" />
+<script src="libs/dt-core-1.10.20/js/jquery.dataTables.min.js"></script>
+<link href="libs/crosstalk-1.1.0.1/css/crosstalk.css" rel="stylesheet" />
+<script src="libs/crosstalk-1.1.0.1/js/crosstalk.min.js"></script>
+
+
+
+<link rel="stylesheet" href="style.css" type="text/css" />
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li><a href="./">A Minimal Book Example</a></li>
+
+<li class="divider"></li>
+<li class="chapter" data-level="1" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i><b>1</b> Abstract</a></li>
+<li class="chapter" data-level="2" data-path="intro.html"><a href="intro.html"><i class="fa fa-check"></i><b>2</b> Introduction</a></li>
+<li class="chapter" data-level="3" data-path="results.html"><a href="results.html"><i class="fa fa-check"></i><b>3</b> Results</a></li>
+<li class="chapter" data-level="4" data-path="discussion.html"><a href="discussion.html"><i class="fa fa-check"></i><b>4</b> Discussion</a></li>
+<li class="chapter" data-level="5" data-path="conclusion.html"><a href="conclusion.html"><i class="fa fa-check"></i><b>5</b> Conclusion</a></li>
+<li class="chapter" data-level="6" data-path="methods.html"><a href="methods.html"><i class="fa fa-check"></i><b>6</b> Methods</a><ul>
+<li class="chapter" data-level="6.1" data-path="methods.html"><a href="methods.html#lucas-state-and-transition-simulation-model"><i class="fa fa-check"></i><b>6.1</b> LUCAS state-and-transition simulation model</a><ul>
+<li class="chapter" data-level="6.1.1" data-path="methods.html"><a href="methods.html#state-class-map"><i class="fa fa-check"></i><b>6.1.1</b> State class map</a></li>
+<li class="chapter" data-level="6.1.2" data-path="methods.html"><a href="methods.html#forest-age"><i class="fa fa-check"></i><b>6.1.2</b> Forest age</a></li>
+<li class="chapter" data-level="6.1.3" data-path="methods.html"><a href="methods.html#lulc-and-disturbance-transitions"><i class="fa fa-check"></i><b>6.1.3</b> LULC and disturbance transitions</a></li>
+</ul></li>
+<li class="chapter" data-level="6.2" data-path="methods.html"><a href="methods.html#lucas-carbon-stock-and-flows"><i class="fa fa-check"></i><b>6.2</b> LUCAS carbon stock and flows</a><ul>
+<li class="chapter" data-level="6.2.1" data-path="methods.html"><a href="methods.html#cbm-cfs3-reference-simulations"><i class="fa fa-check"></i><b>6.2.1</b> CBM-CFS3 reference simulations</a></li>
+<li class="chapter" data-level="6.2.2" data-path="methods.html"><a href="methods.html#carbon-flow-rates-lucas-flow-pathways-module"><i class="fa fa-check"></i><b>6.2.2</b> Carbon flow rates: LUCAS Flow Pathways module</a></li>
+<li class="chapter" data-level="6.2.3" data-path="methods.html"><a href="methods.html#validation"><i class="fa fa-check"></i><b>6.2.3</b> Validation</a></li>
+<li class="chapter" data-level="6.2.4" data-path="methods.html"><a href="methods.html#spin-up-of-dom-pools"><i class="fa fa-check"></i><b>6.2.4</b> Spin-up of DOM pools</a></li>
+<li class="chapter" data-level="6.2.5" data-path="methods.html"><a href="methods.html#mapping-initial-carbon-stocks"><i class="fa fa-check"></i><b>6.2.5</b> Mapping initial carbon stocks</a></li>
+</ul></li>
+<li class="chapter" data-level="6.3" data-path="methods.html"><a href="methods.html#scenario-simulations"><i class="fa fa-check"></i><b>6.3</b> Scenario simulations</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="references.html"><a href="references.html"><i class="fa fa-check"></i>References</a></li>
+<li class="divider"></li>
+<li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
+
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">Spatially explicit estimates of carbon stocks and fluxes for the United States: a new approach linking the LUCAS and CBM-CFS3 models</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="methods" class="section level1">
+<h1><span class="header-section-number">Chapter 6</span> Methods</h1>
+<p>To estimate carbon stocks and fluxes for CONUS, we linked the CBM-CFS3 spatially referenced model of ecosystem carbon dynamics with the LUCAS spatially explicit model of LULC change. The CBM-CFS3 model was used to generate a set of forest species and ecoregion-level carbon flux rates which were then used within the LUCAS model to produce spatially explicit maps of carbon stocks and fluxes based on LULC change, disturbances, forest ageing, and climate variability and change.</p>
+<div id="lucas-state-and-transition-simulation-model" class="section level2">
+<h2><span class="header-section-number">6.1</span> LUCAS state-and-transition simulation model</h2>
+<p>The LUCAS state-and-transition simulation model (STSM) was stratified using EPA level III ecoregions <span class="citation">(Omernik <a href="references.html#ref-omernik1987ecoregions">1987</a>)</span>, U.S. states, and land management boundaries. We defined a total of 43 unique state classes which were based on the combination of classes from the National Land Cover Database <span class="citation">(Homer et al. <a href="references.html#ref-homer2015completion">2015</a>)</span> and the U.S. Forest Service species type-groups <span class="citation">(Ruefenacht et al. <a href="references.html#ref-Ruefenacht2008foresttypes">2008</a>)</span>. We defined a total of XX transition pathways which span seven major categories of LULC change and disturbance. The model was run on an annual timestep for the period 2001-2020 at a spatial resolution of 1-km x 1-km. Below we discuss the major aspects of the LUCAS STSM and the methods used to parameterize the model. For a general description of STSM models see <span class="citation">Daniel et al. (<a href="references.html#ref-daniel2016state">2016</a>)</span>.</p>
+<div id="state-class-map" class="section level3">
+<h3><span class="header-section-number">6.1.1</span> State class map</h3>
+<p>The conterminous U.S (CONUS) was partitioned into a regular grid of 1-km x 1-km cells where each cell was assigned to a discrete land-use/land-cover classes (LULC). The initial land cover map was based on the 2001 National Land Cover Database (NLCD). We further modified the classification system to partition the three NLCD forest classes into forest type-groups based on the U.S. Forest Service classification system. All cells mapped with a forest type-group in the USFS map were assumed to be forest cover and were recoded accordingly in our final state class map. The forest type-groups map contained 28 forest types which were generally classified as eastern and western hardwoods or softwoods. In total, the LUCAS STSM contained 43 unique LULC classes (Fig 1).</p>
+<pre><code>## Reading layer `ne_10m_land&#39; from data source `F:\national-assessment\docs\lucas-cbm-methods\data\vector\ne_10m_land.shp&#39; using driver `ESRI Shapefile&#39;
+## Simple feature collection with 1 feature and 2 fields
+## geometry type:  MULTIPOLYGON
+## dimension:      XY
+## bbox:           xmin: -180 ymin: -90 xmax: 180 ymax: 83.6341
+## geographic CRS: WGS 84</code></pre>
+<pre><code>## Reading layer `states&#39; from data source `F:\national-assessment\docs\lucas-cbm-methods\data\vector\states.shp&#39; using driver `ESRI Shapefile&#39;
+## Simple feature collection with 2895 features and 6 fields
+## geometry type:  POLYGON
+## dimension:      XY
+## bbox:           xmin: -179.1334 ymin: 17.67469 xmax: 179.7882 ymax: 71.39805
+## geographic CRS: NAD83</code></pre>
+<div class="figure"><span id="fig:statemap"></span>
+<img src="test_files/figure-html/statemap-1.png" alt="State class map developed by merging the 2001 National Land Cover Database and U.S. Forest Service forest type-groups maps." width="768" />
+<p class="caption">
+Figure 6.1: State class map developed by merging the 2001 National Land Cover Database and U.S. Forest Service forest type-groups maps.
+</p>
+</div>
+</div>
+<div id="forest-age" class="section level3">
+<h3><span class="header-section-number">6.1.2</span> Forest age</h3>
+<p>Forest age was estimated using a spatially explicit map of aboveground live biomass <span class="citation">(Wilson, Woodall, and Griffith <a href="references.html#ref-wilson2013imputing">2013</a>)</span> and a map of forest canopy cover. The live biomass map was used to look-up forest age for each forest type-group using the state attribute tables derived from the CBM-CFS3 reference simulations described below. Mean canopy cover was calculated for each forest type-group and ages were scaled around the mean so as to avoid assigning ages to forest stands with low canopy cover.</p>
+</div>
+<div id="lulc-and-disturbance-transitions" class="section level3">
+<h3><span class="header-section-number">6.1.3</span> LULC and disturbance transitions</h3>
+<p>We modeled transitions between state classes to represent major LULC change processes, including urbanization, agricultural expansion and contraction, forest management (i.e. clear-cut and selection harvest), wildfire, and insect damage.</p>
+<div id="land-use-change" class="section level4">
+<h4><span class="header-section-number">6.1.3.1</span> Land use change</h4>
+<p>For land use transitions (urbanization, agricultural expansion and contraction), we generated spatial maps of the location of changes based on the NLCD time-series maps for the years 2001, 2006, 2011, and 2016. The 5-year change rates were annualized, and the model was parameterized to stochastically select cells to transition from one class to another within the 5-year period. Additionally, we included changes in developed classes due to intensification (e.g. low intensity developed to high intensity developed). For timesteps after 2016, annual change rates were sampled from the historical period. For urbanization and agricultural expansion transitions, spatial multiplier maps were used to constrain the location of change by removing protected areas. For agricultural expansion, we calculated relative multipliers for each ecoregion to allocate change between cultivated croplands and the hay/pasture class with adjacency multipliers used to allocate transitions spatially. For agricultural contraction, adjacency multipliers were calculated for all forest, grassland, and shrubland state classes and used to allocate transitions to destination classes. For urbanization transition, adjacency parameters were used to modify the probability of change around existing developed areas. For a complete description on the methods of spatially allocating transitions see <span class="citation">Sleeter et al. (<a href="references.html#ref-sleeter2019effects">2019</a>)</span>.</p>
+</div>
+<div id="forest-harvest" class="section level4">
+<h4><span class="header-section-number">6.1.3.2</span> Forest harvest</h4>
+<p>For the forest management transitions (clearcut and selection harvest), we used annual time-series maps from the Landfire Disturbance database <span class="citation">(US Geological Survey (USGS) LandFire Program <a href="references.html#ref-landfire2014disturbance">2014</a>)</span> to identify areas of change for the period 2001-2016. For years after 2016 we sampled from the historical distribution of change for each ecoregion. For clearcut cells, forest age was reset to 0; for selection harvest, the age was not reset. For both transitions we assumed cells reverted to their original state class after disturbnace. In projected years, a minimum age for clearcut and selection was based on a threshold of 40% of peak merchantable volume for each forest type-group.</p>
+</div>
+<div id="droughtinsect-damage" class="section level4">
+<h4><span class="header-section-number">6.1.3.3</span> Drought/insect damage</h4>
+<p>Forest mortality time series maps spanning the period 2001-2015 were used to model the effects of drought/insects and were derived from U.S. Forest Service Aerial Detection Surveys <span class="citation">(Moore, McAfee, and Iaccarino <a href="references.html#ref-aerial2016survey">2018</a>)</span>. Data were binned into low, medium, and high severity classes <span class="citation">(Sleeter et al. <a href="references.html#ref-sleeter2019effects">2019</a>)</span>. Insect/drought disturbances were not modelled beyond 2015.</p>
+</div>
+<div id="wildfire" class="section level4">
+<h4><span class="header-section-number">6.1.3.4</span> Wildfire</h4>
+<p>To simulate wildfire we used annual fire perimeters from the National Interagency Fire Consortium (NIFC) for the period 2001-2020 which were converted into spatial multipliers in each timestep of the simulation. To estimate fire severity (high, medium, and low), we calculated severity multipliers, for each ecoregion, for all fires contained within the Monitoring Trends in Burn Severity database <span class="citation">(Eidenshink et al. <a href="references.html#ref-eidenshink2007project">2007</a>)</span> for the period 2001-2016. Severity multipliers were then applied to the burn perimeters in each timestep for each ecoregion.</p>
+</div>
+</div>
+</div>
+<div id="lucas-carbon-stock-and-flows" class="section level2">
+<h2><span class="header-section-number">6.2</span> LUCAS carbon stock and flows</h2>
+<p>We adopted the carbon stock and flux structure of the CBM-CFS3 model for this study. The approach includes the use of five live carbon pools (including above- and belowground pools) and 9 dead organic matter (DOM) pools covering standing dead trees, down deadwood, litter and carbon stored in soils. DOM pools are organized and named based on their rate of decay (e.g. very fast, fast, medium, slow). Carbon transfers between pools followed the same convention as the CBM-CFS3 model with two important modifications. First, rather than using net growth increment, we calculated net primary production (NPP) for each forest type-group and age and used this to drive annual gross carbon accumulation. Second, we introduced annual spatial multipliers to scale NPP based on variations in local climate conditions. These modifications are discussed in more detail below.</p>
+<div id="cbm-cfs3-reference-simulations" class="section level3">
+<h3><span class="header-section-number">6.2.1</span> CBM-CFS3 reference simulations</h3>
+<p>We used the CBM-CFS3 model (version 1.2) to generate estimates of carbon stocks across all live and DOM pools for a 1-ha representative stand for each forest type-group. Each forest type-group was assigned to the closest forest type found in the CBM database; when no direct type was available we used generic hardwood or softwood types from CBM-CFS3. Additionally, each species was assigned to a representative ecozone and administrative boundary. We assumed wildfire was the historic stand replacing disturbance type and was the most recent disturbance while using default historic return intervals from CBM-CFS3. No additional disturbances were modeled for the reference simulation. Lastly, we calculated the mean temperature across the range of each forest type-group, using the value to modify the CBM-CFS3 reference simulation.</p>
+<div id="merchantable-volume-curves" class="section level4">
+<h4><span class="header-section-number">6.2.1.1</span> Merchantable volume curves</h4>
+<p>The CBM-CFS3 model relies on users to provide merchantable volume curves for each tree species modeled. For each forest type-group, parameters used to estimate merchantable volume were queried from the U.S. Forest Service Forest Inventory and Analysis (FIA) database. We used the Von Bertalanffy growth equation to estimate merchantable volume by age as:</p>
+<p><span class="math display">\[ y = a*1-exp(-b*age)^3 \]</span></p>
+<p>where <em>y</em> is the merchantable volume, <em>a</em> is the asymptote and <em>b</em> is the rate of approach to the asymptote. The resulting estimates of merchantable volume by age (0-300 years), along with default biomass expansion factors from the CBM-CFS3 database, were used as inputs for the reference simulations. The CBM-CFS3 model was then run on an annual timestep for 300 years to estimate the amount of carbon stored in each pool by age by applying species-specific expansion factors to estimate biomass in each tree component. A carbon fraction was applied to estimate the carbon portion of the biomass stock. We used the default biomass expansion factors and carbon proportions from the CBM-CFS3 database.</p>
+<div id="htmlwidget-fd0fee9450e44c9b05ac" style="width:100%;height:auto;" class="datatables html-widget"></div>
+<script type="application/json" data-for="htmlwidget-fd0fee9450e44c9b05ac">{"x":{"filter":"none","data":[["Mixedwood Plains","Atlantic Maritime","Mixedwood Plains","Mixedwood Plains","Montane Cordillera","Pacific Maritime","Montane Cordillera","Pacific Maritime","Montane Cordillera","Montane Cordillera","Pacific Maritime","Montane Cordillera","Pacific Maritime","Montane Cordillera","Montane Cordillera","Montane Cordillera","Mixedwood Plains","Mixedwood Plains","Mixedwood Plains","Mixedwood Plains","Atlantic Maritime","Boreal Shield West","Pacific Maritime","Montane Cordillera","Pacific Maritime","Montane Cordillera","Mixedwood Plains","Mixedwood Plains"],["Ontario","Quebec","Ontario","Ontario","British Columbia","British Columbia","British Columbia","British Columbia","British Columbia","British Columbia","British Columbia","British Columbia","British Columbia","British Columbia","British Columbia","British Columbia","Ontario","Ontario","Ontario","Ontario","Quebec","Ontario","British Columbia","British Columbia","British Columbia","British Columbia","Ontario","Ontario"],["Jack pine","Spruce - Genus type","Pine - Genus type","Pine - Genus type","Other softwoods","Douglas-fir - Genus type","Ponderosa pine","Western white pine","Mountain hemlock","Lodgepole pine","Sitka spruce","Western larch","Other softwoods","Other softwoods","Other softwoods","Other softwoods","Oak","Hickory","Cypress","Ash","Maple","Birch","Alder","Oak","Other hardwoods","Other hardwoods","Other hardwoods","Other hardwoods"],["Forest: White/Red/Jack Pine Group","Forest: Spruce/Fir Group","Forest: Longleaf/Slash Pine Group","Forest: Loblolly/Shortleaf Pine Group","Forest: Pinyon/Juniper Group","Forest: Douglas-fir Group","Forest: Ponderosa Pine Group","Forest: Western White Pine Group","Forest: Fir/Spruce/Mountain Hemlock Group","Forest: Lodgepole Pine Group","Forest: Hemlock/Sitka Spruce Group","Forest: Western Larch Group","Forest: Redwood Group","Forest: Other Western Softwood Group","Forest: California Mixed Conifer Group","Forest: Exotic Softwoods Group","Forest: Oak/Pine Group","Forest: Oak/Hickory Group","Forest: Oak/Gum/Cypress Group","Forest: Elm/Ash/Cottonwood Group","Forest: Maple/Beech/Birch Group","Forest: Aspen/Birch Group","Forest: Alder/Maple Group","Forest: Western Oak Group","Forest: Tanoak/Laurel Group","Forest: Other Western Hardwoods Group","Forest: Tropical Hardwoods Group","Forest: Exotic Hardwoods Group"],[239.99,120.32,148.94,225.7,56.62,597.1,152.73,228.52,241.1,203.42,736.44,298.51,1907.28,138.36,477.09,363.02,191.02,206.02,289.99,155.53,229.04,146.48,436.17,130.24,476.9,130.24,206.48,67.94],[0.04,0.03,0.08,0.08,0.02,0.03,0.03,0.02,0.03,0.03,0.04,0.03,0.01,0.01,0.02,0.03,0.05,0.04,0.03,0.05,0.03,0.04,0.05,0.02,0.04,0.02,0.02,0.09],[6.81,4.64,19.62,17.47,9.74,7.17,7.56,9.75,3.8,3.14,8.38,5.31,12.69,2.47,10.4,7.63,16.8,13.22,18.33,14.23,6.71,5.15,10.47,12.89,13.12,12.81,22.08,19.23],[125,125,125,125,150,300,150,300,150,150,300,150,1000,150,150,150,125,125,125,125,125,75,300,150,300,150,125,125]],"container":"<table class=\"display\">\n  <thead>\n    <tr>\n      <th>CBM_Ecozone<\/th>\n      <th>CBM_Province<\/th>\n      <th>CBM_Species<\/th>\n      <th>LUCAS_Species<\/th>\n      <th>a<\/th>\n      <th>b<\/th>\n      <th>Temp<\/th>\n      <th>MRI<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"pageLength":10,"autoWidth":true,"columnDefs":[{"className":"dt-right","targets":[4,5,6,7]}],"order":[],"orderClasses":false}},"evals":[],"jsHooks":[]}</script>
+</div>
+</div>
+<div id="carbon-flow-rates-lucas-flow-pathways-module" class="section level3">
+<h3><span class="header-section-number">6.2.2</span> Carbon flow rates: LUCAS Flow Pathways module</h3>
+<p>We developed a sub-module within LUCAS to calculate carbon flux parameters based on output from the reference simulations and the CBM-CFS3 database. The module uses the species crosswalk table from above, along with crosswalk tables linking carbon stocks and disturbance types used in LUCAS and CBM-CFS3. Within the LCUAS model we specified a set of carbon Flow Pathways defining all of the carbon pools and fluxes consistent with those used in the CBM-CFS3.</p>
+<p>(insert flow diagram here)</p>
+<div id="net-primary-productivity" class="section level4">
+<h4><span class="header-section-number">6.2.2.1</span> Net Primary Productivity</h4>
+<p>The module first uses results from the CBM-CFS3 reference simulation to calculate net primary productivity (NPP) as the sum of net growth and biomass turnover for a given age:</p>
+<p><span class="math display">\[ NPP = \sum_{a} G_{(f,b,s,fr,cr)} + \sum_{a-1} T_{(f,b,s,fr,cr)}\]</span>
+where <span class="math inline">\(G\)</span> is net growth, <span class="math inline">\(T\)</span> is biomass turnover, <span class="math inline">\(f\)</span> is foliage, <span class="math inline">\(b\)</span> is branches and other wood, <span class="math inline">\(s\)</span> is merchantable stems, <span class="math inline">\(fr\)</span> if fine roots, <span class="math inline">\(cr\)</span> is coarse roots and <span class="math inline">\(a\)</span> is forest age. Thus, outputs consist of an estimate of NPP by age (up to 300 years old) and are stored as state attributes for each state class type (i.e. forest type-group). Results are stored as a State Attribute within the LUCAS model.</p>
+<p>Output from the CBM-CFS3 reference simulation also allows us to calculate the proportional allocation of NPP, by age, between the five live tree component stocks.</p>
+<p><span class="math display">\[ pNPP_{s_i}^{a} = \frac{G_{s_i}^{a} + (S_{s_i}^{{a-1}} * T_{s_i})} {NPP^a}  \]</span>
+where <span class="math inline">\(pNPP_{s_i}^{a^t}\)</span> is the proportion of NPP allocated to one of five live carbon pools (<span class="math inline">\(s_i\)</span>) for a given aged forest (<span class="math inline">\(a^t\)</span>); <span class="math inline">\(G_{s_i}^{a^t}\)</span> is the net growth of carbon pool <span class="math inline">\(i\)</span> at age <span class="math inline">\(t\)</span>; <span class="math inline">\(S_{s_i}^{a^{t-1}}\)</span> is the amount of carbon stored in pool <span class="math inline">\(i\)</span> at age <span class="math inline">\(t-1\)</span>, <span class="math inline">\(T_{s_i}\)</span> is the species and region specific carbon turnover rate, and <span class="math inline">\(NPP^a\)</span> is the total species and region specific NPP for each forest age. Results are stored as Flow Multipliers within the LUCAS model and used to allocate annual NPP State Attribute values to each live tree component.</p>
+</div>
+<div id="carbon-flux-rates" class="section level4">
+<h4><span class="header-section-number">6.2.2.2</span> Carbon flux rates</h4>
+<p>The LUCAS model uses a set of flow multipliers to estimate carbon fluxes representing biomass turnover, decay and decomposition, emissions, and transfers of carbon resulting from LULC change and disturbance. The LUCAS Flow Pathwyas module uses the set of crosswalk tables described above to parameterize a flow multipliers table for each unique combination of forest type-group and ecozone. Flow multipliers specify the annual rate and proportion of carbon transferred from one stock type to another. The ordering of carbon fluxes within the LUCAS model was established to match that of the CBM-CFS3.</p>
+<ol style="list-style-type: decimal">
+<li>Transfer of snag stems and branches to down deadwood pools (aboveground medium and fast, respectively),</li>
+<li>Emission and decay of standing (snag stems and branches) and down deadwood (aboveground medium),</li>
+<li>Emission from the belowground slow pool,</li>
+<li>Biomass turnover from live to DOM pools</li>
+<li>Emission and decay from DOM pools (belowground very fast, belowground fast, aboveground very fast, aboveground fast)</li>
+<li>Emission from aboveground slow</li>
+<li>Transfer from aboveground slow to belowground slow</li>
+<li>Growth of live pools.</li>
+</ol>
+<p>In addition to the base carbon flux rates, the LUCAS Flow Pathways module also parameterzies a set of transition-based flow multipliers which control the rate at which carbon is transferred between pools when a change in LULC or disturbance occurs. Transition triggered flows are implemented at the end of each timestep after all base flows have occured. For this study, we considered the effects of fire (high, medium, and low severity), harvest (clearcut and selection), drought/insect mortality, urbanization, agricultural expansion (i.e. deforestation), and agricultural contraction (i.e. reforestation). Flow rates were imported from transition matricies from the CBM-CFS3 model.</p>
+</div>
+</div>
+<div id="validation" class="section level3">
+<h3><span class="header-section-number">6.2.3</span> Validation</h3>
+<p>Within the LUCAS model we ran a 300 year simulation with all cells starting at age 0 using the carbon flux rates from the Flow Pathways module to estimate changes in stocks. A single 1-ha representative stand was run for each forest group-type and fire was assumed as the last stand replacing disturbance to match the assumptions from the CBM-CFS3 reference simulations. All stocks were initialized at their age-0 values obtained from the CBM-CFS3 simulations. No disturbances were simulated. We compared individual carbon stock output from the LUCAS simulation with the original output from the CBM-CFS3 reference runs to ensure we could reliably reproduce carbon stock estimates. Figure <a href="methods.html#fig:validation">6.2</a> shows a comparison of all stock types for the Douglas-fir forest type-group.</p>
+<div class="figure"><span id="fig:validation"></span>
+<img src="test_files/figure-html/validation-1.png" alt="Comparison of stock estimates from LUCAS to output from the CBM-CFS3 model." width="768" />
+<p class="caption">
+Figure 6.2: Comparison of stock estimates from LUCAS to output from the CBM-CFS3 model.
+</p>
+</div>
+</div>
+<div id="spin-up-of-dom-pools" class="section level3">
+<h3><span class="header-section-number">6.2.4</span> Spin-up of DOM pools</h3>
+<p>The CBM-CFS3 model contains it’s own internal spin-up procedure for stabilizing DOM pools. However, using the CBM-CFS3 method requires running multiple iterations of the model based on the number of types of stand-replacing disturbance events considered in the model. For this reason we developed spin-up module directly with LUCAS. Within LUCAS, carbon stocks are initialized at zero and all cells are set to age zero. The historical stand replacing disturbance type was assumed to be wildfire. Flow pathways and multipliers were used to estimate carbon stocks over a 3000 year simulation period with fire events occurring based on the meanfire return interval specified for each forest type-group. At the end of the 3000 year simulation, two types of stand replacing disturbances were simulated: high sevverity fire and clearcut forest harvest. After each transition, the model was run for another 300 years to generate carbon stocks by age which were used to parameterize a state attribute datafeed in LUCAS. The length of the spin-up simulation can be varied based on how long it takes DOM pools - in particular the belowground slow (soil) pool - to reach a relative steady state between successive historical disturbance events.</p>
+<div class="figure"><span id="fig:spinup"></span>
+<img src="test_files/figure-html/spinup-1.png" alt="Carbon stock by age for DOM pools for cells initialized with fire or clearcut harvest as the last stand replacing disturbance. Data shown is for the Douglas-fir forest type-group." width="768" />
+<p class="caption">
+Figure 6.3: Carbon stock by age for DOM pools for cells initialized with fire or clearcut harvest as the last stand replacing disturbance. Data shown is for the Douglas-fir forest type-group.
+</p>
+</div>
+</div>
+<div id="mapping-initial-carbon-stocks" class="section level3">
+<h3><span class="header-section-number">6.2.5</span> Mapping initial carbon stocks</h3>
+<p>To estimate spatial carbon stocks the LUCAS model was parameterized with state attribute values from the spin-up procedure described above, flow pathways and multipliers, and raster maps of forest type (i.e. state class type) and and age. The model was run for a single timestep for both wildfire and clearcut harvest as the last disturbance. The combination of forest type and age is used to create initial stock rasters for the first timestep. Fire disturbances prior to 2001 were queried from the National Interagency Fire Consortium (NIFC) and mapped to a 1-km grid. Cells classified in the NIFC map were assigned carbon values from the wildfire simulation; all other cells were assigned stock values from the clearcut harvest simulation.</p>
+<p><em>insert figure from spin-up results</em>
+- Map of Live and DOM with bar chart for each showing amount in each stock type.</p>
+<p><span class="citation">Kurz et al. (<a href="references.html#ref-kurz2008mountain">2008</a>)</span> is an example of a reference.</p>
+</div>
+</div>
+<div id="scenario-simulations" class="section level2">
+<h2><span class="header-section-number">6.3</span> Scenario simulations</h2>
+<p>Discuss different scenario simulations here…</p>
+
+</div>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="conclusion.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="references.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/lunr.js"></script>
+<script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-clipboard.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": false,
+"facebook": true,
+"twitter": true,
+"linkedin": false,
+"weibo": false,
+"instapaper": false,
+"vk": false,
+"all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": "https://github.com/rstudio/bookdown-demo/edit/master/05-method.Rmd",
+"text": "Edit"
+},
+"history": {
+"link": null,
+"text": null
+},
+"view": {
+"link": null,
+"text": null
+},
+"download": ["test.pdf", "test.epub"],
+"toc": {
+"collapse": "subsection"
+}
+});
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "true";
+    if (src === "" || src === "true") src = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:")
+      if (/^https?:/.test(src))
+        src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+</body>
+
+</html>
