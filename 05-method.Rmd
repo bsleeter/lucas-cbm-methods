@@ -82,7 +82,9 @@ ggplot() +
 Forest age was estimated using a spatially explicit map of aboveground live biomass [@wilson2013imputing] and a map of forest canopy cover from the National Land Cover Database. The live biomass map was used to look-up forest age for each forest type-group using the state attribute tables derived from the CBM-CFS3 reference simulations (described below). Mean canopy cover was calculated for each forest type-group and ages were scaled around the mean so as to avoid assigning ages to forest stands with low canopy cover.
 
 
-```{r, agemap, cache=T, echo=F, warning=F, message=F, fig.width=8, fig.cap="State class map developed by merging the 2001 National Land Cover Database and U.S. Forest Service forest type-groups maps."}
+```{r, agemap, cache=T, echo=F, warning=F, message=F, fig.width=8, fig.cap="Forest age map inferred from aboveground live biomass and canopy cover data and used to initialize LUCAS model."}
+land_poly = st_read("data/vector/ne_10m_land.shp", quiet=T)
+states_poly = st_read("data/vector/states.shp", quiet=T)
 agemap = raster("data/raster/ic-imputed-age.tif")
 agemap4k = aggregate(agemap, fact=4, fun="modal", na.rm=T)
 agemap_df = as.data.frame(agemap4k, xy=T) %>%
@@ -138,8 +140,8 @@ p = ggplot() +
   geom_tile(data=agemap_df, aes(x=x, y=y, fill=brks), show.legend = T) +
   geom_sf(data=states_poly, aes(geometry=geometry), fill=NA, color="grey20", size=0.2) +
   coord_sf(crs = "+proj=aea +lat_1=29.5 +lat_2=45.5 +lat_0=23 +lon_0=-96 +x_0=0 +y_0=0 +ellps=GRS80 +units=m +no_defs",
-           xlim=c(min(statemap_df$x), max(statemap_df$x)),
-           ylim=c(min(statemap_df$y), max(statemap_df$y))) +
+           xlim=c(min(agemap_df$x), max(agemap_df$x)),
+           ylim=c(min(agemap_df$y), max(agemap_df$y))) +
   theme(legend.position = "bottom") +
   theme_ipsum_rc() +
   labs(x=NULL, y=NULL) +
