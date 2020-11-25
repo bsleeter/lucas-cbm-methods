@@ -444,11 +444,11 @@ $$ f(map)^t = \frac{2540} {1 + exp(1.584 - 0.0622 * MAT)}  $$
 where $f(map)^t$ is NPP estimated from total annual precipitation in the same timestep. Annual NPP was then estimates as:
 
 $$ NPP^t = MIN[f(map)^t, f(mat)^t] $$
-We also applied the same equations to gridMet climate normals for the period 1980-2010. The annual NPP multiplier for each cell was estimated as:
+We also applied the same equations to gridMet climate normals for the period 1980-2010 ($\mu{NPP}^{1980-2010}$). The annual NPP multiplier for each cell was estimated as:
 
 $$ NPP_{anom} = \frac{NPP^t} {\mu{NPP}^{1980-2010}}   $$
 
-```{r, growthmult, echo=F, warning=F, messge=F, fig.width=8, fig.height=8, fig.cap="Spatial flow multipliers used to modify annual NPP in the LUCAS model."}
+```{r, growthmult, cache=T, echo=F, warning=F, messge=F, fig.width=8, fig.height=8, fig.cap="Spatial flow multipliers used to modify annual NPP in the LUCAS model."}
 listgrowth = list.files("data/raster/growth/", pattern="*.tif")
 multgrowth = stack(paste0("data/raster/growth/", listgrowth))
 multgrowth = aggregate(multgrowth, fact=16)
@@ -457,21 +457,26 @@ multgrowth_df = as.data.frame(multgrowth, xy=T) %>%
   pivot_longer(cols=c(-x, -y), names_to="Year", values_to="Amount") %>%
   mutate(Year = str_remove(Year, "X")) %>%
   filter(!is.na(Amount)) %>%
-  mutate(Amount=Amount*0.01)
+  mutate(Amount=Amount*0.01) %>%
+  filter(Year<2020)
+
+nppMin = round(min(multgrowth_df$Amount, na.rm=T),1)
+nppMax = round(max(multgrowth_df$Amount, na.rm=T),1)
+nppbreaks = c(seq(0.6,1.4,0.1))
 
 ggplot() +
   geom_sf(data=land_poly, aes(geometry=geometry), fill="white", color=NA) +
   geom_tile(data=multgrowth_df, aes(x=x, y=y, fill=Amount)) +
   geom_sf(data=states_poly, aes(geometry=geometry), fill=NA, color="grey20", size=0.2) +
   facet_wrap(~Year, ncol=4) +
-  scale_fill_distiller(palette="Spectral", type="div", direction=1, guide="colorbar") +
+  scale_fill_fermenter(palette="BrBG", type="div", direction=1, guide="colorsteps", breaks=nppbreaks) +
   coord_sf(crs = "+proj=aea +lat_1=29.5 +lat_2=45.5 +lat_0=23 +lon_0=-96 +x_0=0 +y_0=0 +ellps=GRS80 +units=m +no_defs",
            xlim=c(min(multgrowth_df$x), max(multgrowth_df$x)),
            ylim=c(min(multgrowth_df$y), max(multgrowth_df$y))) +
   theme_bw() +
-  labs(x=NULL, y=NULL, fill="Multiplier") +
+  labs(x=NULL, y=NULL, fill="NPP Multiplier") +
   theme(text=element_text(family="Roboto Condensed"),
-        legend.position = "bottom",
+        legend.position = c(0.75, 0.05),
         legend.text.align = 0,
         legend.text = element_text(size = 7, hjust = 0, color = "#4e4d47"),
         legend.title = element_text(size = 8),
@@ -480,8 +485,9 @@ ggplot() +
         legend.key.width = unit(10, "mm"),
         axis.text.x = element_text(size=8),
         axis.text.y = element_text(size=8),
-        panel.background = element_rect(fill="grey90")) +
-  guides(fill = guide_colorbar(direction = "horizontal",
+        panel.background = element_rect(fill="grey90"),
+        strip.background = element_blank()) +
+  guides(fill = guide_colorsteps(direction = "horizontal",
                                  title.position = 'top',
                                  title.hjust = 0,
                                  label.hjust = 1,
@@ -498,12 +504,74 @@ ggplot() +
 
 ### Decay and decomposition of DOM
 
+Decay of DOM pools was modeled using a temperature-dependent decay rate for each DOM pool based on methods from @kurz2009cbm. Mean annual temperature for each species was used to scale base decay rates ($BDR$) of DOM for a $10^\circ$ C reference temperature. The effective decay rate ($EDR$) for each DOM pool and species type-group was calculated using Q10 coefficients for fast (2.65) and slow (2.00) DOM pools as:
 
+$$ EDR = BDR * exp^{(T-T_{ref}) * ln(Q_{10}) * 0.1)}  $$
+where $T$ is the mean annual temperature across a species range and $T_{ref}$ is the $10^\circ$ C reference temperature. To represent spatial and temporal variability in decay of DOM we calculated a time-series of annual maps which scale the effective decay rate at the pixel scale using two $Q_{10}$ coefficients. A $Q_{10}$ rate of 2.65 was used for Aboveground Very Fast and Aboveground Slow pools while a $Q_{10}$ of 2.0 was used for all other DOM pools. The modified decay rate ($MDR$) for a cell $c$ in timestep $t$ was calculated as:
 
+$$  MDR_{c}^{t} = EDR * DM_{c}^{t}$$
+where $DM$ is the decay multiplier in cell $c$ intimestep $t$. The annual spatial decay multiplier was calculated as:
+
+$$ DM_{c}^{t} = 1*Q_{10}^{(T_{mean}-T_{norm})/10)} $$
+where $T_{mean}$ is the mean annual temperature in timestep $t$ and $T_{norm}$ is the mean annual temperature for the 30-year climate normal. 
+
+```{r, dommult, cache=T, echo=F, warning=F, messge=F, fig.width=8, fig.height=8, fig.cap="Spatial flow multipliers used to modify annual decay of DOM in the LUCAS model."}
+listdom = list.files("data/raster/q10fast/", pattern="*.tif")
+multdom = stack(paste0("data/raster/q10fast/", listdom))
+multdom = aggregate(multdom, fact=16)
+names(multdom) = seq(2002,2020,1)
+multdom_df = as.data.frame(multdom, xy=T) %>%
+  pivot_longer(cols=c(-x, -y), names_to="Year", values_to="Amount") %>%
+  mutate(Year = str_remove(Year, "X")) %>%
+  filter(!is.na(Amount)) %>%
+  mutate(Amount=Amount*0.01) %>%
+  filter(Year<2020)
+
+domMin = round(min(multdom_df$Amount, na.rm=T),1)
+domMax = round(max(multdom_df$Amount, na.rm=T),1)
+dombreaks = c(seq(0.8,1.2,0.05))
+
+ggplot() +
+  geom_sf(data=land_poly, aes(geometry=geometry), fill="white", color=NA) +
+  geom_tile(data=multdom_df, aes(x=x, y=y, fill=Amount)) +
+  geom_sf(data=states_poly, aes(geometry=geometry), fill=NA, color="grey20", size=0.2) +
+  facet_wrap(~Year, ncol=4) +
+  scale_fill_fermenter(palette="Spectral", type="div", direction=-1, guide="colorsteps", breaks=dombreaks) +
+  coord_sf(crs = "+proj=aea +lat_1=29.5 +lat_2=45.5 +lat_0=23 +lon_0=-96 +x_0=0 +y_0=0 +ellps=GRS80 +units=m +no_defs",
+           xlim=c(min(multdom_df$x), max(multdom_df$x)),
+           ylim=c(min(multdom_df$y), max(multdom_df$y))) +
+  theme_bw() +
+  labs(x=NULL, y=NULL, fill="DOM Decay Multiplier") +
+  theme(text=element_text(family="Roboto Condensed"),
+        legend.position = c(0.75, 0.05),
+        legend.text.align = 0,
+        legend.text = element_text(size = 7, hjust = 0, color = "#4e4d47"),
+        legend.title = element_text(size = 8),
+        plot.margin = unit(c(1,1,1,1), "mm"),
+        legend.key.height = unit(2, "mm"),
+        legend.key.width = unit(10, "mm"),
+        axis.text.x = element_text(size=8),
+        axis.text.y = element_text(size=8),
+        panel.background = element_rect(fill="grey90"),
+        strip.background = element_blank()) +
+  guides(fill = guide_colorsteps(direction = "horizontal",
+                                 title.position = 'top',
+                                 title.hjust = 0,
+                                 label.hjust = 1,
+                                 nrow = 1,
+                                 byrow = T,
+                                 reverse = F,
+                                 label.position = "bottom",
+                                 ticks = T,
+                                 ticks.colour = "black",
+                                 ticks.linewidth = 0.8,
+                                 frame.colour = "black"))
+
+```
 
 ## Scenario simulations
 
-Discuss different scenario simulations here...
+All scenario simulations were run on an annual timestep for the period 2001-2020 at 1-km x 1-km spatial resolution. The primary simulation included the combined effects of LULC change, ecosystem disturbance, and climate change on the carbon balance of forest ecosystems in the conterminous United States. The better understand the major controlling processes of carbon dynamics, we also ran two additional simulations where a) no LULC or disturbance was simulated, and b) no climate variability and/or change was simulated. Outputs from the simulations are available as both spatial and tabular files. Spatial outputs include annual carbon stocks and fluxes, LULC composition (i.e. state class maps and forest age), and LULC transitions. 
 
 
 

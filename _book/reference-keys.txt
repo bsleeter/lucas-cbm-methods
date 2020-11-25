@@ -50,3 +50,4 @@ spatial-flow-multipliers
 npp-variability
 decay-and-decomposition-of-dom
 fig:growthmult
+fig:dommult
