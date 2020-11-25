@@ -429,7 +429,74 @@ ggplot() +
                                  frame.colour = "black"))
 ```
 
+## Spatial flow multipliers
 
+The effects of weather and climate variability and change were incorporated into the LUCAS model to modify the annual flux of carbon in live and DOM pools. We used gridMET annual climate variables (@abatzoglou2013development) to derive a set of spatial flow multipliers which were used to scale NPP and decay/decomposition of all DOM pools. For additional details on the approach see @sleeter2019effects. 
+
+### NPP variability
+
+We used the NCEAS Nmodel of net primary productivity (@del2008global) to derive annual spatial multiplier maps which were used to modify the rate of vegetation growth in the LUCAS model. We estimated the annual NPP multiplier using the following equations from @del2008global:
+
+$$ f(mat)^t = \frac{0.551 * MAP^{1.055}} {exp(0.000306 * MAP)}) $$
+where $f(mat)^t$ is the NPP estimated from mean annual temperature in a given timestep and,
+
+$$ f(map)^t = \frac{2540} {1 + exp(1.584 - 0.0622 * MAT)}  $$
+where $f(map)^t$ is NPP estimated from total annual precipitation in the same timestep. Annual NPP was then estimates as:
+
+$$ NPP^t = MIN[f(map)^t, f(mat)^t] $$
+We also applied the same equations to gridMet climate normals for the period 1980-2010. The annual NPP multiplier for each cell was estimated as:
+
+$$ NPP_{anom} = \frac{NPP^t} {\mu{NPP}^{1980-2010}}   $$
+
+```{r, growthmult, echo=F, warning=F, messge=F, fig.width=8, fig.height=8, fig.cap="Spatial flow multipliers used to modify annual NPP in the LUCAS model."}
+listgrowth = list.files("data/raster/growth/", pattern="*.tif")
+multgrowth = stack(paste0("data/raster/growth/", listgrowth))
+multgrowth = aggregate(multgrowth, fact=16)
+names(multgrowth) = seq(2002,2020,1)
+multgrowth_df = as.data.frame(multgrowth, xy=T) %>%
+  pivot_longer(cols=c(-x, -y), names_to="Year", values_to="Amount") %>%
+  mutate(Year = str_remove(Year, "X")) %>%
+  filter(!is.na(Amount)) %>%
+  mutate(Amount=Amount*0.01)
+
+ggplot() +
+  geom_sf(data=land_poly, aes(geometry=geometry), fill="white", color=NA) +
+  geom_tile(data=multgrowth_df, aes(x=x, y=y, fill=Amount)) +
+  geom_sf(data=states_poly, aes(geometry=geometry), fill=NA, color="grey20", size=0.2) +
+  facet_wrap(~Year, ncol=4) +
+  scale_fill_distiller(palette="Spectral", type="div", direction=1, guide="colorbar") +
+  coord_sf(crs = "+proj=aea +lat_1=29.5 +lat_2=45.5 +lat_0=23 +lon_0=-96 +x_0=0 +y_0=0 +ellps=GRS80 +units=m +no_defs",
+           xlim=c(min(multgrowth_df$x), max(multgrowth_df$x)),
+           ylim=c(min(multgrowth_df$y), max(multgrowth_df$y))) +
+  theme_bw() +
+  labs(x=NULL, y=NULL, fill="Multiplier") +
+  theme(text=element_text(family="Roboto Condensed"),
+        legend.position = "bottom",
+        legend.text.align = 0,
+        legend.text = element_text(size = 7, hjust = 0, color = "#4e4d47"),
+        legend.title = element_text(size = 8),
+        plot.margin = unit(c(1,1,1,1), "mm"),
+        legend.key.height = unit(2, "mm"),
+        legend.key.width = unit(10, "mm"),
+        axis.text.x = element_text(size=8),
+        axis.text.y = element_text(size=8),
+        panel.background = element_rect(fill="grey90")) +
+  guides(fill = guide_colorbar(direction = "horizontal",
+                                 title.position = 'top',
+                                 title.hjust = 0,
+                                 label.hjust = 1,
+                                 nrow = 1,
+                                 byrow = T,
+                                 reverse = F,
+                                 label.position = "bottom",
+                                 ticks = T,
+                                 ticks.colour = "black",
+                                 ticks.linewidth = 0.8,
+                                 frame.colour = "black"))
+
+```
+
+### Decay and decomposition of DOM
 
 
 

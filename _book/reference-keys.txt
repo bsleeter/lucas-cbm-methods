@@ -46,3 +46,7 @@ fig:initiallive
 fig:initialdom
 fig:livestack
 fig:stockstack
+spatial-flow-multipliers
+npp-variability
+decay-and-decomposition-of-dom
+fig:growthmult

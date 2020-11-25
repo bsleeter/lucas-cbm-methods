@@ -50,6 +50,7 @@
 
 
 
+<script src="libs/accessible-code-block-0.0.1/empty-anchor.js"></script>
 <link href="libs/anchor-sections-1.0/anchor-sections.css" rel="stylesheet" />
 <script src="libs/anchor-sections-1.0/anchor-sections.js"></script>
 <script src="libs/kePrint-0.0.1/kePrint.js"></script>
@@ -93,7 +94,11 @@
 <li class="chapter" data-level="6.2.4" data-path="methods.html"><a href="methods.html#spin-up-of-dom-pools"><i class="fa fa-check"></i><b>6.2.4</b> Spin-up of DOM pools</a></li>
 <li class="chapter" data-level="6.2.5" data-path="methods.html"><a href="methods.html#mapping-initial-carbon-stocks"><i class="fa fa-check"></i><b>6.2.5</b> Mapping initial carbon stocks</a></li>
 </ul></li>
-<li class="chapter" data-level="6.3" data-path="methods.html"><a href="methods.html#scenario-simulations"><i class="fa fa-check"></i><b>6.3</b> Scenario simulations</a></li>
+<li class="chapter" data-level="6.3" data-path="methods.html"><a href="methods.html#spatial-flow-multipliers"><i class="fa fa-check"></i><b>6.3</b> Spatial flow multipliers</a><ul>
+<li class="chapter" data-level="6.3.1" data-path="methods.html"><a href="methods.html#npp-variability"><i class="fa fa-check"></i><b>6.3.1</b> NPP variability</a></li>
+<li class="chapter" data-level="6.3.2" data-path="methods.html"><a href="methods.html#decay-and-decomposition-of-dom"><i class="fa fa-check"></i><b>6.3.2</b> Decay and decomposition of DOM</a></li>
+</ul></li>
+<li class="chapter" data-level="6.4" data-path="methods.html"><a href="methods.html#scenario-simulations"><i class="fa fa-check"></i><b>6.4</b> Scenario simulations</a></li>
 </ul></li>
 <li class="chapter" data-level="" data-path="references.html"><a href="references.html"><i class="fa fa-check"></i>References</a></li>
 <li class="chapter" data-level="7" data-path="supplemental-material.html"><a href="supplemental-material.html"><i class="fa fa-check"></i><b>7</b> Supplemental Material</a></li>
@@ -122,7 +127,7 @@
 <p>To estimate carbon stocks and fluxes for CONUS, we linked the CBM-CFS3 spatially referenced model of ecosystem carbon dynamics with the LUCAS spatially explicit model of LULC change. The CBM-CFS3 model was used to generate a set of forest species and ecoregion-level carbon flux rates which were then used within the LUCAS model to produce spatially explicit maps of carbon stocks and fluxes based on LULC change, disturbances, forest ageing, and climate variability and change.</p>
 <div id="lucas-state-and-transition-simulation-model" class="section level2">
 <h2><span class="header-section-number">6.1</span> LUCAS state-and-transition simulation model</h2>
-<p>The LUCAS state-and-transition simulation model (STSM) was stratified using EPA level III ecoregions <span class="citation">(Omernik <a href="#ref-omernik1987ecoregions">1987</a>)</span>, U.S. states, and land management boundaries. We defined a total of 43 unique state classes which were based on the combination of classes from the National Land Cover Database <span class="citation">(Homer et al. <a href="#ref-homer2015completion">2015</a>)</span> and the U.S. Forest Service species type-groups <span class="citation">(Ruefenacht et al. <a href="#ref-Ruefenacht2008foresttypes">2008</a>)</span>. We defined a total of XX transition pathways which span seven major categories of LULC change and disturbance. The model was run on an annual timestep for the period 2001-2020 at a spatial resolution of 1-km x 1-km. Below we discuss the major aspects of the LUCAS STSM and the methods used to parameterize the model. For a general description of STSM models see <span class="citation">Daniel et al. (<a href="#ref-daniel2016state">2016</a>)</span>.</p>
+<p>The LUCAS state-and-transition simulation model (STSM) was stratified using EPA level III ecoregions <span class="citation">(Omernik <a href="#ref-omernik1987ecoregions" role="doc-biblioref">1987</a>)</span>, U.S. states, and land management boundaries. We defined a total of 43 unique state classes which were based on the combination of classes from the National Land Cover Database <span class="citation">(Homer et al. <a href="#ref-homer2015completion" role="doc-biblioref">2015</a>)</span> and the U.S. Forest Service species type-groups <span class="citation">(Ruefenacht et al. <a href="#ref-Ruefenacht2008foresttypes" role="doc-biblioref">2008</a>)</span>. We defined a total of XX transition pathways which span seven major categories of LULC change and disturbance. The model was run on an annual timestep for the period 2001-2020 at a spatial resolution of 1-km x 1-km. Below we discuss the major aspects of the LUCAS STSM and the methods used to parameterize the model. For a general description of STSM models see <span class="citation">Daniel et al. (<a href="#ref-daniel2016state" role="doc-biblioref">2016</a>)</span>.</p>
 <div id="state-class-map" class="section level3">
 <h3><span class="header-section-number">6.1.1</span> State class map</h3>
 <p>The conterminous U.S (CONUS) was partitioned into a regular grid of 1-km x 1-km cells where each cell was assigned to a discrete land-use/land-cover classes (LULC). The initial land cover map was based on the 2001 National Land Cover Database (NLCD). We further modified the classification system to partition the three NLCD forest classes into forest type-groups based on the U.S. Forest Service classification system. All cells mapped with a forest type-group in the USFS map were assumed to be forest cover and were recoded accordingly in our final state class map. The forest type-groups map contained 28 forest types which were generally classified as eastern and western hardwoods or softwoods. In total, the LUCAS STSM contained 43 unique LULC classes which are shown in Figure <a href="methods.html#fig:statemap">6.1</a>.</p>
@@ -135,7 +140,7 @@ Figure 6.1: State class map developed by merging the 2001 National Land Cover Da
 </div>
 <div id="forest-age" class="section level3">
 <h3><span class="header-section-number">6.1.2</span> Forest age</h3>
-<p>Forest age was estimated using a spatially explicit map of aboveground live biomass <span class="citation">(Wilson, Woodall, and Griffith <a href="#ref-wilson2013imputing">2013</a>)</span> and a map of forest canopy cover from the National Land Cover Database. The live biomass map was used to look-up forest age for each forest type-group using the state attribute tables derived from the CBM-CFS3 reference simulations (described below). Mean canopy cover was calculated for each forest type-group and ages were scaled around the mean so as to avoid assigning ages to forest stands with low canopy cover (Figure <a href="methods.html#fig:agemap">6.2</a>).</p>
+<p>Forest age was estimated using a spatially explicit map of aboveground live biomass <span class="citation">(Wilson, Woodall, and Griffith <a href="#ref-wilson2013imputing" role="doc-biblioref">2013</a>)</span> and a map of forest canopy cover from the National Land Cover Database. The live biomass map was used to look-up forest age for each forest type-group using the state attribute tables derived from the CBM-CFS3 reference simulations (described below). Mean canopy cover was calculated for each forest type-group and ages were scaled around the mean so as to avoid assigning ages to forest stands with low canopy cover (Figure <a href="methods.html#fig:agemap">6.2</a>).</p>
 <div class="figure"><span id="fig:agemap"></span>
 <img src="test_files/figure-html/agemap-1.png" alt="Forest age map inferred from aboveground live biomass and canopy cover data and used to initialize LUCAS model." width="768" />
 <p class="caption">
@@ -148,20 +153,20 @@ Figure 6.2: Forest age map inferred from aboveground live biomass and canopy cov
 <p>We modeled transitions between state classes to represent major LULC change processes including: urbanization, agricultural expansion and contraction, forest management (i.e. clear-cut and selection harvest), wildfire, and insect damage.</p>
 <div id="land-use-change" class="section level4">
 <h4><span class="header-section-number">6.1.3.1</span> Land use change</h4>
-<p>For land use transitions (urbanization, agricultural expansion and contraction), we generated spatial maps of the location of changes based on the NLCD time-series maps for the years 2001, 2006, 2011, and 2016. The 5-year change rates were annualized, and the model was parameterized to stochastically select cells to transition from one class to another within the 5-year period. For timesteps after 2016, annual change rates were sampled from the historical period. For urbanization and agricultural expansion transitions, spatial multiplier maps were used to constrain the location of change by removing protected areas. For agricultural expansion, we calculated relative multipliers for each ecoregion to allocate change between cultivated croplands and the hay/pasture class with adjacency multipliers used to allocate transitions spatially. For agricultural contraction, adjacency multipliers were calculated for all forest, grassland, shrubland, and wetlands state classes and used to allocate transitions to destination classes. For urbanization transition, adjacency parameters were used to modify the probability of change around existing developed areas. For a complete description on the methods of spatially allocating transitions see <span class="citation">Sleeter et al. (<a href="#ref-sleeter2019effects">2019</a>)</span>.</p>
+<p>For land use transitions (urbanization, agricultural expansion and contraction), we generated spatial maps of the location of changes based on the NLCD time-series maps for the years 2001, 2006, 2011, and 2016. The 5-year change rates were annualized, and the model was parameterized to stochastically select cells to transition from one class to another within the 5-year period. For timesteps after 2016, annual change rates were sampled from the historical period. For urbanization and agricultural expansion transitions, spatial multiplier maps were used to constrain the location of change by removing protected areas. For agricultural expansion, we calculated relative multipliers for each ecoregion to allocate change between cultivated croplands and the hay/pasture class with adjacency multipliers used to allocate transitions spatially. For agricultural contraction, adjacency multipliers were calculated for all forest, grassland, shrubland, and wetlands state classes and used to allocate transitions to destination classes. For urbanization transition, adjacency parameters were used to modify the probability of change around existing developed areas. For a complete description on the methods of spatially allocating transitions see <span class="citation">Sleeter et al. (<a href="#ref-sleeter2019effects" role="doc-biblioref">2019</a>)</span>.</p>
 <p>Additionally, we included changes in developed classes due to intensification (e.g. low intensity developed to high intensity developed). A time series of maps from NLCD was created showing locations where intensification occurred in each 5-year time period. The type of intensification was then estimated using relative multipliers for each intensification transition calculated for each ecoregion.</p>
 </div>
 <div id="forest-harvest" class="section level4">
 <h4><span class="header-section-number">6.1.3.2</span> Forest harvest</h4>
-<p>For the forest management transitions (clearcut and selection harvest), we used annual time-series maps for the period 2001-2016 from the Landfire Disturbance database <span class="citation">(US Geological Survey (USGS) LandFire Program <a href="#ref-landfire2014disturbance">2014</a>)</span> to identify areas of change. For timesteps after 2016 we sampled from the historical distribution of change for each ecoregion. For clearcut cells, forest age was reset to 0; for selection harvest, the age was not reset. For both transitions we assumed cells reverted to their original state class after disturbnace. In projected years, the minimum age for clearcut was based on a threshold of reaching 60% of peak merchantable volume for each forest type-group; the minimum age for selection harvest was assumed to be half the age used for clearcut harvest (<a href="methods.html#tab:crosswalk">6.1</a>).</p>
+<p>For the forest management transitions (clearcut and selection harvest), we used annual time-series maps for the period 2001-2016 from the Landfire Disturbance database <span class="citation">(US Geological Survey (USGS) LandFire Program <a href="#ref-landfire2014disturbance" role="doc-biblioref">2014</a>)</span> to identify areas of change. For timesteps after 2016 we sampled from the historical distribution of change for each ecoregion. For clearcut cells, forest age was reset to 0; for selection harvest, the age was not reset. For both transitions we assumed cells reverted to their original state class after disturbnace. In projected years, the minimum age for clearcut was based on a threshold of reaching 60% of peak merchantable volume for each forest type-group; the minimum age for selection harvest was assumed to be half the age used for clearcut harvest (<a href="methods.html#tab:crosswalk">6.1</a>).</p>
 </div>
 <div id="droughtinsect-damage" class="section level4">
 <h4><span class="header-section-number">6.1.3.3</span> Drought/insect damage</h4>
-<p>Forest mortality time series maps spanning the period 2001-2015 were used to model the effects of drought/insects and were derived from U.S. Forest Service Aerial Detection Surveys <span class="citation">(Moore, McAfee, and Iaccarino <a href="#ref-aerial2016survey">2018</a>)</span>. ADS data were binned into low, medium, and high severity classes based on methods described in <span class="citation">Sleeter et al. (<a href="#ref-sleeter2019effects">2019</a>)</span>. Insect/drought disturbances were not projected beyond 2015.</p>
+<p>Forest mortality time series maps spanning the period 2001-2015 were used to model the effects of drought/insects and were derived from U.S. Forest Service Aerial Detection Surveys <span class="citation">(Moore, McAfee, and Iaccarino <a href="#ref-aerial2016survey" role="doc-biblioref">2018</a>)</span>. ADS data were binned into low, medium, and high severity classes based on methods described in <span class="citation">Sleeter et al. (<a href="#ref-sleeter2019effects" role="doc-biblioref">2019</a>)</span>. Insect/drought disturbances were not projected beyond 2015.</p>
 </div>
 <div id="wildfire" class="section level4">
 <h4><span class="header-section-number">6.1.3.4</span> Wildfire</h4>
-<p>To simulate wildfire we used annual fire perimeters from the National Interagency Fire Consortium (NIFC) for the period 2001-2020 which were converted into spatial multipliers in each timestep of the simulation. To estimate fire severity (high, medium, and low), we calculated severity multipliers, for each ecoregion, for all fires contained within the Monitoring Trends in Burn Severity database <span class="citation">(Eidenshink et al. <a href="#ref-eidenshink2007project">2007</a>)</span> for the period 2001-2016. Severity multipliers were then applied to the annual burn maps in each timestep and for each ecoregion resulting in stochastic estiamtes of severity within each mapped fire perimeter. For grassland and shrubland state classes, all severity types were assumed to transition back into the original state class. For forest state classes, high severity fires resulted in a transition to a post-fire shrubland class which had a 0.064 annual transition probability back into forest <span class="citation">(Sleeter et al. <a href="#ref-sleeter2019effects">2019</a>)</span>. Medium and low severity fire reverted back into the original forest state class with no change in forest age.</p>
+<p>To simulate wildfire we used annual fire perimeters from the National Interagency Fire Consortium (NIFC) for the period 2001-2020 which were converted into spatial multipliers in each timestep of the simulation. To estimate fire severity (high, medium, and low), we calculated severity multipliers, for each ecoregion, for all fires contained within the Monitoring Trends in Burn Severity database <span class="citation">(Eidenshink et al. <a href="#ref-eidenshink2007project" role="doc-biblioref">2007</a>)</span> for the period 2001-2016. Severity multipliers were then applied to the annual burn maps in each timestep and for each ecoregion resulting in stochastic estiamtes of severity within each mapped fire perimeter. For grassland and shrubland state classes, all severity types were assumed to transition back into the original state class. For forest state classes, high severity fires resulted in a transition to a post-fire shrubland class which had a 0.064 annual transition probability back into forest <span class="citation">(Sleeter et al. <a href="#ref-sleeter2019effects" role="doc-biblioref">2019</a>)</span>. Medium and low severity fire reverted back into the original forest state class with no change in forest age.</p>
 </div>
 </div>
 </div>
@@ -1001,16 +1006,46 @@ Figure 6.5: Carbon stored in live biomass and dead organic matter pools estimate
 </div>
 </div>
 </div>
+<div id="spatial-flow-multipliers" class="section level2">
+<h2><span class="header-section-number">6.3</span> Spatial flow multipliers</h2>
+<p>The effects of weather and climate variability and change were incorporated into the LUCAS model to modify the annual flux of carbon in live and DOM pools. We used gridMET annual climate variables (<span class="citation">Abatzoglou (<a href="#ref-abatzoglou2013development" role="doc-biblioref">2013</a>)</span>) to derive a set of spatial flow multipliers which were used to scale NPP and decay/decomposition of all DOM pools. For additional details on the approach see <span class="citation">Sleeter et al. (<a href="#ref-sleeter2019effects" role="doc-biblioref">2019</a>)</span>.</p>
+<div id="npp-variability" class="section level3">
+<h3><span class="header-section-number">6.3.1</span> NPP variability</h3>
+<p>We used the NCEAS Nmodel of net primary productivity (<span class="citation">Del Grosso et al. (<a href="#ref-del2008global" role="doc-biblioref">2008</a>)</span>) to derive annual spatial multiplier maps which were used to modify the rate of vegetation growth in the LUCAS model. We estimated the annual NPP multiplier using the following equations from <span class="citation">Del Grosso et al. (<a href="#ref-del2008global" role="doc-biblioref">2008</a>)</span>:</p>
+<p><span class="math display">\[ f(mat)^t = \frac{0.551 * MAP^{1.055}} {exp(0.000306 * MAP)}) \]</span>
+where <span class="math inline">\(f(mat)^t\)</span> is the NPP estimated from mean annual temperature in a given timestep and,</p>
+<p><span class="math display">\[ f(map)^t = \frac{2540} {1 + exp(1.584 - 0.0622 * MAT)}  \]</span>
+where <span class="math inline">\(f(map)^t\)</span> is NPP estimated from total annual precipitation in the same timestep. Annual NPP was then estimates as:</p>
+<p><span class="math display">\[ NPP^t = MIN[f(map)^t, f(mat)^t] \]</span>
+We also applied the same equations to gridMet climate normals for the period 1980-2010. The annual NPP multiplier for each cell was estimated as:</p>
+<p><span class="math display">\[ NPP_{anom} = \frac{NPP^t} {\mu{NPP}^{1980-2010}}   \]</span></p>
+<div class="figure"><span id="fig:growthmult"></span>
+<img src="test_files/figure-html/growthmult-1.png" alt="Spatial flow multipliers used to modify annual NPP in the LUCAS model." width="768" />
+<p class="caption">
+Figure 6.6: Spatial flow multipliers used to modify annual NPP in the LUCAS model.
+</p>
+</div>
+</div>
+<div id="decay-and-decomposition-of-dom" class="section level3">
+<h3><span class="header-section-number">6.3.2</span> Decay and decomposition of DOM</h3>
+</div>
+</div>
 <div id="scenario-simulations" class="section level2">
-<h2><span class="header-section-number">6.3</span> Scenario simulations</h2>
+<h2><span class="header-section-number">6.4</span> Scenario simulations</h2>
 <p>Discuss different scenario simulations here…</p>
 
 </div>
 </div>
 <h3>References</h3>
 <div id="refs" class="references">
+<div id="ref-abatzoglou2013development">
+<p>Abatzoglou, John T. 2013. “Development of Gridded Surface Meteorological Data for Ecological Applications and Modelling.” <em>International Journal of Climatology</em> 33 (1): 121–31.</p>
+</div>
 <div id="ref-daniel2016state">
 <p>Daniel, Colin J, Leonardo Frid, Benjamin M Sleeter, and Marie-Josée Fortin. 2016. “State-and-Transition Simulation Models: A Framework for Forecasting Landscape Change.” <em>Methods in Ecology and Evolution</em> 7 (11): 1413–23.</p>
+</div>
+<div id="ref-del2008global">
+<p>Del Grosso, Stephen, William Parton, Thomas Stohlgren, Daolan Zheng, Dominique Bachelet, Stephen Prince, Kathy Hibbard, and Richard Olson. 2008. “Global Potential Net Primary Production Predicted from Vegetation Class, Precipitation, and Temperature.” <em>Ecology</em> 89 (8): 2117–26.</p>
 </div>
 <div id="ref-eidenshink2007project">
 <p>Eidenshink, Jeff, Brian Schwind, Ken Brewer, Zhi-Liang Zhu, Brad Quayle, and Stephen Howard. 2007. “A Project for Monitoring Trends in Burn Severity.” <em>Fire Ecology</em> 3 (1): 3–21.</p>
@@ -1025,7 +1060,7 @@ Figure 6.5: Carbon stored in live biomass and dead organic matter pools estimate
 <p>Omernik, James M. 1987. “Ecoregions of the Conterminous United States.” <em>Annals of the Association of American Geographers</em> 77 (1): 118–25.</p>
 </div>
 <div id="ref-Ruefenacht2008foresttypes">
-<p>Ruefenacht, B., M.V. Finco, M.D. Nelson, R. Czaplewski, E.H. Helmer, J.A. Blackard, G.R. Holden, et al. 2008. “Conterminous U.s. And Alaska Forest Type Mapping Using Forest Inventory and Analysis Data.” <em>Photogrammetric Engineering &amp; Remote Sensing</em> 74 (11): 1379–88. <a href="https://doi.org/10.14358/pers.74.11.1379">https://doi.org/10.14358/pers.74.11.1379</a>.</p>
+<p>Ruefenacht, B., M. V. Finco, M. D. Nelson, R. Czaplewski, E. H. Helmer, J. A. Blackard, G. R. Holden, et al. 2008. “Conterminous U.s. And Alaska Forest Type Mapping Using Forest Inventory and Analysis Data.” <em>Photogrammetric Engineering &amp; Remote Sensing</em> 74 (11): 1379–88. <a href="https://doi.org/10.14358/pers.74.11.1379">https://doi.org/10.14358/pers.74.11.1379</a>.</p>
 </div>
 <div id="ref-sleeter2019effects">
 <p>Sleeter, Benjamin M, David C Marvin, D Richard Cameron, Paul C Selmants, A LeRoy Westerling, Jason Kreitler, Colin J Daniel, Jinxun Liu, and Tamara S Wilson. 2019. “Effects of 21st-Century Climate, Land Use, and Disturbances on Ecosystem Carbon Balance in California.” <em>Global Change Biology</em> 25 (10): 3334–53.</p>
