@@ -1,0 +1,105 @@
+# Supplemental Material
+
+```{r, diagurb, cache=T, echo=F, warning=F, fig.width=3, Fig.height=3, fig.cap="Conceptual diagram of urbanization and urban intensification transitions used within the LUCAS state-and-transition simulation model."}
+
+DiagrammeR::grViz("digraph rmarkdown{
+graph [layout = dot, rankdir = LR]
+
+node [shape = rectangle, fontname = 'Roboto Condensed', fixedsize = true, width=1]
+
+node [style = filled; fillcolor = white]
+Forest; Grassland; Shrubland; Wetland; Cropland; Pasture
+
+node [shape = rectangle; style = filled; fillcolor = Gray90]
+Urbanization
+
+node [shape = rectangle; style = filled; fillcolor = Red4]
+High
+
+node [shape = rectangle; style = filled; fillcolor = OrangeRed]
+Medium
+
+node [shape = rectangle; style = filled; fillcolor = LightSalmon]
+Low
+
+node [shape = rectangle; style = filled; fillcolor = MistyRose]
+Open
+
+edge [arrowhead = vee, color = Red]
+{Forest; Grassland; Shrubland; Wetland; Cropland; Pasture} -> Urbanization
+Urbanization -> {High; Medium; Low; Open}
+
+edge [arrowhead = normal, color = Black]
+{Open} -> {Low; Medium; High}
+{Low} -> {Medium; High}
+{Medium} -> {High}
+
+subgraph {rank = same; Open; Low; Medium; High}
+
+}")
+```
+
+```{r, diagharv, cache=T, echo=F, warning=F, fig.width=3, Fig.height=3, fig.cap="Conceptual diagram of forest harvest transitions used within the LUCAS state-and-transition simulation model."}
+
+DiagrammeR::grViz("digraph rmarkdown{
+graph [layout = dot, rankdir = TB]
+
+node [fontname = 'Roboto Condensed', fixedsize = true, fontsize = 8]
+edge [fontname= 'Roboto Condensed', fontsize = 7]
+
+node [shape = rectangle, style = filled; fillcolor = ForestGreen]
+Forest
+
+node [shape = rectangle; style = filled; fillcolor = Gray90]
+Clearcut; Selection
+
+edge [arrowhead = vee, color = black, font = 'Universe Condensed']
+Forest -> {Harvest} [label = 'Annual area']
+Harvest -> Clearcut [label = 'Harvest multipliers', style = dashed]
+Harvest -> Selection [style = dashed]
+
+Clearcut -> Forest [label = 'regrowth']
+Selection -> Forest
+
+subgraph {rank = same; Clearcut; Selection}
+
+}")
+```
+
+```{r, diagfire, cache=T, echo=F, warning=F, fig.width=3, Fig.height=3, fig.cap="Conceptual diagram of wildfire transitions used within the LUCAS state-and-transition simulation model."}
+
+DiagrammeR::grViz("digraph rmarkdown{
+graph [layout = dot, rankdir = TB]
+
+node [fontname = 'Roboto Condensed', fixedsize = true, fontsize = 8]
+edge [fontname= 'Roboto Condensed', fontsize = 7]
+
+node [shape = rectangle, style = filled; fillcolor = ForestGreen]
+Forest
+
+node [shape = rectangle, style = filled; fillcolor = '#DCCA8F']
+Shrubland
+
+
+node [shape = rectangle; style = filled; fillcolor = Gray90]
+Fire
+
+node [shape = rectangle; style = filled; fillcolor = Gray90]
+High; Medium; Low
+
+edge [arrowhead = vee, color = black, font = 'Universe Condensed']
+Forest -> Fire [label = 'Annual Perimeters']
+Fire -> High [style = dashed]
+Fire -> Medium [label = 'severity multiplier'; style = dashed]
+Fire -> Low [style = dashed]
+
+{Medium; Low} -> Forest
+High -> Shrubland
+Shrubland -> Forest [label = 'regrowth multiplier'; style = dashed]
+
+
+subgraph {rank = same; High; Medium; Low}
+subgraph {rank = same; Shrubland; Forest}
+
+}")
+```

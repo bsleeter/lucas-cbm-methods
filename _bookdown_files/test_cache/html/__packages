@@ -1,10 +1,4 @@
 base
-methods
-datasets
-utils
-grDevices
-graphics
-stats
 sp
 raster
 sf
@@ -21,3 +15,8 @@ DT
 scales
 stringi
 hrbrthemes
+RColorBrewer
+viridisLite
+viridis
+kableExtra
+patchwork

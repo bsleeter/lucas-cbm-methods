@@ -35,3 +35,14 @@ mapping-initial-carbon-stocks
 scenario-simulations
 fig:spinup
 fig:statemap
+fig:agemap
+fig:diagurb
+fig:diagharv
+fig:diagfire
+supplemental-material
+tab:crosswalk
+references
+fig:initiallive
+fig:initialdom
+fig:livestack
+fig:stockstack

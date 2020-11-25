@@ -3,11 +3,30 @@ library(raster)
 library(sf)
 library(tidyverse)
 library(DT)
+library(kableExtra)
 library(scales)
 library(stringi)
 library(hrbrthemes)
 library(RColorBrewer)
 library(viridis)
+library(patchwork)
+
+theme_custom <- function(...) {
+  theme_bw() +
+  theme(
+    axis.text.x = element_text(size=8),
+    axis.text.y = element_text(size=8),
+    axis.title.x = element_text(size=8),
+    axis.title.y = element_text(size=8),
+    plot.margin = margin(3,3,3,3, unit="mm"),
+    strip.text = element_text(size=8),
+    panel.border = element_rect(fill=NA),
+    panel.spacing = unit(2, "mm"),
+    panel.grid.minor = element_blank(),
+    strip.background = element_blank(),
+    ...
+  )
+}
 ```
 
 # Methods
@@ -20,9 +39,9 @@ The LUCAS state-and-transition simulation model (STSM) was stratified using EPA 
 
 ### State class map
 
-The conterminous U.S (CONUS) was partitioned into a regular grid of 1-km x 1-km cells where each cell was assigned to a discrete land-use/land-cover classes (LULC). The initial land cover map was based on the 2001 National Land Cover Database (NLCD). We further modified the classification system to partition the three NLCD forest classes into forest type-groups based on the U.S. Forest Service classification system. All cells mapped with a forest type-group in the USFS map were assumed to be forest cover and were recoded accordingly in our final state class map. The forest type-groups map contained 28 forest types which were generally classified as eastern and western hardwoods or softwoods. In total, the LUCAS STSM contained 43 unique LULC classes which are shown in \@ref(fig:statemap).
+The conterminous U.S (CONUS) was partitioned into a regular grid of 1-km x 1-km cells where each cell was assigned to a discrete land-use/land-cover classes (LULC). The initial land cover map was based on the 2001 National Land Cover Database (NLCD). We further modified the classification system to partition the three NLCD forest classes into forest type-groups based on the U.S. Forest Service classification system. All cells mapped with a forest type-group in the USFS map were assumed to be forest cover and were recoded accordingly in our final state class map. The forest type-groups map contained 28 forest types which were generally classified as eastern and western hardwoods or softwoods. In total, the LUCAS STSM contained 43 unique LULC classes which are shown in Figure \@ref(fig:statemap).
 
-```{r, statemap, cache=T, echo=F, warning=F, message=F, fig.width=8, fig.height=8, fig.cap="State class map developed by merging the 2001 National Land Cover Database and U.S. Forest Service forest type-groups maps."}
+```{r, statemap, cache=T, echo=F, warning=F, message=F, fig.width=8, fig.height=7, fig.cap="State class map developed by merging the 2001 National Land Cover Database and U.S. Forest Service forest type-groups maps."}
 land_poly = st_read("data/vector/ne_10m_land.shp", quiet=T)
 states_poly = st_read("data/vector/states.shp", quiet=T)
 stateTypes = read_csv("data/raster/state-class-types.csv")
@@ -49,8 +68,27 @@ ggplot() +
   geom_sf(data=land_poly, aes(geometry=geometry), fill="grey99", color=NA) +
   geom_tile(data=statemap_df, aes(x=x, y=y, fill=ID), show.legend = T) +
   geom_sf(data=states_poly, aes(geometry=geometry), fill=NA, color="grey20", size=0.2) +
-  scale_fill_manual(values=state_pal,
-                    labels=state_labels,
+  coord_sf(crs = "+proj=aea +lat_1=29.5 +lat_2=45.5 +lat_0=23 +lon_0=-96 +x_0=0 +y_0=0 +ellps=GRS80 +units=m +no_defs",
+           xlim=c(min(statemap_df$x), max(statemap_df$x)),
+           ylim=c(min(statemap_df$y), max(statemap_df$y))) +
+  theme_ipsum_rc() +
+  labs(x=NULL, y=NULL) +
+  theme(
+    legend.position = "bottom",
+    legend.text.align = 0,
+    legend.text = element_text(size = 6.5, hjust = 0, color = "#4e4d47"),
+    legend.title = element_text(size = 8),
+    plot.margin = unit(c(.5,.5,.2,.5), "cm"),
+    panel.spacing = unit(c(-.1,0.2,.2,0.2), "cm"),
+    panel.border = element_rect(size=0.2, fill=NA),
+    panel.background = element_rect(fill="grey90"),
+    axis.text.x = element_text(size=8),
+    axis.text.y = element_text(size=8),
+    axis.ticks.length = unit(2, "mm"),
+    legend.background = element_rect(fill="white", color=NA)) +
+   scale_fill_manual(values = state_pal,
+                    labels = state_labels,
+                    name = "State class type",
                     guide = guide_legend(direction = "vertical",
                                          keyheight = unit(2, units = "mm"),
                                          keywidth = unit(4, units = "mm"),
@@ -59,27 +97,14 @@ ggplot() +
                                          label.hjust = 0,
                                          nrow = 11,
                                          byrow = F,
-                                         reverse = F)) +
-  coord_sf(crs = "+proj=aea +lat_1=29.5 +lat_2=45.5 +lat_0=23 +lon_0=-96 +x_0=0 +y_0=0 +ellps=GRS80 +units=m +no_defs",
-           xlim=c(min(statemap_df$x), max(statemap_df$x)),
-           ylim=c(min(statemap_df$y), max(statemap_df$y))) +
-  theme_ipsum_rc() +
-  labs(fill="State Class", x="Longitude", y="Latitude") +
-  theme(legend.position = "bottom",
-        legend.text = element_text(size=8),
-        legend.key.height = unit(2, "mm"),
-        legend.key.width = unit(4, "mm"),
-        panel.border = element_rect(size=0.2, fill=NA),
-        panel.background = element_rect(fill="grey90"),
-        axis.text.x = element_text(size=8),
-        axis.text.y = element_text(size=8),
-        axis.ticks.length = unit(2, "mm"))
+                                         reverse = F))
+
 
 ```
 
 ### Forest age
 
-Forest age was estimated using a spatially explicit map of aboveground live biomass [@wilson2013imputing] and a map of forest canopy cover from the National Land Cover Database. The live biomass map was used to look-up forest age for each forest type-group using the state attribute tables derived from the CBM-CFS3 reference simulations (described below). Mean canopy cover was calculated for each forest type-group and ages were scaled around the mean so as to avoid assigning ages to forest stands with low canopy cover.
+Forest age was estimated using a spatially explicit map of aboveground live biomass [@wilson2013imputing] and a map of forest canopy cover from the National Land Cover Database. The live biomass map was used to look-up forest age for each forest type-group using the state attribute tables derived from the CBM-CFS3 reference simulations (described below). Mean canopy cover was calculated for each forest type-group and ages were scaled around the mean so as to avoid assigning ages to forest stands with low canopy cover (Figure \@ref(fig:agemap)).
 
 
 ```{r, agemap, cache=T, echo=F, warning=F, message=F, fig.width=8, fig.cap="Forest age map inferred from aboveground live biomass and canopy cover data and used to initialize LUCAS model."}
@@ -135,7 +160,7 @@ agemap_df$brks <- cut(agemap_df$Age,
 brks_scale <- levels(agemap_df$brks)
 labels_scale <- rev(brks_scale)
 
-p = ggplot() +
+ggplot() +
   geom_sf(data=land_poly, aes(geometry=geometry), fill="grey99", color=NA) +
   geom_tile(data=agemap_df, aes(x=x, y=y, fill=brks), show.legend = T) +
   geom_sf(data=states_poly, aes(geometry=geometry), fill=NA, color="grey20", size=0.2) +
@@ -176,29 +201,29 @@ scale_fill_manual(
     reverse = T,
     label.position = "bottom"))
 
-p
-
 ```
 
 ### LULC and disturbance transitions
 
-We modeled transitions between state classes to represent major LULC change processes, including urbanization, agricultural expansion and contraction, forest management (i.e. clear-cut and selection harvest), wildfire, and insect damage. 
+We modeled transitions between state classes to represent major LULC change processes including: urbanization, agricultural expansion and contraction, forest management (i.e. clear-cut and selection harvest), wildfire, and insect damage. 
 
 #### Land use change
 
-For land use transitions (urbanization, agricultural expansion and contraction), we generated spatial maps of the location of changes based on the NLCD time-series maps for the years 2001, 2006, 2011, and 2016. The 5-year change rates were annualized, and the model was parameterized to stochastically select cells to transition from one class to another within the 5-year period. Additionally, we included changes in developed classes due to intensification (e.g. low intensity developed to high intensity developed). For timesteps after 2016, annual change rates were sampled from the historical period. For urbanization and agricultural expansion transitions, spatial multiplier maps were used to constrain the location of change by removing protected areas. For agricultural expansion, we calculated relative multipliers for each ecoregion to allocate change between cultivated croplands and the hay/pasture class with adjacency multipliers used to allocate transitions spatially. For agricultural contraction, adjacency multipliers were calculated for all forest, grassland, and shrubland state classes and used to allocate transitions to destination classes. For urbanization transition, adjacency parameters were used to modify the probability of change around existing developed areas. For a complete description on the methods of spatially allocating transitions see @sleeter2019effects.
+For land use transitions (urbanization, agricultural expansion and contraction), we generated spatial maps of the location of changes based on the NLCD time-series maps for the years 2001, 2006, 2011, and 2016. The 5-year change rates were annualized, and the model was parameterized to stochastically select cells to transition from one class to another within the 5-year period. For timesteps after 2016, annual change rates were sampled from the historical period. For urbanization and agricultural expansion transitions, spatial multiplier maps were used to constrain the location of change by removing protected areas. For agricultural expansion, we calculated relative multipliers for each ecoregion to allocate change between cultivated croplands and the hay/pasture class with adjacency multipliers used to allocate transitions spatially. For agricultural contraction, adjacency multipliers were calculated for all forest, grassland, shrubland, and wetlands state classes and used to allocate transitions to destination classes. For urbanization transition, adjacency parameters were used to modify the probability of change around existing developed areas. For a complete description on the methods of spatially allocating transitions see @sleeter2019effects.
+
+Additionally, we included changes in developed classes due to intensification (e.g. low intensity developed to high intensity developed). A time series of maps from NLCD was created showing locations where intensification occurred in each 5-year time period. The type of intensification was then estimated using relative multipliers for each intensification transition calculated for each ecoregion.
 
 #### Forest harvest
 
-For the forest management transitions (clearcut and selection harvest), we used annual time-series maps from the Landfire Disturbance database [@landfire2014disturbance] to identify areas of change for the period 2001-2016. For years after 2016 we sampled from the historical distribution of change for each ecoregion. For clearcut cells, forest age was reset to 0; for selection harvest, the age was not reset. For both transitions we assumed cells reverted to their original state class after disturbnace. In projected years, a minimum age for clearcut and selection was based on a threshold of 40% of peak merchantable volume for each forest type-group.
+For the forest management transitions (clearcut and selection harvest), we used annual time-series maps for the period 2001-2016 from the Landfire Disturbance database [@landfire2014disturbance] to identify areas of change. For timesteps after 2016 we sampled from the historical distribution of change for each ecoregion. For clearcut cells, forest age was reset to 0; for selection harvest, the age was not reset. For both transitions we assumed cells reverted to their original state class after disturbnace. In projected years, the minimum age for clearcut was based on a threshold of reaching 60% of peak merchantable volume for each forest type-group; the minimum age for selection harvest was assumed to be half the age used for clearcut harvest (\@ref(tab:crosswalk)). 
 
 #### Drought/insect damage
 
-Forest mortality time series maps spanning the period 2001-2015 were used to model the effects of drought/insects and were derived from U.S. Forest Service Aerial Detection Surveys [@aerial2016survey]. Data were binned into low, medium, and high severity classes [@sleeter2019effects]. Insect/drought disturbances were not modelled beyond 2015. 
+Forest mortality time series maps spanning the period 2001-2015 were used to model the effects of drought/insects and were derived from U.S. Forest Service Aerial Detection Surveys [@aerial2016survey]. ADS data were binned into low, medium, and high severity classes based on methods described in @sleeter2019effects. Insect/drought disturbances were not projected beyond 2015. 
 
 #### Wildfire
 
-To simulate wildfire we used annual fire perimeters from the National Interagency Fire Consortium (NIFC) for the period 2001-2020 which were converted into spatial multipliers in each timestep of the simulation. To estimate fire severity (high, medium, and low), we calculated severity multipliers, for each ecoregion, for all fires contained within the Monitoring Trends in Burn Severity database [@eidenshink2007project] for the period 2001-2016. Severity multipliers were then applied to the burn perimeters in each timestep for each ecoregion.
+To simulate wildfire we used annual fire perimeters from the National Interagency Fire Consortium (NIFC) for the period 2001-2020 which were converted into spatial multipliers in each timestep of the simulation. To estimate fire severity (high, medium, and low), we calculated severity multipliers, for each ecoregion, for all fires contained within the Monitoring Trends in Burn Severity database [@eidenshink2007project] for the period 2001-2016. Severity multipliers were then applied to the annual burn maps in each timestep and for each ecoregion resulting in stochastic estiamtes of severity within each mapped fire perimeter. For grassland and shrubland state classes, all severity types were assumed to transition back into the original state class. For forest state classes, high severity fires resulted in a transition to a post-fire shrubland class which had a 0.064 annual transition probability back into forest [@sleeter2019effects]. Medium and low severity fire reverted back into the original forest state class with no change in forest age.
 
 ## LUCAS carbon stock and flows
 
@@ -219,14 +244,14 @@ where *y* is the merchantable volume, *a* is the asymptote and *b* is the rate o
 
 ```{r crosswalk, echo=FALSE, message=FALSE, warning=FALSE, paged.print=TRUE}
 crosswalk_eco = read.csv("data/tables/cbm-lucas-lookup.csv") 
-datatable(crosswalk_eco, options = list(pageLength = 10, autoWidth = TRUE), rownames= FALSE)
+#datatable(crosswalk_eco, options = list(pageLength = 10, autoWidth = TRUE), rownames= FALSE)
 
-# kable(crosswalk_eco, 
-#       digits = 2, 
-#       booktabs = T, 
-#       escape = F, 
-#       caption="Crosswalk table used to connect U.S. forest type-groups to Ecozones, Provinces and species types.") %>% 
-#   kable_styling(latex_options = c("hold_position"), bootstrap_options = c("striped"))
+kable(crosswalk_eco,
+      digits = 2,
+      booktabs = T,
+      escape = F,
+      caption="Crosswalk table used to connect U.S. forest type-groups used in LUCAS to Ecozones, Provinces and species types from the CBM-CFS3 model.") %>%
+  kable_paper(lightable_options = c("striped"), font_size=12)
 ```
 
 
@@ -281,11 +306,11 @@ ggplot(stock_validation, aes(x=Age, y=Tons, color=Model)) +
   #scale_linetype_manual(values=c("CBM"="solid", "LUCAS"="dotted")) +
   scale_y_continuous(labels=number_format(accuracy = 1)) +
   facet_wrap(~StockGroupID, scales = "free_y", ncol=3) +
-  theme_bw() +
-  theme(legend.position = c(0.75,0.08),
-        strip.background = element_blank()) +
+  theme_custom() +
+  theme(legend.position = c(0.75,0.08)) +
   labs(x="Age", 
      y=expression(tons~C~ha^-1))
+
 
 ```
 
@@ -303,9 +328,8 @@ ggplot(spinup, aes(x=Age, y=Amount, color=TertiaryStratumID)) +
   geom_point(data=filter(spinup, Age %in% seq(0,300,20)), shape=22, fill="white") +
   scale_color_brewer("Last Transition", palette = "Dark2") +
   facet_wrap(~StockGroupID, scales="free_y") +
-  theme_bw() +
-  theme(legend.position = "bottom",
-        strip.background = element_blank()) +
+  theme_custom() +
+  theme(legend.position = "bottom") +
   labs(x="Age", 
      y=expression(tons~C~ha^-1))
 ```
@@ -313,12 +337,101 @@ ggplot(spinup, aes(x=Age, y=Amount, color=TertiaryStratumID)) +
 
 ### Mapping initial carbon stocks
 
-To estimate spatial carbon stocks the LUCAS model was parameterized with state attribute values from the spin-up procedure described above, flow pathways and multipliers, and raster maps of forest type (i.e. state class type) and and age. The model was run for a single timestep for both wildfire and clearcut harvest as the last disturbance. The combination of forest type and age is used to create initial stock rasters for the first timestep. Fire disturbances prior to 2001 were queried from the National Interagency Fire Consortium (NIFC) and mapped to a 1-km grid. Cells classified in the NIFC map were assigned carbon values from the wildfire simulation; all other cells were assigned stock values from the clearcut harvest simulation. 
+To estimate spatial carbon stocks the LUCAS model was parameterized with state attribute values from the spin-up procedure described above, flow pathways and multipliers, and raster maps of forest type (Figure \@ref(fig:statemap)) and and age (Figure \@ref(fig:agemap). The model was run for a single timestep for both wildfire and clearcut harvest as the last disturbance creating two sets of initial carbon stock maps. The combination of forest type and age was used to create initial stock rasters for the first timestep. Fire disturbances prior to 2001 were queried from the National Interagency Fire Consortium (NIFC) and mapped to a 1-km grid. Cells classified in the NIFC map were assigned carbon values from the wildfire simulation; all other cells were assigned stock values from the clearcut harvest simulation. 
 
-*insert figure from spin-up results*
-- Map of Live and DOM with bar chart for each showing amount in each stock type.
+```{r, livestack, cache=T, message=FALSE, warning=FALSE, echo=F}
+live_list = c("Biomass Coarse Root [Type].tif",
+              "Biomass Fine Root [Type].tif",
+              "Biomass Foliage [Type].tif",
+              "Biomass Merchantable [Type].tif",
+              "Biomass Other Wood [Type].tif")
+live_names = c("Coarse_Root", 
+               "Fine_Root", 
+               "Foliage", 
+               "Other_Wood", 
+               "Merchantable")
+live_pools = stack(paste0("data/raster/is-live/", live_list))
+live_pools = aggregate(live_pools, fact=4)
+names(live_pools) = live_names
+live_pools_df = as.data.frame(live_pools, xy=T) %>%
+  pivot_longer(cols=c(-x, -y), names_to="Stock", values_to="Amount") %>%
+  filter(!is.na(Amount)) %>%
+  mutate(Stock=str_replace(Stock, "_", " "))
+```
 
-@kurz2008mountain is an example of a reference.
+```{r, domstack, cache=T, message=FALSE, warning=FALSE, echo=F}
+# DOM pools
+dom_list = c("DOM Aboveground Very Fast [Type].tif",
+             "DOM Aboveground Fast [Type].tif",
+             "DOM Aboveground Medium [Type].tif",
+             "DOM Aboveground Slow [Type].tif",
+             "DOM Belowground Very Fast [Type].tif",
+             "DOM Belowground Fast [Type].tif",
+             "DOM Belowground Slow [Type].tif",
+             "DOM Snag Branch [Type].tif",
+             "DOM Snag Stem [Type].tif")
+
+dom_names = c("Aboveground_Very_Fast",
+             "Aboveground_Fast",
+             "Aboveground_Medium",
+             "Aboveground_Slow",
+             "Belowground_Very_Fast",
+             "Belowground_Fast",
+             "Belowground_Slow",
+             "Snag_Branch",
+             "Snag_Stem")
+dom_pools = stack(paste0("data/raster/is-dom/", dom_list))
+dom_pools = aggregate(dom_pools, fact=4)
+names(dom_pools) = dom_names
+dom_pools_df = as.data.frame(dom_pools, xy=T) %>%
+  pivot_longer(cols=c(-x, -y), names_to="Stock", values_to="Amount") %>%
+  filter(!is.na(Amount)) %>%
+  mutate(Stock=str_replace_all(Stock, "_", " "))
+```
+
+```{r, stockstack, cache=T, message=FALSE, warning=FALSE, echo=F, fig.width=8, fig.height=10, fig.cap="Carbon stored in live biomass and dead organic matter pools estimated for the year 2001."}
+
+all_pools_df = bind_rows(live_pools_df,dom_pools_df)
+
+ggplot() +
+  geom_sf(data=land_poly, aes(geometry=geometry), fill="white", color=NA) +
+  geom_tile(data=all_pools_df, aes(x=x, y=y, fill=Amount)) +
+  geom_sf(data=states_poly, aes(geometry=geometry), fill=NA, color="grey20", size=0.2) +
+  facet_wrap(~Stock, ncol = 3) +
+  coord_sf(crs = "+proj=aea +lat_1=29.5 +lat_2=45.5 +lat_0=23 +lon_0=-96 +x_0=0 +y_0=0 +ellps=GRS80 +units=m +no_defs",
+           xlim=c(min(live_pools_df$x), max(live_pools_df$x)),
+           ylim=c(min(live_pools_df$y), max(live_pools_df$y))) +
+  scale_fill_fermenter(palette = "YlGnBu", type="seq", direction=1, guide="colorsteps", breaks=c(5,10,20,50,80,110,150,200)) +
+  labs(x=NULL, y=NULL, fill=expression(Metric~Tons~C~ha^-1)) +
+  theme_bw() +
+  theme(text=element_text(family="Roboto Condensed"),
+        legend.position = c(0.85,0.1),
+        legend.text.align = 0,
+        legend.text = element_text(size = 7, hjust = 0, color = "#4e4d47"),
+        legend.title = element_text(size = 8),
+        plot.margin = unit(c(1,1,1,1), "mm"),
+        legend.key.height = unit(2, "mm"),
+        legend.key.width = unit(10, "mm"),
+        axis.text.x = element_text(size=8),
+        axis.text.y = element_text(size=8),
+        panel.background = element_rect(fill="grey90")) +
+  guides(fill = guide_colorsteps(direction = "horizontal",
+                                 title.position = 'top',
+                                 title.hjust = 0,
+                                 label.hjust = 1,
+                                 nrow = 1,
+                                 byrow = T,
+                                 reverse = F,
+                                 label.position = "bottom",
+                                 ticks = T,
+                                 ticks.colour = "black",
+                                 ticks.linewidth = 0.8,
+                                 frame.colour = "black"))
+```
+
+
+
+
 
 
 ## Scenario simulations

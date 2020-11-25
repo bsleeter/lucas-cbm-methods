@@ -24,7 +24,7 @@
 <meta name="author" content="Benjamin M. Sleeter" />
 
 
-<meta name="date" content="2020-11-23" />
+<meta name="date" content="2020-11-24" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -52,14 +52,10 @@
 
 <link href="libs/anchor-sections-1.0/anchor-sections.css" rel="stylesheet" />
 <script src="libs/anchor-sections-1.0/anchor-sections.js"></script>
-<script src="libs/htmlwidgets-1.5.2/htmlwidgets.js"></script>
-<link href="libs/datatables-css-0.0.0/datatables-crosstalk.css" rel="stylesheet" />
-<script src="libs/datatables-binding-0.16/datatables.js"></script>
-<link href="libs/dt-core-1.10.20/css/jquery.dataTables.min.css" rel="stylesheet" />
-<link href="libs/dt-core-1.10.20/css/jquery.dataTables.extra.css" rel="stylesheet" />
-<script src="libs/dt-core-1.10.20/js/jquery.dataTables.min.js"></script>
-<link href="libs/crosstalk-1.1.0.1/css/crosstalk.css" rel="stylesheet" />
-<script src="libs/crosstalk-1.1.0.1/js/crosstalk.min.js"></script>
+<script src="libs/kePrint-0.0.1/kePrint.js"></script>
+<link href="libs/lightable-0.0.1/lightable.css" rel="stylesheet" />
+<link href="libs/bsTable-3.3.7/bootstrapTable.min.css" rel="stylesheet" />
+<script src="libs/bsTable-3.3.7/bootstrapTable.js"></script>
 
 
 
@@ -100,6 +96,7 @@
 <li class="chapter" data-level="6.3" data-path="methods.html"><a href="methods.html#scenario-simulations"><i class="fa fa-check"></i><b>6.3</b> Scenario simulations</a></li>
 </ul></li>
 <li class="chapter" data-level="" data-path="references.html"><a href="references.html"><i class="fa fa-check"></i>References</a></li>
+<li class="chapter" data-level="7" data-path="supplemental-material.html"><a href="supplemental-material.html"><i class="fa fa-check"></i><b>7</b> Supplemental Material</a></li>
 <li class="divider"></li>
 <li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
 
@@ -125,22 +122,10 @@
 <p>To estimate carbon stocks and fluxes for CONUS, we linked the CBM-CFS3 spatially referenced model of ecosystem carbon dynamics with the LUCAS spatially explicit model of LULC change. The CBM-CFS3 model was used to generate a set of forest species and ecoregion-level carbon flux rates which were then used within the LUCAS model to produce spatially explicit maps of carbon stocks and fluxes based on LULC change, disturbances, forest ageing, and climate variability and change.</p>
 <div id="lucas-state-and-transition-simulation-model" class="section level2">
 <h2><span class="header-section-number">6.1</span> LUCAS state-and-transition simulation model</h2>
-<p>The LUCAS state-and-transition simulation model (STSM) was stratified using EPA level III ecoregions <span class="citation">(Omernik <a href="references.html#ref-omernik1987ecoregions">1987</a>)</span>, U.S. states, and land management boundaries. We defined a total of 43 unique state classes which were based on the combination of classes from the National Land Cover Database <span class="citation">(Homer et al. <a href="references.html#ref-homer2015completion">2015</a>)</span> and the U.S. Forest Service species type-groups <span class="citation">(Ruefenacht et al. <a href="references.html#ref-Ruefenacht2008foresttypes">2008</a>)</span>. We defined a total of XX transition pathways which span seven major categories of LULC change and disturbance. The model was run on an annual timestep for the period 2001-2020 at a spatial resolution of 1-km x 1-km. Below we discuss the major aspects of the LUCAS STSM and the methods used to parameterize the model. For a general description of STSM models see <span class="citation">Daniel et al. (<a href="references.html#ref-daniel2016state">2016</a>)</span>.</p>
+<p>The LUCAS state-and-transition simulation model (STSM) was stratified using EPA level III ecoregions <span class="citation">(Omernik <a href="#ref-omernik1987ecoregions">1987</a>)</span>, U.S. states, and land management boundaries. We defined a total of 43 unique state classes which were based on the combination of classes from the National Land Cover Database <span class="citation">(Homer et al. <a href="#ref-homer2015completion">2015</a>)</span> and the U.S. Forest Service species type-groups <span class="citation">(Ruefenacht et al. <a href="#ref-Ruefenacht2008foresttypes">2008</a>)</span>. We defined a total of XX transition pathways which span seven major categories of LULC change and disturbance. The model was run on an annual timestep for the period 2001-2020 at a spatial resolution of 1-km x 1-km. Below we discuss the major aspects of the LUCAS STSM and the methods used to parameterize the model. For a general description of STSM models see <span class="citation">Daniel et al. (<a href="#ref-daniel2016state">2016</a>)</span>.</p>
 <div id="state-class-map" class="section level3">
 <h3><span class="header-section-number">6.1.1</span> State class map</h3>
-<p>The conterminous U.S (CONUS) was partitioned into a regular grid of 1-km x 1-km cells where each cell was assigned to a discrete land-use/land-cover classes (LULC). The initial land cover map was based on the 2001 National Land Cover Database (NLCD). We further modified the classification system to partition the three NLCD forest classes into forest type-groups based on the U.S. Forest Service classification system. All cells mapped with a forest type-group in the USFS map were assumed to be forest cover and were recoded accordingly in our final state class map. The forest type-groups map contained 28 forest types which were generally classified as eastern and western hardwoods or softwoods. In total, the LUCAS STSM contained 43 unique LULC classes (Fig 1).</p>
-<pre><code>## Reading layer `ne_10m_land&#39; from data source `F:\national-assessment\docs\lucas-cbm-methods\data\vector\ne_10m_land.shp&#39; using driver `ESRI Shapefile&#39;
-## Simple feature collection with 1 feature and 2 fields
-## geometry type:  MULTIPOLYGON
-## dimension:      XY
-## bbox:           xmin: -180 ymin: -90 xmax: 180 ymax: 83.6341
-## geographic CRS: WGS 84</code></pre>
-<pre><code>## Reading layer `states&#39; from data source `F:\national-assessment\docs\lucas-cbm-methods\data\vector\states.shp&#39; using driver `ESRI Shapefile&#39;
-## Simple feature collection with 2895 features and 6 fields
-## geometry type:  POLYGON
-## dimension:      XY
-## bbox:           xmin: -179.1334 ymin: 17.67469 xmax: 179.7882 ymax: 71.39805
-## geographic CRS: NAD83</code></pre>
+<p>The conterminous U.S (CONUS) was partitioned into a regular grid of 1-km x 1-km cells where each cell was assigned to a discrete land-use/land-cover classes (LULC). The initial land cover map was based on the 2001 National Land Cover Database (NLCD). We further modified the classification system to partition the three NLCD forest classes into forest type-groups based on the U.S. Forest Service classification system. All cells mapped with a forest type-group in the USFS map were assumed to be forest cover and were recoded accordingly in our final state class map. The forest type-groups map contained 28 forest types which were generally classified as eastern and western hardwoods or softwoods. In total, the LUCAS STSM contained 43 unique LULC classes which are shown in Figure <a href="methods.html#fig:statemap">6.1</a>.</p>
 <div class="figure"><span id="fig:statemap"></span>
 <img src="test_files/figure-html/statemap-1.png" alt="State class map developed by merging the 2001 National Land Cover Database and U.S. Forest Service forest type-groups maps." width="768" />
 <p class="caption">
@@ -150,26 +135,33 @@ Figure 6.1: State class map developed by merging the 2001 National Land Cover Da
 </div>
 <div id="forest-age" class="section level3">
 <h3><span class="header-section-number">6.1.2</span> Forest age</h3>
-<p>Forest age was estimated using a spatially explicit map of aboveground live biomass <span class="citation">(Wilson, Woodall, and Griffith <a href="references.html#ref-wilson2013imputing">2013</a>)</span> and a map of forest canopy cover. The live biomass map was used to look-up forest age for each forest type-group using the state attribute tables derived from the CBM-CFS3 reference simulations described below. Mean canopy cover was calculated for each forest type-group and ages were scaled around the mean so as to avoid assigning ages to forest stands with low canopy cover.</p>
+<p>Forest age was estimated using a spatially explicit map of aboveground live biomass <span class="citation">(Wilson, Woodall, and Griffith <a href="#ref-wilson2013imputing">2013</a>)</span> and a map of forest canopy cover from the National Land Cover Database. The live biomass map was used to look-up forest age for each forest type-group using the state attribute tables derived from the CBM-CFS3 reference simulations (described below). Mean canopy cover was calculated for each forest type-group and ages were scaled around the mean so as to avoid assigning ages to forest stands with low canopy cover (Figure <a href="methods.html#fig:agemap">6.2</a>).</p>
+<div class="figure"><span id="fig:agemap"></span>
+<img src="test_files/figure-html/agemap-1.png" alt="Forest age map inferred from aboveground live biomass and canopy cover data and used to initialize LUCAS model." width="768" />
+<p class="caption">
+Figure 6.2: Forest age map inferred from aboveground live biomass and canopy cover data and used to initialize LUCAS model.
+</p>
+</div>
 </div>
 <div id="lulc-and-disturbance-transitions" class="section level3">
 <h3><span class="header-section-number">6.1.3</span> LULC and disturbance transitions</h3>
-<p>We modeled transitions between state classes to represent major LULC change processes, including urbanization, agricultural expansion and contraction, forest management (i.e. clear-cut and selection harvest), wildfire, and insect damage.</p>
+<p>We modeled transitions between state classes to represent major LULC change processes including: urbanization, agricultural expansion and contraction, forest management (i.e. clear-cut and selection harvest), wildfire, and insect damage.</p>
 <div id="land-use-change" class="section level4">
 <h4><span class="header-section-number">6.1.3.1</span> Land use change</h4>
-<p>For land use transitions (urbanization, agricultural expansion and contraction), we generated spatial maps of the location of changes based on the NLCD time-series maps for the years 2001, 2006, 2011, and 2016. The 5-year change rates were annualized, and the model was parameterized to stochastically select cells to transition from one class to another within the 5-year period. Additionally, we included changes in developed classes due to intensification (e.g. low intensity developed to high intensity developed). For timesteps after 2016, annual change rates were sampled from the historical period. For urbanization and agricultural expansion transitions, spatial multiplier maps were used to constrain the location of change by removing protected areas. For agricultural expansion, we calculated relative multipliers for each ecoregion to allocate change between cultivated croplands and the hay/pasture class with adjacency multipliers used to allocate transitions spatially. For agricultural contraction, adjacency multipliers were calculated for all forest, grassland, and shrubland state classes and used to allocate transitions to destination classes. For urbanization transition, adjacency parameters were used to modify the probability of change around existing developed areas. For a complete description on the methods of spatially allocating transitions see <span class="citation">Sleeter et al. (<a href="references.html#ref-sleeter2019effects">2019</a>)</span>.</p>
+<p>For land use transitions (urbanization, agricultural expansion and contraction), we generated spatial maps of the location of changes based on the NLCD time-series maps for the years 2001, 2006, 2011, and 2016. The 5-year change rates were annualized, and the model was parameterized to stochastically select cells to transition from one class to another within the 5-year period. For timesteps after 2016, annual change rates were sampled from the historical period. For urbanization and agricultural expansion transitions, spatial multiplier maps were used to constrain the location of change by removing protected areas. For agricultural expansion, we calculated relative multipliers for each ecoregion to allocate change between cultivated croplands and the hay/pasture class with adjacency multipliers used to allocate transitions spatially. For agricultural contraction, adjacency multipliers were calculated for all forest, grassland, shrubland, and wetlands state classes and used to allocate transitions to destination classes. For urbanization transition, adjacency parameters were used to modify the probability of change around existing developed areas. For a complete description on the methods of spatially allocating transitions see <span class="citation">Sleeter et al. (<a href="#ref-sleeter2019effects">2019</a>)</span>.</p>
+<p>Additionally, we included changes in developed classes due to intensification (e.g. low intensity developed to high intensity developed). A time series of maps from NLCD was created showing locations where intensification occurred in each 5-year time period. The type of intensification was then estimated using relative multipliers for each intensification transition calculated for each ecoregion.</p>
 </div>
 <div id="forest-harvest" class="section level4">
 <h4><span class="header-section-number">6.1.3.2</span> Forest harvest</h4>
-<p>For the forest management transitions (clearcut and selection harvest), we used annual time-series maps from the Landfire Disturbance database <span class="citation">(US Geological Survey (USGS) LandFire Program <a href="references.html#ref-landfire2014disturbance">2014</a>)</span> to identify areas of change for the period 2001-2016. For years after 2016 we sampled from the historical distribution of change for each ecoregion. For clearcut cells, forest age was reset to 0; for selection harvest, the age was not reset. For both transitions we assumed cells reverted to their original state class after disturbnace. In projected years, a minimum age for clearcut and selection was based on a threshold of 40% of peak merchantable volume for each forest type-group.</p>
+<p>For the forest management transitions (clearcut and selection harvest), we used annual time-series maps for the period 2001-2016 from the Landfire Disturbance database <span class="citation">(US Geological Survey (USGS) LandFire Program <a href="#ref-landfire2014disturbance">2014</a>)</span> to identify areas of change. For timesteps after 2016 we sampled from the historical distribution of change for each ecoregion. For clearcut cells, forest age was reset to 0; for selection harvest, the age was not reset. For both transitions we assumed cells reverted to their original state class after disturbnace. In projected years, the minimum age for clearcut was based on a threshold of reaching 60% of peak merchantable volume for each forest type-group; the minimum age for selection harvest was assumed to be half the age used for clearcut harvest (<a href="methods.html#tab:crosswalk">6.1</a>).</p>
 </div>
 <div id="droughtinsect-damage" class="section level4">
 <h4><span class="header-section-number">6.1.3.3</span> Drought/insect damage</h4>
-<p>Forest mortality time series maps spanning the period 2001-2015 were used to model the effects of drought/insects and were derived from U.S. Forest Service Aerial Detection Surveys <span class="citation">(Moore, McAfee, and Iaccarino <a href="references.html#ref-aerial2016survey">2018</a>)</span>. Data were binned into low, medium, and high severity classes <span class="citation">(Sleeter et al. <a href="references.html#ref-sleeter2019effects">2019</a>)</span>. Insect/drought disturbances were not modelled beyond 2015.</p>
+<p>Forest mortality time series maps spanning the period 2001-2015 were used to model the effects of drought/insects and were derived from U.S. Forest Service Aerial Detection Surveys <span class="citation">(Moore, McAfee, and Iaccarino <a href="#ref-aerial2016survey">2018</a>)</span>. ADS data were binned into low, medium, and high severity classes based on methods described in <span class="citation">Sleeter et al. (<a href="#ref-sleeter2019effects">2019</a>)</span>. Insect/drought disturbances were not projected beyond 2015.</p>
 </div>
 <div id="wildfire" class="section level4">
 <h4><span class="header-section-number">6.1.3.4</span> Wildfire</h4>
-<p>To simulate wildfire we used annual fire perimeters from the National Interagency Fire Consortium (NIFC) for the period 2001-2020 which were converted into spatial multipliers in each timestep of the simulation. To estimate fire severity (high, medium, and low), we calculated severity multipliers, for each ecoregion, for all fires contained within the Monitoring Trends in Burn Severity database <span class="citation">(Eidenshink et al. <a href="references.html#ref-eidenshink2007project">2007</a>)</span> for the period 2001-2016. Severity multipliers were then applied to the burn perimeters in each timestep for each ecoregion.</p>
+<p>To simulate wildfire we used annual fire perimeters from the National Interagency Fire Consortium (NIFC) for the period 2001-2020 which were converted into spatial multipliers in each timestep of the simulation. To estimate fire severity (high, medium, and low), we calculated severity multipliers, for each ecoregion, for all fires contained within the Monitoring Trends in Burn Severity database <span class="citation">(Eidenshink et al. <a href="#ref-eidenshink2007project">2007</a>)</span> for the period 2001-2016. Severity multipliers were then applied to the annual burn maps in each timestep and for each ecoregion resulting in stochastic estiamtes of severity within each mapped fire perimeter. For grassland and shrubland state classes, all severity types were assumed to transition back into the original state class. For forest state classes, high severity fires resulted in a transition to a post-fire shrubland class which had a 0.064 annual transition probability back into forest <span class="citation">(Sleeter et al. <a href="#ref-sleeter2019effects">2019</a>)</span>. Medium and low severity fire reverted back into the original forest state class with no change in forest age.</p>
 </div>
 </div>
 </div>
@@ -184,8 +176,769 @@ Figure 6.1: State class map developed by merging the 2001 National Land Cover Da
 <p>The CBM-CFS3 model relies on users to provide merchantable volume curves for each tree species modeled. For each forest type-group, parameters used to estimate merchantable volume were queried from the U.S. Forest Service Forest Inventory and Analysis (FIA) database. We used the Von Bertalanffy growth equation to estimate merchantable volume by age as:</p>
 <p><span class="math display">\[ y = a*1-exp(-b*age)^3 \]</span></p>
 <p>where <em>y</em> is the merchantable volume, <em>a</em> is the asymptote and <em>b</em> is the rate of approach to the asymptote. The resulting estimates of merchantable volume by age (0-300 years), along with default biomass expansion factors from the CBM-CFS3 database, were used as inputs for the reference simulations. The CBM-CFS3 model was then run on an annual timestep for 300 years to estimate the amount of carbon stored in each pool by age by applying species-specific expansion factors to estimate biomass in each tree component. A carbon fraction was applied to estimate the carbon portion of the biomass stock. We used the default biomass expansion factors and carbon proportions from the CBM-CFS3 database.</p>
-<div id="htmlwidget-fd0fee9450e44c9b05ac" style="width:100%;height:auto;" class="datatables html-widget"></div>
-<script type="application/json" data-for="htmlwidget-fd0fee9450e44c9b05ac">{"x":{"filter":"none","data":[["Mixedwood Plains","Atlantic Maritime","Mixedwood Plains","Mixedwood Plains","Montane Cordillera","Pacific Maritime","Montane Cordillera","Pacific Maritime","Montane Cordillera","Montane Cordillera","Pacific Maritime","Montane Cordillera","Pacific Maritime","Montane Cordillera","Montane Cordillera","Montane Cordillera","Mixedwood Plains","Mixedwood Plains","Mixedwood Plains","Mixedwood Plains","Atlantic Maritime","Boreal Shield West","Pacific Maritime","Montane Cordillera","Pacific Maritime","Montane Cordillera","Mixedwood Plains","Mixedwood Plains"],["Ontario","Quebec","Ontario","Ontario","British Columbia","British Columbia","British Columbia","British Columbia","British Columbia","British Columbia","British Columbia","British Columbia","British Columbia","British Columbia","British Columbia","British Columbia","Ontario","Ontario","Ontario","Ontario","Quebec","Ontario","British Columbia","British Columbia","British Columbia","British Columbia","Ontario","Ontario"],["Jack pine","Spruce - Genus type","Pine - Genus type","Pine - Genus type","Other softwoods","Douglas-fir - Genus type","Ponderosa pine","Western white pine","Mountain hemlock","Lodgepole pine","Sitka spruce","Western larch","Other softwoods","Other softwoods","Other softwoods","Other softwoods","Oak","Hickory","Cypress","Ash","Maple","Birch","Alder","Oak","Other hardwoods","Other hardwoods","Other hardwoods","Other hardwoods"],["Forest: White/Red/Jack Pine Group","Forest: Spruce/Fir Group","Forest: Longleaf/Slash Pine Group","Forest: Loblolly/Shortleaf Pine Group","Forest: Pinyon/Juniper Group","Forest: Douglas-fir Group","Forest: Ponderosa Pine Group","Forest: Western White Pine Group","Forest: Fir/Spruce/Mountain Hemlock Group","Forest: Lodgepole Pine Group","Forest: Hemlock/Sitka Spruce Group","Forest: Western Larch Group","Forest: Redwood Group","Forest: Other Western Softwood Group","Forest: California Mixed Conifer Group","Forest: Exotic Softwoods Group","Forest: Oak/Pine Group","Forest: Oak/Hickory Group","Forest: Oak/Gum/Cypress Group","Forest: Elm/Ash/Cottonwood Group","Forest: Maple/Beech/Birch Group","Forest: Aspen/Birch Group","Forest: Alder/Maple Group","Forest: Western Oak Group","Forest: Tanoak/Laurel Group","Forest: Other Western Hardwoods Group","Forest: Tropical Hardwoods Group","Forest: Exotic Hardwoods Group"],[239.99,120.32,148.94,225.7,56.62,597.1,152.73,228.52,241.1,203.42,736.44,298.51,1907.28,138.36,477.09,363.02,191.02,206.02,289.99,155.53,229.04,146.48,436.17,130.24,476.9,130.24,206.48,67.94],[0.04,0.03,0.08,0.08,0.02,0.03,0.03,0.02,0.03,0.03,0.04,0.03,0.01,0.01,0.02,0.03,0.05,0.04,0.03,0.05,0.03,0.04,0.05,0.02,0.04,0.02,0.02,0.09],[6.81,4.64,19.62,17.47,9.74,7.17,7.56,9.75,3.8,3.14,8.38,5.31,12.69,2.47,10.4,7.63,16.8,13.22,18.33,14.23,6.71,5.15,10.47,12.89,13.12,12.81,22.08,19.23],[125,125,125,125,150,300,150,300,150,150,300,150,1000,150,150,150,125,125,125,125,125,75,300,150,300,150,125,125]],"container":"<table class=\"display\">\n  <thead>\n    <tr>\n      <th>CBM_Ecozone<\/th>\n      <th>CBM_Province<\/th>\n      <th>CBM_Species<\/th>\n      <th>LUCAS_Species<\/th>\n      <th>a<\/th>\n      <th>b<\/th>\n      <th>Temp<\/th>\n      <th>MRI<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"pageLength":10,"autoWidth":true,"columnDefs":[{"className":"dt-right","targets":[4,5,6,7]}],"order":[],"orderClasses":false}},"evals":[],"jsHooks":[]}</script>
+<table class=" lightable-paper lightable-striped" style='font-size: 12px; font-family: "Arial Narrow", arial, helvetica, sans-serif; margin-left: auto; margin-right: auto;'>
+<caption style="font-size: initial !important;">
+<span id="tab:crosswalk">Table 6.1: </span>Crosswalk table used to connect U.S. forest type-groups used in LUCAS to Ecozones, Provinces and species types from the CBM-CFS3 model.
+</caption>
+<thead>
+<tr>
+<th style="text-align:left;">
+CBM_Ecozone
+</th>
+<th style="text-align:left;">
+CBM_Province
+</th>
+<th style="text-align:left;">
+CBM_Species
+</th>
+<th style="text-align:left;">
+LUCAS_Species
+</th>
+<th style="text-align:right;">
+a
+</th>
+<th style="text-align:right;">
+b
+</th>
+<th style="text-align:right;">
+Temp
+</th>
+<th style="text-align:right;">
+MRI
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+Mixedwood Plains
+</td>
+<td style="text-align:left;">
+Ontario
+</td>
+<td style="text-align:left;">
+Jack pine
+</td>
+<td style="text-align:left;">
+Forest: White/Red/Jack Pine Group
+</td>
+<td style="text-align:right;">
+239.99
+</td>
+<td style="text-align:right;">
+0.04
+</td>
+<td style="text-align:right;">
+6.81
+</td>
+<td style="text-align:right;">
+125
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Atlantic Maritime
+</td>
+<td style="text-align:left;">
+Quebec
+</td>
+<td style="text-align:left;">
+Spruce - Genus type
+</td>
+<td style="text-align:left;">
+Forest: Spruce/Fir Group
+</td>
+<td style="text-align:right;">
+120.32
+</td>
+<td style="text-align:right;">
+0.03
+</td>
+<td style="text-align:right;">
+4.64
+</td>
+<td style="text-align:right;">
+125
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Mixedwood Plains
+</td>
+<td style="text-align:left;">
+Ontario
+</td>
+<td style="text-align:left;">
+Pine - Genus type
+</td>
+<td style="text-align:left;">
+Forest: Longleaf/Slash Pine Group
+</td>
+<td style="text-align:right;">
+148.94
+</td>
+<td style="text-align:right;">
+0.08
+</td>
+<td style="text-align:right;">
+19.62
+</td>
+<td style="text-align:right;">
+125
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Mixedwood Plains
+</td>
+<td style="text-align:left;">
+Ontario
+</td>
+<td style="text-align:left;">
+Pine - Genus type
+</td>
+<td style="text-align:left;">
+Forest: Loblolly/Shortleaf Pine Group
+</td>
+<td style="text-align:right;">
+225.70
+</td>
+<td style="text-align:right;">
+0.08
+</td>
+<td style="text-align:right;">
+17.47
+</td>
+<td style="text-align:right;">
+125
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Montane Cordillera
+</td>
+<td style="text-align:left;">
+British Columbia
+</td>
+<td style="text-align:left;">
+Other softwoods
+</td>
+<td style="text-align:left;">
+Forest: Pinyon/Juniper Group
+</td>
+<td style="text-align:right;">
+56.62
+</td>
+<td style="text-align:right;">
+0.02
+</td>
+<td style="text-align:right;">
+9.74
+</td>
+<td style="text-align:right;">
+150
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Pacific Maritime
+</td>
+<td style="text-align:left;">
+British Columbia
+</td>
+<td style="text-align:left;">
+Douglas-fir - Genus type
+</td>
+<td style="text-align:left;">
+Forest: Douglas-fir Group
+</td>
+<td style="text-align:right;">
+597.10
+</td>
+<td style="text-align:right;">
+0.03
+</td>
+<td style="text-align:right;">
+7.17
+</td>
+<td style="text-align:right;">
+300
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Montane Cordillera
+</td>
+<td style="text-align:left;">
+British Columbia
+</td>
+<td style="text-align:left;">
+Ponderosa pine
+</td>
+<td style="text-align:left;">
+Forest: Ponderosa Pine Group
+</td>
+<td style="text-align:right;">
+152.73
+</td>
+<td style="text-align:right;">
+0.03
+</td>
+<td style="text-align:right;">
+7.56
+</td>
+<td style="text-align:right;">
+150
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Pacific Maritime
+</td>
+<td style="text-align:left;">
+British Columbia
+</td>
+<td style="text-align:left;">
+Western white pine
+</td>
+<td style="text-align:left;">
+Forest: Western White Pine Group
+</td>
+<td style="text-align:right;">
+228.52
+</td>
+<td style="text-align:right;">
+0.02
+</td>
+<td style="text-align:right;">
+9.75
+</td>
+<td style="text-align:right;">
+300
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Montane Cordillera
+</td>
+<td style="text-align:left;">
+British Columbia
+</td>
+<td style="text-align:left;">
+Mountain hemlock
+</td>
+<td style="text-align:left;">
+Forest: Fir/Spruce/Mountain Hemlock Group
+</td>
+<td style="text-align:right;">
+241.10
+</td>
+<td style="text-align:right;">
+0.03
+</td>
+<td style="text-align:right;">
+3.80
+</td>
+<td style="text-align:right;">
+150
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Montane Cordillera
+</td>
+<td style="text-align:left;">
+British Columbia
+</td>
+<td style="text-align:left;">
+Lodgepole pine
+</td>
+<td style="text-align:left;">
+Forest: Lodgepole Pine Group
+</td>
+<td style="text-align:right;">
+203.42
+</td>
+<td style="text-align:right;">
+0.03
+</td>
+<td style="text-align:right;">
+3.14
+</td>
+<td style="text-align:right;">
+150
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Pacific Maritime
+</td>
+<td style="text-align:left;">
+British Columbia
+</td>
+<td style="text-align:left;">
+Sitka spruce
+</td>
+<td style="text-align:left;">
+Forest: Hemlock/Sitka Spruce Group
+</td>
+<td style="text-align:right;">
+736.44
+</td>
+<td style="text-align:right;">
+0.04
+</td>
+<td style="text-align:right;">
+8.38
+</td>
+<td style="text-align:right;">
+300
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Montane Cordillera
+</td>
+<td style="text-align:left;">
+British Columbia
+</td>
+<td style="text-align:left;">
+Western larch
+</td>
+<td style="text-align:left;">
+Forest: Western Larch Group
+</td>
+<td style="text-align:right;">
+298.51
+</td>
+<td style="text-align:right;">
+0.03
+</td>
+<td style="text-align:right;">
+5.31
+</td>
+<td style="text-align:right;">
+150
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Pacific Maritime
+</td>
+<td style="text-align:left;">
+British Columbia
+</td>
+<td style="text-align:left;">
+Other softwoods
+</td>
+<td style="text-align:left;">
+Forest: Redwood Group
+</td>
+<td style="text-align:right;">
+1907.28
+</td>
+<td style="text-align:right;">
+0.01
+</td>
+<td style="text-align:right;">
+12.69
+</td>
+<td style="text-align:right;">
+1000
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Montane Cordillera
+</td>
+<td style="text-align:left;">
+British Columbia
+</td>
+<td style="text-align:left;">
+Other softwoods
+</td>
+<td style="text-align:left;">
+Forest: Other Western Softwood Group
+</td>
+<td style="text-align:right;">
+138.36
+</td>
+<td style="text-align:right;">
+0.01
+</td>
+<td style="text-align:right;">
+2.47
+</td>
+<td style="text-align:right;">
+150
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Montane Cordillera
+</td>
+<td style="text-align:left;">
+British Columbia
+</td>
+<td style="text-align:left;">
+Other softwoods
+</td>
+<td style="text-align:left;">
+Forest: California Mixed Conifer Group
+</td>
+<td style="text-align:right;">
+477.09
+</td>
+<td style="text-align:right;">
+0.02
+</td>
+<td style="text-align:right;">
+10.40
+</td>
+<td style="text-align:right;">
+150
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Montane Cordillera
+</td>
+<td style="text-align:left;">
+British Columbia
+</td>
+<td style="text-align:left;">
+Other softwoods
+</td>
+<td style="text-align:left;">
+Forest: Exotic Softwoods Group
+</td>
+<td style="text-align:right;">
+363.02
+</td>
+<td style="text-align:right;">
+0.03
+</td>
+<td style="text-align:right;">
+7.63
+</td>
+<td style="text-align:right;">
+150
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Mixedwood Plains
+</td>
+<td style="text-align:left;">
+Ontario
+</td>
+<td style="text-align:left;">
+Oak
+</td>
+<td style="text-align:left;">
+Forest: Oak/Pine Group
+</td>
+<td style="text-align:right;">
+191.02
+</td>
+<td style="text-align:right;">
+0.05
+</td>
+<td style="text-align:right;">
+16.80
+</td>
+<td style="text-align:right;">
+125
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Mixedwood Plains
+</td>
+<td style="text-align:left;">
+Ontario
+</td>
+<td style="text-align:left;">
+Hickory
+</td>
+<td style="text-align:left;">
+Forest: Oak/Hickory Group
+</td>
+<td style="text-align:right;">
+206.02
+</td>
+<td style="text-align:right;">
+0.04
+</td>
+<td style="text-align:right;">
+13.22
+</td>
+<td style="text-align:right;">
+125
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Mixedwood Plains
+</td>
+<td style="text-align:left;">
+Ontario
+</td>
+<td style="text-align:left;">
+Cypress
+</td>
+<td style="text-align:left;">
+Forest: Oak/Gum/Cypress Group
+</td>
+<td style="text-align:right;">
+289.99
+</td>
+<td style="text-align:right;">
+0.03
+</td>
+<td style="text-align:right;">
+18.33
+</td>
+<td style="text-align:right;">
+125
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Mixedwood Plains
+</td>
+<td style="text-align:left;">
+Ontario
+</td>
+<td style="text-align:left;">
+Ash
+</td>
+<td style="text-align:left;">
+Forest: Elm/Ash/Cottonwood Group
+</td>
+<td style="text-align:right;">
+155.53
+</td>
+<td style="text-align:right;">
+0.05
+</td>
+<td style="text-align:right;">
+14.23
+</td>
+<td style="text-align:right;">
+125
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Atlantic Maritime
+</td>
+<td style="text-align:left;">
+Quebec
+</td>
+<td style="text-align:left;">
+Maple
+</td>
+<td style="text-align:left;">
+Forest: Maple/Beech/Birch Group
+</td>
+<td style="text-align:right;">
+229.04
+</td>
+<td style="text-align:right;">
+0.03
+</td>
+<td style="text-align:right;">
+6.71
+</td>
+<td style="text-align:right;">
+125
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Boreal Shield West
+</td>
+<td style="text-align:left;">
+Ontario
+</td>
+<td style="text-align:left;">
+Birch
+</td>
+<td style="text-align:left;">
+Forest: Aspen/Birch Group
+</td>
+<td style="text-align:right;">
+146.48
+</td>
+<td style="text-align:right;">
+0.04
+</td>
+<td style="text-align:right;">
+5.15
+</td>
+<td style="text-align:right;">
+75
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Pacific Maritime
+</td>
+<td style="text-align:left;">
+British Columbia
+</td>
+<td style="text-align:left;">
+Alder
+</td>
+<td style="text-align:left;">
+Forest: Alder/Maple Group
+</td>
+<td style="text-align:right;">
+436.17
+</td>
+<td style="text-align:right;">
+0.05
+</td>
+<td style="text-align:right;">
+10.47
+</td>
+<td style="text-align:right;">
+300
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Montane Cordillera
+</td>
+<td style="text-align:left;">
+British Columbia
+</td>
+<td style="text-align:left;">
+Oak
+</td>
+<td style="text-align:left;">
+Forest: Western Oak Group
+</td>
+<td style="text-align:right;">
+130.24
+</td>
+<td style="text-align:right;">
+0.02
+</td>
+<td style="text-align:right;">
+12.89
+</td>
+<td style="text-align:right;">
+150
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Pacific Maritime
+</td>
+<td style="text-align:left;">
+British Columbia
+</td>
+<td style="text-align:left;">
+Other hardwoods
+</td>
+<td style="text-align:left;">
+Forest: Tanoak/Laurel Group
+</td>
+<td style="text-align:right;">
+476.90
+</td>
+<td style="text-align:right;">
+0.04
+</td>
+<td style="text-align:right;">
+13.12
+</td>
+<td style="text-align:right;">
+300
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Montane Cordillera
+</td>
+<td style="text-align:left;">
+British Columbia
+</td>
+<td style="text-align:left;">
+Other hardwoods
+</td>
+<td style="text-align:left;">
+Forest: Other Western Hardwoods Group
+</td>
+<td style="text-align:right;">
+130.24
+</td>
+<td style="text-align:right;">
+0.02
+</td>
+<td style="text-align:right;">
+12.81
+</td>
+<td style="text-align:right;">
+150
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Mixedwood Plains
+</td>
+<td style="text-align:left;">
+Ontario
+</td>
+<td style="text-align:left;">
+Other hardwoods
+</td>
+<td style="text-align:left;">
+Forest: Tropical Hardwoods Group
+</td>
+<td style="text-align:right;">
+206.48
+</td>
+<td style="text-align:right;">
+0.02
+</td>
+<td style="text-align:right;">
+22.08
+</td>
+<td style="text-align:right;">
+125
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Mixedwood Plains
+</td>
+<td style="text-align:left;">
+Ontario
+</td>
+<td style="text-align:left;">
+Other hardwoods
+</td>
+<td style="text-align:left;">
+Forest: Exotic Hardwoods Group
+</td>
+<td style="text-align:right;">
+67.94
+</td>
+<td style="text-align:right;">
+0.09
+</td>
+<td style="text-align:right;">
+19.23
+</td>
+<td style="text-align:right;">
+125
+</td>
+</tr>
+</tbody>
+</table>
 </div>
 </div>
 <div id="carbon-flow-rates-lucas-flow-pathways-module" class="section level3">
@@ -219,11 +972,11 @@ where <span class="math inline">\(pNPP_{s_i}^{a^t}\)</span> is the proportion of
 </div>
 <div id="validation" class="section level3">
 <h3><span class="header-section-number">6.2.3</span> Validation</h3>
-<p>Within the LUCAS model we ran a 300 year simulation with all cells starting at age 0 using the carbon flux rates from the Flow Pathways module to estimate changes in stocks. A single 1-ha representative stand was run for each forest group-type and fire was assumed as the last stand replacing disturbance to match the assumptions from the CBM-CFS3 reference simulations. All stocks were initialized at their age-0 values obtained from the CBM-CFS3 simulations. No disturbances were simulated. We compared individual carbon stock output from the LUCAS simulation with the original output from the CBM-CFS3 reference runs to ensure we could reliably reproduce carbon stock estimates. Figure <a href="methods.html#fig:validation">6.2</a> shows a comparison of all stock types for the Douglas-fir forest type-group.</p>
+<p>Within the LUCAS model we ran a 300 year simulation with all cells starting at age 0 using the carbon flux rates from the Flow Pathways module to estimate changes in stocks. A single 1-ha representative stand was run for each forest group-type and fire was assumed as the last stand replacing disturbance to match the assumptions from the CBM-CFS3 reference simulations. All stocks were initialized at their age-0 values obtained from the CBM-CFS3 simulations. No disturbances were simulated. We compared individual carbon stock output from the LUCAS simulation with the original output from the CBM-CFS3 reference runs to ensure we could reliably reproduce carbon stock estimates. Figure <a href="methods.html#fig:validation">6.3</a> shows a comparison of all stock types for the Douglas-fir forest type-group.</p>
 <div class="figure"><span id="fig:validation"></span>
 <img src="test_files/figure-html/validation-1.png" alt="Comparison of stock estimates from LUCAS to output from the CBM-CFS3 model." width="768" />
 <p class="caption">
-Figure 6.2: Comparison of stock estimates from LUCAS to output from the CBM-CFS3 model.
+Figure 6.3: Comparison of stock estimates from LUCAS to output from the CBM-CFS3 model.
 </p>
 </div>
 </div>
@@ -233,22 +986,55 @@ Figure 6.2: Comparison of stock estimates from LUCAS to output from the CBM-CFS3
 <div class="figure"><span id="fig:spinup"></span>
 <img src="test_files/figure-html/spinup-1.png" alt="Carbon stock by age for DOM pools for cells initialized with fire or clearcut harvest as the last stand replacing disturbance. Data shown is for the Douglas-fir forest type-group." width="768" />
 <p class="caption">
-Figure 6.3: Carbon stock by age for DOM pools for cells initialized with fire or clearcut harvest as the last stand replacing disturbance. Data shown is for the Douglas-fir forest type-group.
+Figure 6.4: Carbon stock by age for DOM pools for cells initialized with fire or clearcut harvest as the last stand replacing disturbance. Data shown is for the Douglas-fir forest type-group.
 </p>
 </div>
 </div>
 <div id="mapping-initial-carbon-stocks" class="section level3">
 <h3><span class="header-section-number">6.2.5</span> Mapping initial carbon stocks</h3>
-<p>To estimate spatial carbon stocks the LUCAS model was parameterized with state attribute values from the spin-up procedure described above, flow pathways and multipliers, and raster maps of forest type (i.e. state class type) and and age. The model was run for a single timestep for both wildfire and clearcut harvest as the last disturbance. The combination of forest type and age is used to create initial stock rasters for the first timestep. Fire disturbances prior to 2001 were queried from the National Interagency Fire Consortium (NIFC) and mapped to a 1-km grid. Cells classified in the NIFC map were assigned carbon values from the wildfire simulation; all other cells were assigned stock values from the clearcut harvest simulation.</p>
-<p><em>insert figure from spin-up results</em>
-- Map of Live and DOM with bar chart for each showing amount in each stock type.</p>
-<p><span class="citation">Kurz et al. (<a href="references.html#ref-kurz2008mountain">2008</a>)</span> is an example of a reference.</p>
+<p>To estimate spatial carbon stocks the LUCAS model was parameterized with state attribute values from the spin-up procedure described above, flow pathways and multipliers, and raster maps of forest type (Figure <a href="methods.html#fig:statemap">6.1</a>) and and age (Figure <a href="methods.html#fig:agemap">6.2</a>. The model was run for a single timestep for both wildfire and clearcut harvest as the last disturbance creating two sets of initial carbon stock maps. The combination of forest type and age was used to create initial stock rasters for the first timestep. Fire disturbances prior to 2001 were queried from the National Interagency Fire Consortium (NIFC) and mapped to a 1-km grid. Cells classified in the NIFC map were assigned carbon values from the wildfire simulation; all other cells were assigned stock values from the clearcut harvest simulation.</p>
+<div class="figure"><span id="fig:stockstack"></span>
+<img src="test_files/figure-html/stockstack-1.png" alt="Carbon stored in live biomass and dead organic matter pools estimated for the year 2001." width="768" />
+<p class="caption">
+Figure 6.5: Carbon stored in live biomass and dead organic matter pools estimated for the year 2001.
+</p>
+</div>
 </div>
 </div>
 <div id="scenario-simulations" class="section level2">
 <h2><span class="header-section-number">6.3</span> Scenario simulations</h2>
 <p>Discuss different scenario simulations here…</p>
 
+</div>
+</div>
+<h3>References</h3>
+<div id="refs" class="references">
+<div id="ref-daniel2016state">
+<p>Daniel, Colin J, Leonardo Frid, Benjamin M Sleeter, and Marie-Josée Fortin. 2016. “State-and-Transition Simulation Models: A Framework for Forecasting Landscape Change.” <em>Methods in Ecology and Evolution</em> 7 (11): 1413–23.</p>
+</div>
+<div id="ref-eidenshink2007project">
+<p>Eidenshink, Jeff, Brian Schwind, Ken Brewer, Zhi-Liang Zhu, Brad Quayle, and Stephen Howard. 2007. “A Project for Monitoring Trends in Burn Severity.” <em>Fire Ecology</em> 3 (1): 3–21.</p>
+</div>
+<div id="ref-homer2015completion">
+<p>Homer, Collin, Jon Dewitz, Limin Yang, Suming Jin, Patrick Danielson, George Xian, John Coulston, Nathaniel Herold, James Wickham, and Kevin Megown. 2015. “Completion of the 2011 National Land Cover Database for the Conterminous United States–Representing a Decade of Land Cover Change Information.” <em>Photogrammetric Engineering &amp; Remote Sensing</em> 81 (5): 345–54.</p>
+</div>
+<div id="ref-aerial2016survey">
+<p>Moore, Jeffrey, Loren McAfee, and Jennifer Iaccarino. 2018. “2017 Aerial Survey Results: California.” <em>United States Department of Agriculture (USDA)</em>, 1–18. <a href="https://www.fs.usda.gov/Internet/FSE_DOCUMENTS/fseprd583288.pdf">https://www.fs.usda.gov/Internet/FSE_DOCUMENTS/fseprd583288.pdf</a>.</p>
+</div>
+<div id="ref-omernik1987ecoregions">
+<p>Omernik, James M. 1987. “Ecoregions of the Conterminous United States.” <em>Annals of the Association of American Geographers</em> 77 (1): 118–25.</p>
+</div>
+<div id="ref-Ruefenacht2008foresttypes">
+<p>Ruefenacht, B., M.V. Finco, M.D. Nelson, R. Czaplewski, E.H. Helmer, J.A. Blackard, G.R. Holden, et al. 2008. “Conterminous U.s. And Alaska Forest Type Mapping Using Forest Inventory and Analysis Data.” <em>Photogrammetric Engineering &amp; Remote Sensing</em> 74 (11): 1379–88. <a href="https://doi.org/10.14358/pers.74.11.1379">https://doi.org/10.14358/pers.74.11.1379</a>.</p>
+</div>
+<div id="ref-sleeter2019effects">
+<p>Sleeter, Benjamin M, David C Marvin, D Richard Cameron, Paul C Selmants, A LeRoy Westerling, Jason Kreitler, Colin J Daniel, Jinxun Liu, and Tamara S Wilson. 2019. “Effects of 21st-Century Climate, Land Use, and Disturbances on Ecosystem Carbon Balance in California.” <em>Global Change Biology</em> 25 (10): 3334–53.</p>
+</div>
+<div id="ref-landfire2014disturbance">
+<p>US Geological Survey (USGS) LandFire Program. 2014. “Annual Disturbance Layer 1.1.4.” <a href="http://landfire.cr.usgs.gov">http://landfire.cr.usgs.gov</a>.</p>
+</div>
+<div id="ref-wilson2013imputing">
+<p>Wilson, Barry Tyler, Christopher W Woodall, and Douglas M Griffith. 2013. “Imputing Forest Carbon Stock Estimates from Inventory Plots to a Nationally Continuous Coverage.” <em>Carbon Balance and Management</em> 8 (1): 1.</p>
 </div>
 </div>
             </section>
