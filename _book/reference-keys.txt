@@ -51,3 +51,10 @@ npp-variability
 decay-and-decomposition-of-dom
 fig:growthmult
 fig:dommult
+fig:flowresults
+fig:stockresults
+fig:nbpmap
+fig:tecmap
+fig:stockresults-1
+fig:stockresults-2
+fig:stockchange

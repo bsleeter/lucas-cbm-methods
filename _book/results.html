@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+<head>
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>Chapter 3 Results | Spatially explicit estimates of carbon stocks and fluxes for the United States: a new approach linking the LUCAS and CBM-CFS3 models</title>
+  <meta name="description" content="This is a minimal example of using the bookdown package to write a book. The output format for this example is bookdown::gitbook." />
+  <meta name="generator" content="bookdown 0.21 and GitBook 2.6.7" />
+
+  <meta property="og:title" content="Chapter 3 Results | Spatially explicit estimates of carbon stocks and fluxes for the United States: a new approach linking the LUCAS and CBM-CFS3 models" />
+  <meta property="og:type" content="book" />
+  
+  
+  <meta property="og:description" content="This is a minimal example of using the bookdown package to write a book. The output format for this example is bookdown::gitbook." />
+  <meta name="github-repo" content="rstudio/bookdown-demo" />
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="Chapter 3 Results | Spatially explicit estimates of carbon stocks and fluxes for the United States: a new approach linking the LUCAS and CBM-CFS3 models" />
+  
+  <meta name="twitter:description" content="This is a minimal example of using the bookdown package to write a book. The output format for this example is bookdown::gitbook." />
+  
+
+<meta name="author" content="Benjamin M. Sleeter" />
+
+
+<meta name="date" content="2020-11-28" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  
+  
+<link rel="prev" href="intro.html"/>
+<link rel="next" href="discussion.html"/>
+<script src="libs/jquery-2.2.3/jquery.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+
+<script src="libs/accessible-code-block-0.0.1/empty-anchor.js"></script>
+<link href="libs/anchor-sections-1.0/anchor-sections.css" rel="stylesheet" />
+<script src="libs/anchor-sections-1.0/anchor-sections.js"></script>
+
+
+
+<link rel="stylesheet" href="style.css" type="text/css" />
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li><a href="./">A Minimal Book Example</a></li>
+
+<li class="divider"></li>
+<li class="chapter" data-level="1" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i><b>1</b> Abstract</a></li>
+<li class="chapter" data-level="2" data-path="intro.html"><a href="intro.html"><i class="fa fa-check"></i><b>2</b> Introduction</a></li>
+<li class="chapter" data-level="3" data-path="results.html"><a href="results.html"><i class="fa fa-check"></i><b>3</b> Results</a></li>
+<li class="chapter" data-level="4" data-path="discussion.html"><a href="discussion.html"><i class="fa fa-check"></i><b>4</b> Discussion</a></li>
+<li class="chapter" data-level="5" data-path="conclusion.html"><a href="conclusion.html"><i class="fa fa-check"></i><b>5</b> Conclusion</a></li>
+<li class="chapter" data-level="6" data-path="methods.html"><a href="methods.html"><i class="fa fa-check"></i><b>6</b> Methods</a><ul>
+<li class="chapter" data-level="6.1" data-path="methods.html"><a href="methods.html#lucas-state-and-transition-simulation-model"><i class="fa fa-check"></i><b>6.1</b> LUCAS state-and-transition simulation model</a><ul>
+<li class="chapter" data-level="6.1.1" data-path="methods.html"><a href="methods.html#state-class-map"><i class="fa fa-check"></i><b>6.1.1</b> State class map</a></li>
+<li class="chapter" data-level="6.1.2" data-path="methods.html"><a href="methods.html#forest-age"><i class="fa fa-check"></i><b>6.1.2</b> Forest age</a></li>
+<li class="chapter" data-level="6.1.3" data-path="methods.html"><a href="methods.html#lulc-and-disturbance-transitions"><i class="fa fa-check"></i><b>6.1.3</b> LULC and disturbance transitions</a></li>
+</ul></li>
+<li class="chapter" data-level="6.2" data-path="methods.html"><a href="methods.html#lucas-carbon-stock-and-flows"><i class="fa fa-check"></i><b>6.2</b> LUCAS carbon stock and flows</a><ul>
+<li class="chapter" data-level="6.2.1" data-path="methods.html"><a href="methods.html#cbm-cfs3-reference-simulations"><i class="fa fa-check"></i><b>6.2.1</b> CBM-CFS3 reference simulations</a></li>
+<li class="chapter" data-level="6.2.2" data-path="methods.html"><a href="methods.html#carbon-flow-rates-lucas-flow-pathways-module"><i class="fa fa-check"></i><b>6.2.2</b> Carbon flow rates: LUCAS Flow Pathways module</a></li>
+<li class="chapter" data-level="6.2.3" data-path="methods.html"><a href="methods.html#validation"><i class="fa fa-check"></i><b>6.2.3</b> Validation</a></li>
+<li class="chapter" data-level="6.2.4" data-path="methods.html"><a href="methods.html#spin-up-of-dom-pools"><i class="fa fa-check"></i><b>6.2.4</b> Spin-up of DOM pools</a></li>
+<li class="chapter" data-level="6.2.5" data-path="methods.html"><a href="methods.html#mapping-initial-carbon-stocks"><i class="fa fa-check"></i><b>6.2.5</b> Mapping initial carbon stocks</a></li>
+</ul></li>
+<li class="chapter" data-level="6.3" data-path="methods.html"><a href="methods.html#spatial-flow-multipliers"><i class="fa fa-check"></i><b>6.3</b> Spatial flow multipliers</a><ul>
+<li class="chapter" data-level="6.3.1" data-path="methods.html"><a href="methods.html#npp-variability"><i class="fa fa-check"></i><b>6.3.1</b> NPP variability</a></li>
+<li class="chapter" data-level="6.3.2" data-path="methods.html"><a href="methods.html#decay-and-decomposition-of-dom"><i class="fa fa-check"></i><b>6.3.2</b> Decay and decomposition of DOM</a></li>
+</ul></li>
+<li class="chapter" data-level="6.4" data-path="methods.html"><a href="methods.html#scenario-simulations"><i class="fa fa-check"></i><b>6.4</b> Scenario simulations</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="references.html"><a href="references.html"><i class="fa fa-check"></i>References</a></li>
+<li class="chapter" data-level="7" data-path="supplemental-material.html"><a href="supplemental-material.html"><i class="fa fa-check"></i><b>7</b> Supplemental Material</a></li>
+<li class="divider"></li>
+<li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
+
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">Spatially explicit estimates of carbon stocks and fluxes for the United States: a new approach linking the LUCAS and CBM-CFS3 models</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="results" class="section level1">
+<h1><span class="header-section-number">Chapter 3</span> Results</h1>
+<p>Results will go here</p>
+<div class="figure"><span id="fig:flowresults"></span>
+<img src="test_files/figure-html/flowresults-1.png" alt="Net fluxes of carbon in conterminous U.S. forests for the period 2002-2020." width="768" />
+<p class="caption">
+Figure 3.1: Net fluxes of carbon in conterminous U.S. forests for the period 2002-2020.
+</p>
+</div>
+<div class="figure"><span id="fig:stockchange"></span>
+<img src="test_files/figure-html/stockchange-1.png" alt="Carbon stocks in conterminous U.S. forests from 2001-2020." width="768" />
+<p class="caption">
+Figure 3.2: Carbon stocks in conterminous U.S. forests from 2001-2020.
+</p>
+</div>
+<div class="figure"><span id="fig:nbpmap"></span>
+<img src="test_files/figure-html/nbpmap-1.png" alt="Map of the estiamted net biome productivity of conterminous U.S. forests for the period 2001-2020. Negative values indicate a net loss of carbon from ecosystems and positive values indicate a net sink of carbon." width="768" />
+<p class="caption">
+Figure 3.3: Map of the estiamted net biome productivity of conterminous U.S. forests for the period 2001-2020. Negative values indicate a net loss of carbon from ecosystems and positive values indicate a net sink of carbon.
+</p>
+</div>
+<div class="figure"><span id="fig:tecmap"></span>
+<img src="test_files/figure-html/tecmap-1.png" alt="Map of the estiamted net biome productivity of conterminous U.S. forests for the period 2001-2020. Negative values indicate a net loss of carbon from ecosystems and positive values indicate a net sink of carbon." width="768" />
+<p class="caption">
+Figure 3.4: Map of the estiamted net biome productivity of conterminous U.S. forests for the period 2001-2020. Negative values indicate a net loss of carbon from ecosystems and positive values indicate a net sink of carbon.
+</p>
+</div>
+
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="intro.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="discussion.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/lunr.js"></script>
+<script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-clipboard.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": false,
+"facebook": true,
+"twitter": true,
+"linkedin": false,
+"weibo": false,
+"instapaper": false,
+"vk": false,
+"all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": "https://github.com/rstudio/bookdown-demo/edit/master/02_results.Rmd",
+"text": "Edit"
+},
+"history": {
+"link": null,
+"text": null
+},
+"view": {
+"link": null,
+"text": null
+},
+"download": ["test.pdf", "test.epub"],
+"toc": {
+"collapse": "subsection"
+}
+});
+});
+</script>
+
+</body>
+
+</html>

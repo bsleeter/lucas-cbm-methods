@@ -46,8 +46,8 @@ land_poly = st_read("data/vector/ne_10m_land.shp", quiet=T)
 states_poly = st_read("data/vector/states.shp", quiet=T)
 stateTypes = read_csv("data/raster/state-class-types.csv")
 statemap = raster("data/raster/ic-state-class.tif")
-statemap4k = aggregate(statemap, fact=4, fun="modal", na.rm=T)
-statemap_df = as.data.frame(statemap4k, xy=T) %>%
+#statemap = aggregate(statemap, fact=4, fun="modal", na.rm=T)
+statemap_df = as.data.frame(statemap, xy=T) %>%
   rename("ID"="ic.state.class") %>%
   filter(!is.na(ID)) %>%
   left_join(stateTypes) %>%
@@ -71,7 +71,7 @@ ggplot() +
   coord_sf(crs = "+proj=aea +lat_1=29.5 +lat_2=45.5 +lat_0=23 +lon_0=-96 +x_0=0 +y_0=0 +ellps=GRS80 +units=m +no_defs",
            xlim=c(min(statemap_df$x), max(statemap_df$x)),
            ylim=c(min(statemap_df$y), max(statemap_df$y))) +
-  theme_ipsum_rc() +
+  theme_custom() +
   labs(x=NULL, y=NULL) +
   theme(
     legend.position = "bottom",
@@ -111,8 +111,8 @@ Forest age was estimated using a spatially explicit map of aboveground live biom
 land_poly = st_read("data/vector/ne_10m_land.shp", quiet=T)
 states_poly = st_read("data/vector/states.shp", quiet=T)
 agemap = raster("data/raster/ic-imputed-age.tif")
-agemap4k = aggregate(agemap, fact=4, fun="modal", na.rm=T)
-agemap_df = as.data.frame(agemap4k, xy=T) %>%
+#agemap = aggregate(agemap, fact=4, fun="modal", na.rm=T)
+agemap_df = as.data.frame(agemap, xy=T) %>%
   rename("Age"="ic.imputed.age") %>%
   filter(!is.na(Age)) 
 
@@ -168,7 +168,7 @@ ggplot() +
            xlim=c(min(agemap_df$x), max(agemap_df$x)),
            ylim=c(min(agemap_df$y), max(agemap_df$y))) +
   theme(legend.position = "bottom") +
-  theme_ipsum_rc() +
+  theme_custom() +
   labs(x=NULL, y=NULL) +
   theme(
     legend.position = c(0.22,0.08),
@@ -258,9 +258,6 @@ kable(crosswalk_eco,
 ### Carbon flow rates: LUCAS Flow Pathways module
 
 We developed a sub-module within LUCAS to calculate carbon flux parameters based on output from the reference simulations and the CBM-CFS3 database. The module uses the species crosswalk table from above, along with crosswalk tables linking carbon stocks and disturbance types used in LUCAS and CBM-CFS3. Within the LCUAS model we specified a set of carbon Flow Pathways defining all of the carbon pools and fluxes consistent with those used in the CBM-CFS3. 
-
-(insert flow diagram here)
-
 
 #### Net Primary Productivity
 
@@ -571,7 +568,7 @@ ggplot() +
 
 ## Scenario simulations
 
-All scenario simulations were run on an annual timestep for the period 2001-2020 at 1-km x 1-km spatial resolution. The primary simulation included the combined effects of LULC change, ecosystem disturbance, and climate change on the carbon balance of forest ecosystems in the conterminous United States. The better understand the major controlling processes of carbon dynamics, we also ran two additional simulations where a) no LULC or disturbance was simulated, and b) no climate variability and/or change was simulated. Outputs from the simulations are available as both spatial and tabular files. Spatial outputs include annual carbon stocks and fluxes, LULC composition (i.e. state class maps and forest age), and LULC transitions. 
+All scenario simulations were run on an annual timestep for the period 2001-2020 at 1-km x 1-km spatial resolution. The primary simulation included the combined effects of LULC change, ecosystem disturbance, and climate change on the carbon balance of forest ecosystems in the conterminous United States. The better understand the major controlling processes of carbon dynamics, we also ran three additional simulations where 1) no LULC or disturbance was simulated, 2) no climate variability was simulated and 3) no climate or LULC effects were simulated. Outputs from the simulations are available as both spatial and tabular files. Spatial outputs include annual carbon stocks and fluxes, LULC composition (i.e. state class maps and forest age), and LULC transitions. 
 
 
 
