@@ -1,12 +1,11 @@
 # Results
 
-Results will go here
-
-```{r, cache=T, warning=F, message=F, echo=F}
+```{r, warning=F, message=F, echo=F}
 library(raster)
 library(sf)
 library(tidyverse)
 library(cowplot)
+library(dplyr)
 
 theme_custom <- function(...) {
   theme_bw() +
@@ -32,12 +31,93 @@ scenario_ids = data.frame(ScenarioID=c(128,134,136,138),
 
 ```
 
-```{r, flowresults, cache=T, echo=F, warning=F, message=F, fig.width=8, fig.height=3, fig.cap="Net fluxes of carbon in conterminous U.S. forests for the period 2002-2020."}
+```{r, resultdata, echo=F, warning=F, message=F}
+
 flowTypes_net = c("Net Primary Productivity", "Net Ecosystem Productivity", "Net Biome Productivity", "Emission: Total")
 
 flows_net = read_csv("data/results/flows_conus.csv") %>%
   left_join(scenario_ids) %>%
-  filter(FlowGroupID %in% flowTypes_net)
+  filter(FlowGroupID %in% flowTypes_net) %>%
+  mutate(FlowGroupID = factor(FlowGroupID, levels=c("Net Primary Productivity","Emission: Total","Net Ecosystem Productivity", "Net Biome Productivity")))
+
+flows_net_mmt = flows_net %>% mutate(Amount=round(Amount/1000000,0))
+
+nbp_primary = flows_net_mmt %>% filter(ScenarioName=="LULC+Clim", FlowGroupID=="Net Biome Productivity")
+nbp_primary_mean = round(mean(nbp_primary$Amount),0)
+nbp_primary_min = min(nbp_primary$Amount)
+nbp_primary_max = max(nbp_primary$Amount)
+
+nbp_lulc = flows_net_mmt %>% filter(ScenarioName=="LULC", FlowGroupID=="Net Biome Productivity")
+nbp_lulc_mean = round(mean(nbp_lulc$Amount),0)
+nbp_lulc_min = min(nbp_lulc$Amount)
+nbp_lulc_max = max(nbp_lulc$Amount)
+
+nbp_climate = flows_net_mmt %>% filter(ScenarioName=="Clim", FlowGroupID=="Net Biome Productivity")
+nbp_climate_mean = round(mean(nbp_climate$Amount),0)
+nbp_climate_min = min(nbp_climate$Amount)
+nbp_climate_max = max(nbp_climate$Amount)
+
+npp_primary = flows_net_mmt %>% filter(ScenarioName=="LULC+Clim", FlowGroupID=="Net Primary Productivity")
+npp_primary_mean = round(mean(npp_primary$Amount),0)
+
+npp_clim = flows_net_mmt %>% filter(ScenarioName=="Clim", FlowGroupID=="Net Primary Productivity")
+npp_clim_mean = round(mean(npp_clim$Amount),0)
+
+npp_lulc = flows_net_mmt %>% filter(ScenarioName=="LULC", FlowGroupID=="Net Primary Productivity")
+npp_lulc_mean = round(mean(npp_lulc$Amount),0)
+
+npp_lulc_pct = round((npp_clim_mean-npp_primary_mean)/npp_clim_mean*100,0)
+npp_clim_pct = round((npp_lulc_mean-npp_primary_mean)/npp_lulc_mean*100,0)
+
+npp_lulc_abs = round((npp_clim_mean-npp_primary_mean),0)
+npp_clim_abs = round((npp_lulc_mean-npp_primary_mean),0)
+
+rh_primary = flows_net_mmt %>% filter(ScenarioName=="LULC+Clim", FlowGroupID=="Emission: Total")
+rh_primary_mean = round(mean(rh_primary$Amount),0)
+
+rh_clim = flows_net_mmt %>% filter(ScenarioName=="Clim", FlowGroupID=="Emission: Total")
+rh_clim_mean = round(mean(rh_clim$Amount),0)
+
+rh_lulc = flows_net_mmt %>% filter(ScenarioName=="LULC", FlowGroupID=="Emission: Total")
+rh_lulc_mean = round(mean(rh_lulc$Amount),0)
+
+nep_primary = flows_net_mmt %>% filter(ScenarioName=="LULC+Clim", FlowGroupID=="Net Ecosystem Productivity")
+nep_primary_mean = round(mean(nep_primary$Amount),0)
+
+lulc_losses = nep_primary_mean-nbp_primary_mean
+
+flow_types_lulc = c("LULC: Emission [Type]", "LULC: Harvest [Type]", "LULC: Mortality [Type]")
+flows_lulc = read_csv("data/results/flows_conus.csv") %>%
+  left_join(scenario_ids) %>%
+  filter(FlowGroupID %in% flow_types_lulc, ScenarioName=="LULC+Clim") %>%
+  mutate(Amount=Amount/1000000)
+
+flows_harvest_prim = flows_lulc %>% filter(FlowGroupID=="LULC: Harvest [Type]")
+flows_harvest_prim_mean = round(mean(flows_harvest_prim$Amount),0)
+
+flows_emis_prim = flows_lulc %>% filter(FlowGroupID=="LULC: Emission [Type]")
+flows_emis_prim_mean = round(mean(flows_emis_prim$Amount),0)
+
+flows_mort_prim = flows_lulc %>% filter(FlowGroupID=="LULC: Mortality [Type]")
+flows_mort_prim_mean = round(mean(flows_mort_prim$Amount),0)
+
+# ggplot(flows_lulc, aes(x=Timestep, y=Amount, color=FlowGroupID)) +
+#   geom_line() +
+#   geom_point() +
+#   theme_custom()
+
+
+```
+
+## Net carbon flux
+
+We estimate that for the period 2001-2020, U.S. forests were on average, a net sink of carbon at a rate of `r nbp_primary_mean` MMT C yr^-1^. Figure \@ref(fig:flowresults) shows the estimated net primary productivity (NPP), heterotrophic respiration (Rh), net ecosystem productivity (NEP) and net biome productivity (NBP) over time for each of the four simulations. The size of the net sink varied considerably from year-to-year, ranging from `r nbp_primary_min` (source) to `r nbp_primary_max` MMT C yr^-1^. Climate variability was the primary driver of inter-annual variability in the size of the forest sink. When climate was not included in the simulations, the size of the net sink ranged from `r nbp_lulc_min` to `r nbp_lulc_max` MMT C yr^-1^ and showed a declining trend over time due to the lack of increased productivity from recent climate conditions. Land use, land-use change, and disturbances were the primary controlling processes effecting the magnitude of the net carbon sink. When LULC was excluded, the forest carbon sink was `r round((nbp_primary_mean/nbp_climate_mean)*100,0)`% higher (mean of `r nbp_climate_mean` MMT C yr^-1^) than simulations where LULC was incorporated.
+
+Net primary productivity (NPP) of U.S. forests averaged `r npp_primary_mean` MMT C yr^-1^. Incorporating the effects of LULC and disturbances reduced total NPP by `r npp_lulc_abs` MMT C yr^-1^ while incorporating the effects of climate variability and change resulted in an increase in NPP of `r abs(npp_clim_abs)` MMT C yr^-1^ compared to the LULC only simulation. These results suggest that LULC and disturbance have a negative impact on NPP while climate variability and change between 2001-2020 have resulted in increased productivity of U.S. forests. Heterotrophic respiration (Rh) increased under all simulations resulting from increases in productivity and climate warming.
+
+Carbon losses from LULC and disturbances reduced the annual forest carbon sink by `r lulc_losses` MMT C yr^-1^ on average. The cumulative loss of carbon sequestration was primarily from the transfer of carbon to harvest wood products which averaged `r flows_harvest_prim_mean` MMT C yr^-1^ while carbon losses from combusion - primarily due to wildfire - averaged `r flows_emis_prim_mean` MMT C yr^-1^. In addition to ecosystem carbon removals, LULC and disturbances resulted in the transfer of an additional `r flows_mort_prim_mean` MMT C yr^-1^ from live to DOM pools which will contribute to future years reductions in the carbon sink. This future flux could be accelerated by continued increases in the turnover rate of DOM resulting from continued climate warming. 
+
+```{r, flowresults, cache=T, echo=F, warning=F, message=F, fig.width=8, fig.height=3, fig.cap="Net fluxes of carbon in conterminous U.S. forests for the period 2002-2020."}
 
 ggplot(flows_net, aes(x=Timestep, y=Amount/1000000, color=ScenarioName, fill=ScenarioName, shape=ScenarioName)) +
   geom_line() +
@@ -53,6 +133,10 @@ ggplot(flows_net, aes(x=Timestep, y=Amount/1000000, color=ScenarioName, fill=Sce
         legend.margin=margin(0,0,0,0),
         legend.box.margin=margin(-10,-10,0,-10))
 ```
+
+## Carbon stocks
+
+
 
 ```{r, stockresults, cache=T, echo=F, warning=F, message=F, fig.width=4, fig.height=2.5, fig.cap="Carbon stocks in conterminous U.S. forests from 2001-2020."}
 stockypes_live_dom_tec = c("Total Ecosystem", "Biomass: Total", "DOM: Deadwood")

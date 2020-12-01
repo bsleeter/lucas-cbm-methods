@@ -58,3 +58,5 @@ fig:tecmap
 fig:stockresults-1
 fig:stockresults-2
 fig:stockchange
+net-carbon-flux
+carbon-stocks

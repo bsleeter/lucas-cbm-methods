@@ -99,6 +99,8 @@ Shrubland -> Forest [label = 'regrowth multiplier'; style = dashed]
 
 Forest -> Selection
 Selection -> Prescribed
+Prescribed -> Low
+Prescribed -> Medium
 
 subgraph {rank = same; High; Medium; Low}
 subgraph {rank = same; Shrubland; Forest}
