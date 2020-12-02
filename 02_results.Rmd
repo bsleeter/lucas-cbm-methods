@@ -6,6 +6,7 @@ library(sf)
 library(tidyverse)
 library(cowplot)
 library(dplyr)
+library(kableExtra)
 
 theme_custom <- function(...) {
   theme_bw() +
@@ -172,13 +173,61 @@ stocks_dom_2001 = round(sum((stocks_primary %>% filter(StockGroupID %in% c("DOM:
 stocks_dom_2001_pct = round((stocks_dom_2001/stocks_tec_2001)*100,0)
 stocks_dom_2020 = round(sum((stocks_primary %>% filter(StockGroupID %in% c("DOM: Litter", "DOM: Deadwood", "DOM: Soil"), Timestep==2020))$Amount),0)
 
+stocks_ipcc_change = stocks_ipcc %>%
+  filter(Timestep %in% c(2001,2020)) %>%
+  arrange(Timestep) %>%
+  group_by(ScenarioID, ScenarioName, Iteration, StockGroupID) %>%
+  mutate(Change=Amount-lag(Amount)) %>%
+  filter(Timestep==2020) %>% arrange(StockGroupID) %>%
+  mutate(Change=Change/1000000)
 
+stocks_live_change_prim = round((stocks_ipcc_change %>% filter(ScenarioName=="LULC+Clim", StockGroupID=="Biomass: Total"))$Change,0)
+
+stocks_live_change_clim = round((stocks_ipcc_change %>% filter(ScenarioName=="Clim", StockGroupID=="Biomass: Total"))$Change,0)
 ```
+
 ## Carbon stocks
 
-We estimate U.S. forested ecosystems stored `r stocks_tec_2001` MMT C in 2001 with live carbon accounting for `r stocks_live_2001_pct`% (`r stocks_live_2001` MMT C) and DOM pools accounting for `r stocks_dom_2001_pct`% (`r stocks_dom_2001` MMT C). By 2020, the total carbon stored in DOM pools remained relatively stable while live carbon increased to `r stocks_live_2020` MMT C. 
+We estimate U.S. forested ecosystems stored `r stocks_tec_2001` MMT C in 2001 with live carbon accounting for `r stocks_live_2001_pct`% (`r stocks_live_2001` MMT C) and DOM pools accounting for `r stocks_dom_2001_pct`% (`r stocks_dom_2001` MMT C). By 2020, the total carbon stored in live carbon pools increased to `r stocks_live_2020` MMT C while DOM pools remained relatively stable. However, the net change in DOM masked dynamics within DOM pools. For example, carbon stored in standing dead snags increased by nearly 250 MMT C while soil pools declined by 420 MMT C (Table \@ref(tab:stocktable)).  
 
+Changes in LULC were an important driver of carbon stock change. When the effects of LULC were included, increases in live carbon were modest (`r stocks_live_change_prim` MMT C) relative to simulations without LULC and disturbances (`r stocks_live_change_clim` MMT C). Changes in LULC and disturbance resulted in increases in litter and deadwood relative to simulations without LULC while soil carbon losses were larger. 
 
+```{r, stocktable, echo=F, warning=F, message=F}
+stock_groups = read_csv("data/tables/stock-groups.csv")
+
+stocks_table = read_csv("data/results/stocks_conus.csv") %>% 
+  left_join(scenario_ids) %>%
+  mutate(Amount=Amount/1000000) %>%
+  filter(Timestep %in% c(2001,2020), ScenarioName=="LULC+Clim") %>%
+  select(-ScenarioID, -Iteration, -ScenarioName) %>%
+  arrange(StockGroupID) %>%
+  right_join(stock_groups) %>%
+  arrange(StockGroup) %>%
+  select(StockGroup, StockGroupID, Timestep, Amount)
+
+stocks_table_sum = stocks_table %>%
+  group_by(StockGroup, Timestep) %>% summarise(Amount=sum(Amount)) %>%
+  mutate(StockGroupID = "Total")
+
+stocks_table_merge = bind_rows(stocks_table, stocks_table_sum) %>%
+  pivot_wider(names_from=Timestep, values_from=Amount) %>%
+  mutate(Change=`2020`-`2001`) %>%
+  arrange(StockGroup) %>%
+  mutate(StockGroup = factor(StockGroup, levels=c("Aboveground live", "Belowground live", "Deadwood", "Litter", "Soil"))) %>%
+  select(-StockGroup)
+
+kable(stocks_table_merge, col.names = c("Stock", "2001", "2020", "Change"),
+      digits = 1,
+      booktabs = T,
+      escape = F,
+      caption="Carbon stock estimates for forest ecosystems of the conterminous U.S.. Units are in MMT C.") %>%
+  kable_paper(lightable_options = c("striped"), font_size=12, full_width = F) %>%
+  pack_rows(index = c("Aboveground live" = 4, 
+                      "Belowground live" = 3, 
+                      "Deadwood" = 5,
+                      "Litter" = 3,
+                      "Soil" = 4))
+```
 
 ```{r, stockresults, cache=T, echo=F, warning=F, message=F, fig.width=8, fig.height=4, fig.cap="Carbon stocks in conterminous U.S. forests from 2001-2020."}
 
@@ -199,14 +248,8 @@ ps1 = ggplot(stocks_ipcc, aes(x=Timestep, y=Amount/1000000, color=ScenarioName, 
 ```
 
 ```{r, stockchange, cache=T, echo=F, warning=F, message=F, fig.width=8, fig.height=4, fig.cap="Carbon stocks in conterminous U.S. forests from 2001-2020."}
-stocks_ipcc_change = stocks_ipcc %>%
-  filter(Timestep %in% c(2001,2020)) %>%
-  arrange(Timestep) %>%
-  group_by(ScenarioID, ScenarioName, Iteration, StockGroupID) %>%
-  mutate(Change=Amount-lag(Amount)) %>%
-  filter(Timestep==2020) %>% arrange(StockGroupID)
 
-ps2 = ggplot(stocks_ipcc_change, aes(x=ScenarioName, y=Change/1000000, fill=ScenarioName)) +
+ps2 = ggplot(stocks_ipcc_change, aes(x=ScenarioName, y=Change, fill=ScenarioName)) +
   geom_bar(stat="identity") +
   scale_fill_brewer(palette = "Dark2") +
   facet_wrap(~StockGroupID, scales = "free_y", ncol=5) +

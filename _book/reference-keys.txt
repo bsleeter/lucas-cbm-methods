@@ -60,3 +60,4 @@ fig:stockresults-2
 fig:stockchange
 net-carbon-flux
 carbon-stocks
+tab:stocktable
