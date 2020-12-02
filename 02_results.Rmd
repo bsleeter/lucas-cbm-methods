@@ -29,6 +29,9 @@ theme_custom <- function(...) {
 scenario_ids = data.frame(ScenarioID=c(128,134,136,138),
                           ScenarioName = c("LULC+Clim", "Clim", "Ref", "LULC"))
 
+options(scipen=999)
+knitr::knit_hooks$set(inline = function(x) {
+  if(!is.numeric(x)){x}else{prettyNum(round(x,2), big.mark=",")}})
 ```
 
 ```{r, resultdata, echo=F, warning=F, message=F}
@@ -106,7 +109,6 @@ flows_mort_prim_mean = round(mean(flows_mort_prim$Amount),0)
 #   geom_point() +
 #   theme_custom()
 
-
 ```
 
 ## Net carbon flux
@@ -134,11 +136,7 @@ ggplot(flows_net, aes(x=Timestep, y=Amount/1000000, color=ScenarioName, fill=Sce
         legend.box.margin=margin(-10,-10,0,-10))
 ```
 
-## Carbon stocks
-
-
-
-```{r, stockresults, cache=T, echo=F, warning=F, message=F, fig.width=4, fig.height=2.5, fig.cap="Carbon stocks in conterminous U.S. forests from 2001-2020."}
+```{r, resultdata2, echo=F, message=F, warning=F}
 stockypes_live_dom_tec = c("Total Ecosystem", "Biomass: Total", "DOM: Deadwood")
 
 stocks_ipcc = read_csv("data/results/stocks_conus.csv") %>%
@@ -164,6 +162,25 @@ stocks_ipcc_soil= read_csv("data/results/stocks_conus.csv") %>%
 
 stocks_ipcc = bind_rows(stocks_ipcc, stocks_ipcc_litter, stocks_ipcc_soil)
 
+stocks_primary = stocks_ipcc %>% filter(ScenarioName == "LULC+Clim") %>% mutate(Amount = Amount/1000000)
+stocks_tec_2001 = round((stocks_primary %>% filter(StockGroupID == "Total Ecosystem", Timestep==2001))$Amount,0)
+stocks_live_2001 = round((stocks_primary %>% filter(StockGroupID == "Biomass: Total", Timestep==2001))$Amount,0)
+stocks_live_2001_pct = round((stocks_live_2001/stocks_tec_2001)*100,0)
+stocks_live_2020 = round((stocks_primary %>% filter(StockGroupID == "Biomass: Total", Timestep==2020))$Amount,0)
+
+stocks_dom_2001 = round(sum((stocks_primary %>% filter(StockGroupID %in% c("DOM: Litter", "DOM: Deadwood", "DOM: Soil"), Timestep==2001))$Amount),0)
+stocks_dom_2001_pct = round((stocks_dom_2001/stocks_tec_2001)*100,0)
+stocks_dom_2020 = round(sum((stocks_primary %>% filter(StockGroupID %in% c("DOM: Litter", "DOM: Deadwood", "DOM: Soil"), Timestep==2020))$Amount),0)
+
+
+```
+## Carbon stocks
+
+We estimate U.S. forested ecosystems stored `r stocks_tec_2001` MMT C in 2001 with live carbon accounting for `r stocks_live_2001_pct`% (`r stocks_live_2001` MMT C) and DOM pools accounting for `r stocks_dom_2001_pct`% (`r stocks_dom_2001` MMT C). By 2020, the total carbon stored in DOM pools remained relatively stable while live carbon increased to `r stocks_live_2020` MMT C. 
+
+
+
+```{r, stockresults, cache=T, echo=F, warning=F, message=F, fig.width=8, fig.height=4, fig.cap="Carbon stocks in conterminous U.S. forests from 2001-2020."}
 
 ps1 = ggplot(stocks_ipcc, aes(x=Timestep, y=Amount/1000000, color=ScenarioName, fill=ScenarioName, shape=ScenarioName)) +
   geom_line() +
@@ -303,3 +320,4 @@ ggplot() +
                                  frame.colour = "black"))
 
 ```
+
