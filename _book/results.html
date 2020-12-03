@@ -24,7 +24,7 @@
 <meta name="author" content="Benjamin M. Sleeter" />
 
 
-<meta name="date" content="2020-12-01" />
+<meta name="date" content="2020-12-02" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -50,7 +50,6 @@
 
 
 
-<script src="libs/accessible-code-block-0.0.1/empty-anchor.js"></script>
 <link href="libs/anchor-sections-1.0/anchor-sections.css" rel="stylesheet" />
 <script src="libs/anchor-sections-1.0/anchor-sections.js"></script>
 <script src="libs/kePrint-0.0.1/kePrint.js"></script>
@@ -131,13 +130,21 @@
 <h2><span class="header-section-number">3.1</span> Net carbon flux</h2>
 <p>We estimate that for the period 2001-2020, U.S. forests were on average, a net sink of carbon at a rate of 135 MMT C yr<sup>-1</sup>. Figure <a href="results.html#fig:flowresults">3.1</a> shows the estimated net primary productivity (NPP), heterotrophic respiration (Rh), net ecosystem productivity (NEP) and net biome productivity (NBP) over time for each of the four simulations. The size of the net sink varied considerably from year-to-year, ranging from -3 (source) to 242 MMT C yr<sup>-1</sup>. Climate variability was the primary driver of inter-annual variability in the size of the forest sink. When climate was not included in the simulations, the size of the net sink ranged from 51 to 200 MMT C yr<sup>-1</sup> and showed a declining trend over time due to the lack of increased productivity from recent climate conditions. Land use, land-use change, and disturbances were the primary controlling processes effecting the magnitude of the net carbon sink. When LULC was excluded, the forest carbon sink was 49% higher (mean of 278 MMT C yr<sup>-1</sup>) than simulations where LULC was incorporated.</p>
 <p>Net primary productivity (NPP) of U.S. forests averaged 1,241 MMT C yr<sup>-1</sup>. Incorporating the effects of LULC and disturbances reduced total NPP by 50 MMT C yr<sup>-1</sup> while incorporating the effects of climate variability and change resulted in an increase in NPP of 12 MMT C yr<sup>-1</sup> compared to the LULC only simulation. These results suggest that LULC and disturbance have a negative impact on NPP while climate variability and change between 2001-2020 have resulted in increased productivity of U.S. forests. Heterotrophic respiration (Rh) increased under all simulations resulting from increases in productivity and climate warming.</p>
-<p>Carbon losses from LULC and disturbances reduced the annual forest carbon sink by 83 MMT C yr<sup>-1</sup> on average. The cumulative loss of carbon sequestration was primarily from the transfer of carbon to harvest wood products which averaged 68 MMT C yr<sup>-1</sup> while carbon losses from combusion - primarily due to wildfire - averaged 14 MMT C yr<sup>-1</sup>. In addition to ecosystem carbon removals, LULC and disturbances resulted in the transfer of an additional 96 MMT C yr<sup>-1</sup> from live to DOM pools which will contribute to future years reductions in the carbon sink. This future flux could be accelerated by continued increases in the turnover rate of DOM resulting from continued climate warming.</p>
 <div class="figure"><span id="fig:flowresults"></span>
 <img src="test_files/figure-html/flowresults-1.png" alt="Net fluxes of carbon in conterminous U.S. forests for the period 2002-2020." width="768" />
 <p class="caption">
 Figure 3.1: Net fluxes of carbon in conterminous U.S. forests for the period 2002-2020.
 </p>
 </div>
+<p>The largest net carbon losses were in found in the mountain regions (Sierra Nevada, Klamath and Cascades ecoregions) of California and Oregon and were largely driven by stand-replacing wildifres (California) and forest harvest (Oregon). While remaining a net sink of carbon, the southeast experienced declines to to high rates of harvest of plantation forests and urbanization. However, the high rates of productivity in the region, along with afforestation, offset carbon losses resulting in a modest net sink. Texas was the state with the largest net sink, largely the result of forest ageing and low rates of stand-replacing disturbances.</p>
+<div class="figure"><span id="fig:stratumflows"></span>
+<img src="test_files/figure-html/stratumflows-1.png" alt="Mean annual net biome productivity (NBP) of conterminous U.S. forests for the period 2002-2020 summarized by ecoregion (a) and states (b). Panel c shows NBP estimated for all forest cells inthe conterminous U.S." width="768" />
+<p class="caption">
+Figure 3.2: Mean annual net biome productivity (NBP) of conterminous U.S. forests for the period 2002-2020 summarized by ecoregion (a) and states (b). Panel c shows NBP estimated for all forest cells inthe conterminous U.S.
+</p>
+</div>
+<p>Carbon losses from LULC and disturbances reduced the annual forest carbon sink by 83 MMT C yr<sup>-1</sup> on average. The cumulative loss of carbon sequestration was primarily from the transfer of carbon to harvest wood products which averaged 68 MMT C yr<sup>-1</sup> while carbon losses from combusion - primarily due to wildfire - averaged 14 MMT C yr<sup>-1</sup>. Carbon losses from fire were highly variable from year-to-year. However, the three highest fire emission years all occurred since 2017. In 2020, emissions from fire, including the record setting megafires in California and Oregon, were estimated to be 47.16 MMT C (173.06 MMT CO[2]), more then three times the historical average. In addition to ecosystem carbon removals, LULC and disturbances resulted in the transfer of an additional 96 MMT C yr<sup>-1</sup> from live to DOM pools which will contribute to future years reductions in the carbon sink. This future flux could be accelerated by continued increases in the turnover rate of DOM resulting from continued climate warming.</p>
+<p>Add section here on carbon fluxes from specific LULC transitions.</p>
 </div>
 <div id="carbon-stocks" class="section level2">
 <h2><span class="header-section-number">3.2</span> Carbon stocks</h2>
@@ -457,22 +464,10 @@ Total
 </tr>
 </tbody>
 </table>
-<div class="figure"><span id="fig:stockchange"></span>
-<img src="test_files/figure-html/stockchange-1.png" alt="Carbon stocks in conterminous U.S. forests from 2001-2020." width="768" />
-<p class="caption">
-Figure 3.2: Carbon stocks in conterminous U.S. forests from 2001-2020.
-</p>
-</div>
-<div class="figure"><span id="fig:nbpmap"></span>
-<img src="test_files/figure-html/nbpmap-1.png" alt="Map of the estiamted net biome productivity of conterminous U.S. forests for the period 2001-2020. Negative values indicate a net loss of carbon from ecosystems and positive values indicate a net sink of carbon." width="768" />
-<p class="caption">
-Figure 3.3: Map of the estiamted net biome productivity of conterminous U.S. forests for the period 2001-2020. Negative values indicate a net loss of carbon from ecosystems and positive values indicate a net sink of carbon.
-</p>
-</div>
 <div class="figure"><span id="fig:tecmap"></span>
 <img src="test_files/figure-html/tecmap-1.png" alt="Map of the estiamted net biome productivity of conterminous U.S. forests for the period 2001-2020. Negative values indicate a net loss of carbon from ecosystems and positive values indicate a net sink of carbon." width="768" />
 <p class="caption">
-Figure 3.4: Map of the estiamted net biome productivity of conterminous U.S. forests for the period 2001-2020. Negative values indicate a net loss of carbon from ecosystems and positive values indicate a net sink of carbon.
+Figure 3.3: Map of the estiamted net biome productivity of conterminous U.S. forests for the period 2001-2020. Negative values indicate a net loss of carbon from ecosystems and positive values indicate a net sink of carbon.
 </p>
 </div>
 

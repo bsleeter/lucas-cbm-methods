@@ -61,3 +61,4 @@ fig:stockchange
 net-carbon-flux
 carbon-stocks
 tab:stocktable
+fig:stratumflows

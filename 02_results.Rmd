@@ -27,6 +27,8 @@ theme_custom <- function(...) {
     ...
   )}
 
+crs = "+proj=aea +lat_1=29.5 +lat_2=45.5 +lat_0=23 +lon_0=-96 +x_0=0 +y_0=0 +ellps=GRS80 +units=m +no_defs"
+
 scenario_ids = data.frame(ScenarioID=c(128,134,136,138),
                           ScenarioName = c("LULC+Clim", "Clim", "Ref", "LULC"))
 
@@ -91,6 +93,7 @@ nep_primary_mean = round(mean(nep_primary$Amount),0)
 lulc_losses = nep_primary_mean-nbp_primary_mean
 
 flow_types_lulc = c("LULC: Emission [Type]", "LULC: Harvest [Type]", "LULC: Mortality [Type]")
+
 flows_lulc = read_csv("data/results/flows_conus.csv") %>%
   left_join(scenario_ids) %>%
   filter(FlowGroupID %in% flow_types_lulc, ScenarioName=="LULC+Clim") %>%
@@ -101,15 +104,10 @@ flows_harvest_prim_mean = round(mean(flows_harvest_prim$Amount),0)
 
 flows_emis_prim = flows_lulc %>% filter(FlowGroupID=="LULC: Emission [Type]")
 flows_emis_prim_mean = round(mean(flows_emis_prim$Amount),0)
+flows_emis_prim_2020 = (flows_lulc %>% filter(FlowGroupID=="LULC: Emission [Type]", Timestep==2020))$Amount
 
 flows_mort_prim = flows_lulc %>% filter(FlowGroupID=="LULC: Mortality [Type]")
 flows_mort_prim_mean = round(mean(flows_mort_prim$Amount),0)
-
-# ggplot(flows_lulc, aes(x=Timestep, y=Amount, color=FlowGroupID)) +
-#   geom_line() +
-#   geom_point() +
-#   theme_custom()
-
 ```
 
 ## Net carbon flux
@@ -117,8 +115,6 @@ flows_mort_prim_mean = round(mean(flows_mort_prim$Amount),0)
 We estimate that for the period 2001-2020, U.S. forests were on average, a net sink of carbon at a rate of `r nbp_primary_mean` MMT C yr^-1^. Figure \@ref(fig:flowresults) shows the estimated net primary productivity (NPP), heterotrophic respiration (Rh), net ecosystem productivity (NEP) and net biome productivity (NBP) over time for each of the four simulations. The size of the net sink varied considerably from year-to-year, ranging from `r nbp_primary_min` (source) to `r nbp_primary_max` MMT C yr^-1^. Climate variability was the primary driver of inter-annual variability in the size of the forest sink. When climate was not included in the simulations, the size of the net sink ranged from `r nbp_lulc_min` to `r nbp_lulc_max` MMT C yr^-1^ and showed a declining trend over time due to the lack of increased productivity from recent climate conditions. Land use, land-use change, and disturbances were the primary controlling processes effecting the magnitude of the net carbon sink. When LULC was excluded, the forest carbon sink was `r round((nbp_primary_mean/nbp_climate_mean)*100,0)`% higher (mean of `r nbp_climate_mean` MMT C yr^-1^) than simulations where LULC was incorporated.
 
 Net primary productivity (NPP) of U.S. forests averaged `r npp_primary_mean` MMT C yr^-1^. Incorporating the effects of LULC and disturbances reduced total NPP by `r npp_lulc_abs` MMT C yr^-1^ while incorporating the effects of climate variability and change resulted in an increase in NPP of `r abs(npp_clim_abs)` MMT C yr^-1^ compared to the LULC only simulation. These results suggest that LULC and disturbance have a negative impact on NPP while climate variability and change between 2001-2020 have resulted in increased productivity of U.S. forests. Heterotrophic respiration (Rh) increased under all simulations resulting from increases in productivity and climate warming.
-
-Carbon losses from LULC and disturbances reduced the annual forest carbon sink by `r lulc_losses` MMT C yr^-1^ on average. The cumulative loss of carbon sequestration was primarily from the transfer of carbon to harvest wood products which averaged `r flows_harvest_prim_mean` MMT C yr^-1^ while carbon losses from combusion - primarily due to wildfire - averaged `r flows_emis_prim_mean` MMT C yr^-1^. In addition to ecosystem carbon removals, LULC and disturbances resulted in the transfer of an additional `r flows_mort_prim_mean` MMT C yr^-1^ from live to DOM pools which will contribute to future years reductions in the carbon sink. This future flux could be accelerated by continued increases in the turnover rate of DOM resulting from continued climate warming. 
 
 ```{r, flowresults, cache=T, echo=F, warning=F, message=F, fig.width=8, fig.height=3, fig.cap="Net fluxes of carbon in conterminous U.S. forests for the period 2002-2020."}
 
@@ -136,6 +132,135 @@ ggplot(flows_net, aes(x=Timestep, y=Amount/1000000, color=ScenarioName, fill=Sce
         legend.margin=margin(0,0,0,0),
         legend.box.margin=margin(-10,-10,0,-10))
 ```
+
+The largest net carbon losses were in found in the mountain regions (Sierra Nevada, Klamath and Cascades ecoregions) of California and Oregon and were largely driven by stand-replacing wildifres (California) and forest harvest (Oregon). While remaining a net sink of carbon, the southeast experienced declines to to high rates of harvest of plantation forests and urbanization. However, the high rates of productivity in the region, along with afforestation, offset carbon losses resulting in a modest net sink. Texas was the state with the largest net sink, largely the result of forest ageing and low rates of stand-replacing disturbances.
+
+```{r, nbpmap, cache=T, echo=F, warning=F, message=F, fig.width=8, fig.cap="Map of the estiamted net biome productivity of conterminous U.S. forests for the period 2001-2020. Negative values indicate a net loss of carbon from ecosystems and positive values indicate a net sink of carbon."}
+land_poly = st_read("data/vector/ne_10m_land.shp", quiet=T)
+states_poly = st_read("data/vector/states.shp", quiet=T)
+nbp_raster = raster("data/results/flows-nbp-2020.tif")
+# nbp_raster = aggregate(nbp_raster, fact=4, na.rm=T)
+nbp_raster_df = as.data.frame(nbp_raster, xy=T) %>%
+  rename("Amount"="flows.nbp.2020") %>%
+  filter(!is.na(Amount))
+# 
+# min(nbp_raster_df$Amount)
+# max(nbp_raster_df$Amount)
+# quantile(nbp_raster_df$Amount, probs = seq(0, 1, length.out = 9 + 1))
+
+p1 = ggplot() +
+  geom_sf(data=land_poly, aes(geometry=geometry), fill="white", color=NA) +
+  geom_tile(data=nbp_raster_df, aes(x=x, y=y, fill=Amount)) +
+  geom_sf(data=states_poly, aes(geometry=geometry), fill=NA, color="grey20", size=0.2) +
+  coord_sf(crs = "+proj=aea +lat_1=29.5 +lat_2=45.5 +lat_0=23 +lon_0=-96 +x_0=0 +y_0=0 +ellps=GRS80 +units=m +no_defs",
+           xlim=c(min(nbp_raster_df$x), max(nbp_raster_df$x)),
+           ylim=c(min(nbp_raster_df$y), max(nbp_raster_df$y))) +
+  scale_fill_fermenter(palette = "BrBG", type="seq", direction=1, guide="colorsteps", breaks=c(-100,-20,-10,-5,-2,2,5,10,20, 50)) +
+  labs(x=NULL, y=NULL, fill=expression(Metric~Tons~C~ha^-1)) +
+  theme_bw() +
+  theme(#text=element_text(family="Roboto Condensed"),
+        legend.position = c(0.2,0.1),
+        legend.text.align = 0,
+        legend.text = element_text(size = 7, hjust = 0, color = "#4e4d47"),
+        legend.title = element_text(size = 8),
+        plot.margin = unit(c(1,1,1,1), "mm"),
+        legend.key.height = unit(2, "mm"),
+        legend.key.width = unit(8, "mm"),
+        legend.background = element_blank(),
+        axis.text.x = element_text(size=8),
+        axis.text.y = element_text(size=8),
+        panel.background = element_rect(fill="grey90")) +
+  guides(fill = guide_colorsteps(direction = "horizontal",
+                                 title.position = 'top',
+                                 title.hjust = 0,
+                                 label.hjust = 1,
+                                 nrow = 1,
+                                 byrow = T,
+                                 reverse = F,
+                                 label.position = "bottom",
+                                 ticks = T,
+                                 ticks.colour = "black",
+                                 ticks.linewidth = 0.8,
+                                 frame.colour = "black"))
+
+```
+
+```{r, stratumflows, cache=T, echo=F, warning=F, message=F, fig.width=8, fig.height=3, fig.cap="Mean annual net biome productivity (NBP) of conterminous U.S. forests for the period 2002-2020 summarized by ecoregion (a) and states (b). Panel c shows NBP estimated for all forest cells inthe conterminous U.S."}
+# Ecoregion chloropleth map NBP ----
+
+eco_poly = st_read("data/vector/us_eco_l3_no_st_simp.shp", quiet=T) %>%
+  st_simplify()
+eco_code = read_csv("data/tables/ecoregions.csv")
+
+flows_ecoreg = read_csv("data/results/flows_ecoregions.csv") %>%
+  left_join(scenario_ids) %>%
+  mutate(Amount = Amount/1000000) %>%
+  filter(FlowGroupID == "Net Biome Productivity", ScenarioName == "LULC+Clim") %>%
+  group_by(ScenarioName, FromStratumID, FlowGroupID) %>%
+  summarise(Mean=mean(Amount), Min=quantile(Amount, 0.025), Max=quantile(Amount, 0.975)) %>%
+  arrange(Mean) %>%
+  left_join(eco_code, by=c("FromStratumID"="Name")) %>%
+  mutate(ID = as.character(ID)) %>%
+  left_join(eco_poly, by=c("ID"="US_L3CODE"))
+
+p2 = ggplot(flows_ecoreg, aes(geometry=geometry, fill = Mean)) +
+  geom_sf(color="black", size=0.1) +
+  coord_sf(crs = "+proj=aea +lat_1=29.5 +lat_2=45.5 +lat_0=23 +lon_0=-96 +x_0=0 +y_0=0 +ellps=GRS80 +units=m +no_defs") +
+  #scale_fill_fermenter(palette = "BrBG", direction=1 , type="seq", guide="colorsteps", breaks=c(-4,-2,-1,-0.5,0.5,1,2,4,8)) +
+  scale_fill_gradient2(low=muted("red"), mid="white", high=muted("green"), midpoint=0, guide="colorsteps", n.breaks=9) +
+  theme_bw(9) +
+  labs(fill=expression(MMT~C~yr^-1)) +
+  theme(legend.key.height = unit(5, "mm"),
+        legend.key.width = unit(2, "mm"),
+        plot.margin = margin(2,2,2,2, "mm")) +
+  guides(fill = guide_colorsteps(ticks = T,
+                                 ticks.colour = "black",
+                                 ticks.linewidth = 0.8,
+                                 frame.colour = "black"))
+
+# State chloropleth map NBP ----
+
+state_poly = st_read("data/vector/cb_2018_us_state_20m.shp", quiet=T) %>% 
+  mutate(STATEFP = as.character(STATEFP)) %>%
+  st_transform(crs=crs)
+state_code = read_csv("data/tables/states.csv")
+
+flows_states = read_csv("data/results/flows_states.csv") %>%
+  left_join(scenario_ids) %>%
+  mutate(Amount = Amount/1000000) %>%
+  filter(FlowGroupID == "Net Biome Productivity", ScenarioName == "LULC+Clim") %>%
+  group_by(ScenarioName, FromSecondaryStratumID, FlowGroupID) %>%
+  summarise(Mean=mean(Amount), Min=quantile(Amount, 0.025), Max=quantile(Amount, 0.975)) %>%
+  arrange(Mean) %>%
+  left_join(state_code, by=c("FromSecondaryStratumID"="Name")) %>%
+  mutate(ID = as.character(ID)) %>%
+  left_join(state_poly, by=c("ID"="STATEFP"))
+
+p3 = ggplot(flows_states, aes(geometry=geometry, fill=Mean)) +
+  geom_sf(color="black", size=0.1) +
+  coord_sf(crs = "+proj=aea +lat_1=29.5 +lat_2=45.5 +lat_0=23 +lon_0=-96 +x_0=0 +y_0=0 +ellps=GRS80 +units=m +no_defs") +
+  #scale_fill_fermenter(palette = "BrBG", direction=1 , type="seq", guide="colorsteps", breaks=c(-4,-2,-1,-0.5,0.5,1,2,4,8)) +
+  scale_fill_gradient2(low=muted("red"), mid="white", high=muted("green"), midpoint=0, guide="colorsteps", n.breaks=9) +
+  theme_bw(9) +
+  labs(fill=expression(MMT~C~yr^-1)) +
+  theme(legend.key.height = unit(5, "mm"),
+        legend.key.width = unit(2, "mm"),
+        plot.margin = margin(2,2,2,2, "mm")) +
+  guides(fill = guide_colorsteps(ticks = T,
+                                 ticks.colour = "black",
+                                 ticks.linewidth = 0.8,
+                                 frame.colour = "black"))
+
+# Create the plot ----
+pleft = plot_grid(p2,p3, align=c("hv"), ncol = 1, labels=c("a", "b"), label_size = 10, label_fontface = "plain")
+pright = plot_grid(p1, align=c("hv"), ncol = 1, labels=c("c"), label_size = 10, label_fontface = "plain")
+p = plot_grid(pleft, pright, align=c("hv"), ncol = 2, rel_widths = c(4,6))
+p
+```
+
+Carbon losses from LULC and disturbances reduced the annual forest carbon sink by `r lulc_losses` MMT C yr^-1^ on average. The cumulative loss of carbon sequestration was primarily from the transfer of carbon to harvest wood products which averaged `r flows_harvest_prim_mean` MMT C yr^-1^ while carbon losses from combusion - primarily due to wildfire - averaged `r flows_emis_prim_mean` MMT C yr^-1^. Carbon losses from fire were highly variable from year-to-year. However, the three highest fire emission years all occurred since 2017. In 2020, emissions from fire, including the record setting megafires in California and Oregon, were estimated to be `r flows_emis_prim_2020` MMT C (`r flows_emis_prim_2020*3.67` MMT CO[2]), more then three times the historical average. In addition to ecosystem carbon removals, LULC and disturbances resulted in the transfer of an additional `r flows_mort_prim_mean` MMT C yr^-1^ from live to DOM pools which will contribute to future years reductions in the carbon sink. This future flux could be accelerated by continued increases in the turnover rate of DOM resulting from continued climate warming. 
+
+Add section here on carbon fluxes from specific LULC transitions.
 
 ```{r, resultdata2, echo=F, message=F, warning=F}
 stockypes_live_dom_tec = c("Total Ecosystem", "Biomass: Total", "DOM: Deadwood")
@@ -229,91 +354,9 @@ kable(stocks_table_merge, col.names = c("Stock", "2001", "2020", "Change"),
                       "Soil" = 4))
 ```
 
-```{r, stockresults, cache=T, echo=F, warning=F, message=F, fig.width=8, fig.height=4, fig.cap="Carbon stocks in conterminous U.S. forests from 2001-2020."}
 
-ps1 = ggplot(stocks_ipcc, aes(x=Timestep, y=Amount/1000000, color=ScenarioName, fill=ScenarioName, shape=ScenarioName)) +
-  geom_line() +
-  scale_color_brewer(palette="Dark2") +
-  geom_point(color="white", size=1.5) +
-  scale_fill_brewer(palette="Dark2") +
-  scale_shape_manual(values=c("LULC+Clim"=21, "Clim"=22, "LULC"=23, "Ref"=24)) +
-  facet_wrap(~StockGroupID, scales="free_y", ncol=5) +
-  theme_custom() +
-  labs(x="Year", y=expression(Carbon~storage~(MMT~C)), fill="Scenario", shape="Scenario", color="Scenario") +
-    theme(legend.position = "bottom",
-        legend.key.width = unit(10, "mm"),
-        legend.key.height = unit(3, "mm"),
-        legend.margin=margin(0,0,0,0),
-        legend.box.margin=margin(-10,-10,0,-10))
-```
 
-```{r, stockchange, cache=T, echo=F, warning=F, message=F, fig.width=8, fig.height=4, fig.cap="Carbon stocks in conterminous U.S. forests from 2001-2020."}
 
-ps2 = ggplot(stocks_ipcc_change, aes(x=ScenarioName, y=Change, fill=ScenarioName)) +
-  geom_bar(stat="identity") +
-  scale_fill_brewer(palette = "Dark2") +
-  facet_wrap(~StockGroupID, scales = "free_y", ncol=5) +
-  geom_hline(yintercept = 0, size=0.2) +
-  theme_custom() +
-  labs(x=NULL, y=expression(Net~flux~(MMT~C)), fill="Scenario", shape="Scenario", color="Scenario") +
-  theme(legend.position = "bottom",
-        legend.key.width = unit(10, "mm"),
-        legend.key.height = unit(3, "mm"),
-        legend.margin=margin(0,0,0,0),
-        legend.box.margin=margin(-10,-10,0,-10),
-        axis.text.x = element_blank())
-
-plot_grid(ps1, ps2, align=c("hv"), nrow=2)
-```
-
-```{r, nbpmap, cache=T, echo=F, warning=F, message=F, fig.width=8, fig.cap="Map of the estiamted net biome productivity of conterminous U.S. forests for the period 2001-2020. Negative values indicate a net loss of carbon from ecosystems and positive values indicate a net sink of carbon."}
-land_poly = st_read("data/vector/ne_10m_land.shp", quiet=T)
-states_poly = st_read("data/vector/states.shp", quiet=T)
-nbp_raster = raster("data/results/flows-nbp-2020.tif")
-# nbp_raster = aggregate(nbp_raster, fact=4, na.rm=T)
-nbp_raster_df = as.data.frame(nbp_raster, xy=T) %>%
-  rename("Amount"="flows.nbp.2020") %>%
-  filter(!is.na(Amount))
-# 
-# min(nbp_raster_df$Amount)
-# max(nbp_raster_df$Amount)
-# quantile(nbp_raster_df$Amount, probs = seq(0, 1, length.out = 9 + 1))
-
-ggplot() +
-  geom_sf(data=land_poly, aes(geometry=geometry), fill="white", color=NA) +
-  geom_tile(data=nbp_raster_df, aes(x=x, y=y, fill=Amount)) +
-  geom_sf(data=states_poly, aes(geometry=geometry), fill=NA, color="grey20", size=0.2) +
-  coord_sf(crs = "+proj=aea +lat_1=29.5 +lat_2=45.5 +lat_0=23 +lon_0=-96 +x_0=0 +y_0=0 +ellps=GRS80 +units=m +no_defs",
-           xlim=c(min(nbp_raster_df$x), max(nbp_raster_df$x)),
-           ylim=c(min(nbp_raster_df$y), max(nbp_raster_df$y))) +
-  scale_fill_fermenter(palette = "BrBG", type="seq", direction=1, guide="colorsteps", breaks=c(-100,-20,-10,-5,-2,2,5,10,20, 50)) +
-  labs(x=NULL, y=NULL, fill=expression(Metric~Tons~C~ha^-1)) +
-  theme_bw() +
-  theme(text=element_text(family="Roboto Condensed"),
-        legend.position = c(0.2,0.1),
-        legend.text.align = 0,
-        legend.text = element_text(size = 7, hjust = 0, color = "#4e4d47"),
-        legend.title = element_text(size = 8),
-        plot.margin = unit(c(1,1,1,1), "mm"),
-        legend.key.height = unit(2, "mm"),
-        legend.key.width = unit(10, "mm"),
-        axis.text.x = element_text(size=8),
-        axis.text.y = element_text(size=8),
-        panel.background = element_rect(fill="grey90")) +
-  guides(fill = guide_colorsteps(direction = "horizontal",
-                                 title.position = 'top',
-                                 title.hjust = 0,
-                                 label.hjust = 1,
-                                 nrow = 1,
-                                 byrow = T,
-                                 reverse = F,
-                                 label.position = "bottom",
-                                 ticks = T,
-                                 ticks.colour = "black",
-                                 ticks.linewidth = 0.8,
-                                 frame.colour = "black"))
-
-```
 
 ```{r, tecmap, cache=T, echo=F, warning=F, message=F, fig.width=8, fig.cap="Map of the estiamted net biome productivity of conterminous U.S. forests for the period 2001-2020. Negative values indicate a net loss of carbon from ecosystems and positive values indicate a net sink of carbon."}
 land_poly = st_read("data/vector/ne_10m_land.shp", quiet=T)
