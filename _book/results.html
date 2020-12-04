@@ -24,7 +24,7 @@
 <meta name="author" content="Benjamin M. Sleeter" />
 
 
-<meta name="date" content="2020-12-02" />
+<meta name="date" content="2020-12-03" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -143,16 +143,382 @@ Figure 3.1: Net fluxes of carbon in conterminous U.S. forests for the period 200
 Figure 3.2: Mean annual net biome productivity (NBP) of conterminous U.S. forests for the period 2002-2020 summarized by ecoregion (a) and states (b). Panel c shows NBP estimated for all forest cells inthe conterminous U.S.
 </p>
 </div>
-<p>Carbon losses from LULC and disturbances reduced the annual forest carbon sink by 83 MMT C yr<sup>-1</sup> on average. The cumulative loss of carbon sequestration was primarily from the transfer of carbon to harvest wood products which averaged 68 MMT C yr<sup>-1</sup> while carbon losses from combusion - primarily due to wildfire - averaged 14 MMT C yr<sup>-1</sup>. Carbon losses from fire were highly variable from year-to-year. However, the three highest fire emission years all occurred since 2017. In 2020, emissions from fire, including the record setting megafires in California and Oregon, were estimated to be 47.16 MMT C (173.06 MMT CO[2]), more then three times the historical average. In addition to ecosystem carbon removals, LULC and disturbances resulted in the transfer of an additional 96 MMT C yr<sup>-1</sup> from live to DOM pools which will contribute to future years reductions in the carbon sink. This future flux could be accelerated by continued increases in the turnover rate of DOM resulting from continued climate warming.</p>
-<p>Add section here on carbon fluxes from specific LULC transitions.</p>
+<p>Carbon losses from LULC and disturbances reduced the annual forest carbon sink by 83 MMT C yr<sup>-1</sup> on average. The cumulative loss of carbon sequestration was primarily from the transfer of carbon to harvest wood products which averaged 68 MMT C yr<sup>-1</sup> while carbon losses from combusion - primarily due to wildfire - averaged 14 MMT C yr<sup>-1</sup> (Table <a href="results.html#tab:lulcfluxtable">3.1</a>). Carbon losses from fire were highly variable from year-to-year. However, the three highest fire emission years all occurred since 2017. In 2020, emissions from fire, including the record setting megafires in California and Oregon, were estimated to be 47.16 MMT C (173.06 MMT CO<sub>2</sub>), more then three times the historical average. In addition to ecosystem carbon removals, LULC and disturbances resulted in the transfer of an additional 96 MMT C yr<sup>-1</sup> from live to DOM pools which will contribute to future years reductions in the carbon sink. This future flux could be accelerated by continued increases in the turnover rate of DOM resulting from continued climate warming.</p>
+<table class=" lightable-paper" style='font-size: 12px; font-family: "Arial Narrow", arial, helvetica, sans-serif; width: auto !important; margin-left: auto; margin-right: auto;'>
+<caption style="font-size: initial !important;">
+<span id="tab:lulcfluxtable">Table 3.1: </span>Average annual Fluxes of carbon resulting from land use, land-use change, and disturbances for the period 2001-2020. Emissions refer to the direct combustion of carbon to the atmosphere as either carbon monoxide, methane, or carbon dioxide. All emissions are shown in units of carbon. Harvest refers to the transfer of carbon out of the ecosystem to harvested wood products. Mortality is the transfer of live carbon to DOM pools. Transfer refers to the transfer of carbon from one DOM pool to another. Units are in MMT C yr.
+</caption>
+<thead>
+<tr>
+<th style="text-align:left;">
+TransitionGroupID
+</th>
+<th style="text-align:left;">
+Transition Type
+</th>
+<th style="text-align:right;">
+Emission
+</th>
+<th style="text-align:right;">
+Harvest
+</th>
+<th style="text-align:right;">
+Mortality
+</th>
+<th style="text-align:right;">
+Transfer
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;vertical-align: top !important;" rowspan="3">
+Ag Expansion
+</td>
+<td style="text-align:left;">
+Ag Expansion: Cropland
+</td>
+<td style="text-align:right;">
+0.57
+</td>
+<td style="text-align:right;">
+0.42
+</td>
+<td style="text-align:right;">
+0.25
+</td>
+<td style="text-align:right;">
+—
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Ag Expansion: Pasture
+</td>
+<td style="text-align:right;">
+0.57
+</td>
+<td style="text-align:right;">
+0.50
+</td>
+<td style="text-align:right;">
+0.26
+</td>
+<td style="text-align:right;">
+—
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Total
+</td>
+<td style="text-align:right;">
+1.14
+</td>
+<td style="text-align:right;">
+0.92
+</td>
+<td style="text-align:right;">
+0.50
+</td>
+<td style="text-align:right;">
+—
+</td>
+</tr>
+<tr>
+<td style="text-align:left;vertical-align: top !important;" rowspan="5">
+Urbanization
+</td>
+<td style="text-align:left;">
+Urbanization: High
+</td>
+<td style="text-align:right;">
+0.23
+</td>
+<td style="text-align:right;">
+0.09
+</td>
+<td style="text-align:right;">
+—
+</td>
+<td style="text-align:right;">
+—
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Urbanization: Medium
+</td>
+<td style="text-align:right;">
+0.72
+</td>
+<td style="text-align:right;">
+0.26
+</td>
+<td style="text-align:right;">
+—
+</td>
+<td style="text-align:right;">
+—
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Urbanization: Low
+</td>
+<td style="text-align:right;">
+1.21
+</td>
+<td style="text-align:right;">
+0.45
+</td>
+<td style="text-align:right;">
+—
+</td>
+<td style="text-align:right;">
+—
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Urbanization: Open
+</td>
+<td style="text-align:right;">
+1.73
+</td>
+<td style="text-align:right;">
+0.66
+</td>
+<td style="text-align:right;">
+—
+</td>
+<td style="text-align:right;">
+—
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Total
+</td>
+<td style="text-align:right;">
+3.89
+</td>
+<td style="text-align:right;">
+1.46
+</td>
+<td style="text-align:right;">
+—
+</td>
+<td style="text-align:right;">
+—
+</td>
+</tr>
+<tr>
+<td style="text-align:left;vertical-align: top !important;" rowspan="3">
+Forest Harvest
+</td>
+<td style="text-align:left;">
+Forest Harvest: Forest Clearcut
+</td>
+<td style="text-align:right;">
+—
+</td>
+<td style="text-align:right;">
+63.90
+</td>
+<td style="text-align:right;">
+61.35
+</td>
+<td style="text-align:right;">
+7.32
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Forest Harvest: Forest Selection
+</td>
+<td style="text-align:right;">
+—
+</td>
+<td style="text-align:right;">
+2.14
+</td>
+<td style="text-align:right;">
+2.10
+</td>
+<td style="text-align:right;">
+—
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Total
+</td>
+<td style="text-align:right;">
+—
+</td>
+<td style="text-align:right;">
+66.04
+</td>
+<td style="text-align:right;">
+63.45
+</td>
+<td style="text-align:right;">
+7.32
+</td>
+</tr>
+<tr>
+<td style="text-align:left;vertical-align: top !important;" rowspan="4">
+Fire
+</td>
+<td style="text-align:left;">
+Fire: High Severity
+</td>
+<td style="text-align:right;">
+3.83
+</td>
+<td style="text-align:right;">
+—
+</td>
+<td style="text-align:right;">
+7.59
+</td>
+<td style="text-align:right;">
+6.89
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Fire: Medium Severity
+</td>
+<td style="text-align:right;">
+2.27
+</td>
+<td style="text-align:right;">
+—
+</td>
+<td style="text-align:right;">
+4.76
+</td>
+<td style="text-align:right;">
+2.40
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Fire: Low Severity
+</td>
+<td style="text-align:right;">
+3.15
+</td>
+<td style="text-align:right;">
+—
+</td>
+<td style="text-align:right;">
+6.86
+</td>
+<td style="text-align:right;">
+2.07
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Total
+</td>
+<td style="text-align:right;">
+9.25
+</td>
+<td style="text-align:right;">
+—
+</td>
+<td style="text-align:right;">
+19.22
+</td>
+<td style="text-align:right;">
+11.35
+</td>
+</tr>
+<tr>
+<td style="text-align:left;vertical-align: top !important;" rowspan="4">
+Insect
+</td>
+<td style="text-align:left;">
+Insect: High Severity
+</td>
+<td style="text-align:right;">
+—
+</td>
+<td style="text-align:right;">
+—
+</td>
+<td style="text-align:right;">
+6.07
+</td>
+<td style="text-align:right;">
+—
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Insect: Medium Severity
+</td>
+<td style="text-align:right;">
+—
+</td>
+<td style="text-align:right;">
+—
+</td>
+<td style="text-align:right;">
+4.95
+</td>
+<td style="text-align:right;">
+—
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Insect: Low Severity
+</td>
+<td style="text-align:right;">
+—
+</td>
+<td style="text-align:right;">
+—
+</td>
+<td style="text-align:right;">
+6.24
+</td>
+<td style="text-align:right;">
+—
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Total
+</td>
+<td style="text-align:right;">
+—
+</td>
+<td style="text-align:right;">
+—
+</td>
+<td style="text-align:right;">
+17.27
+</td>
+<td style="text-align:right;">
+—
+</td>
+</tr>
+</tbody>
+</table>
 </div>
 <div id="carbon-stocks" class="section level2">
 <h2><span class="header-section-number">3.2</span> Carbon stocks</h2>
-<p>We estimate U.S. forested ecosystems stored 52,027 MMT C in 2001 with live carbon accounting for 31% (16,201 MMT C) and DOM pools accounting for 69% (35,826 MMT C). By 2020, the total carbon stored in live carbon pools increased to 18,814 MMT C while DOM pools remained relatively stable. However, the net change in DOM masked dynamics within DOM pools. For example, carbon stored in standing dead snags increased by nearly 250 MMT C while soil pools declined by 420 MMT C (Table <a href="results.html#tab:stocktable">3.1</a>).</p>
-<p>Changes in LULC were an important driver of carbon stock change. When the effects of LULC were included, increases in live carbon were modest (2,613 MMT C) relative to simulations without LULC and disturbances (5,618 MMT C). Changes in LULC and disturbance resulted in increases in litter and deadwood relative to simulations without LULC while soil carbon losses were larger.</p>
+<p>We estimate U.S. forested ecosystems stored 52,027 MMT C in 2001 with live carbon accounting for 31% (16,201 MMT C) and DOM pools accounting for 69% (35,826 MMT C). By 2020, the total carbon stored in live carbon pools increased to 18,814 MMT C while DOM pools remained relatively stable. However, the net change in DOM masked dynamics within DOM pools. For example, carbon stored in standing dead snags increased by nearly 250 MMT C while soil pools declined by 420 MMT C (Table <a href="results.html#tab:stocktable">3.2</a>).</p>
+<p>Changes in LULC were an important driver of carbon stock change. When the effects of LULC were included, increases in live carbon were modest (2,613 MMT C) relative to simulations without LULC and disturbances (5,618 MMT C). Furthermore, changes in LULC and disturbance resulted in increases in litter and deadwood relative to simulations without LULC while soil carbon losses were larger.</p>
 <table class=" lightable-paper lightable-striped" style='font-size: 12px; font-family: "Arial Narrow", arial, helvetica, sans-serif; width: auto !important; margin-left: auto; margin-right: auto;'>
 <caption style="font-size: initial !important;">
-<span id="tab:stocktable">Table 3.1: </span>Carbon stock estimates for forest ecosystems of the conterminous U.S.. Units are in MMT C.
+<span id="tab:stocktable">Table 3.2: </span>Carbon stock estimates for forest ecosystems of the conterminous U.S.. Units are in MMT C.
 </caption>
 <thead>
 <tr>
@@ -464,10 +830,23 @@ Total
 </tr>
 </tbody>
 </table>
-<div class="figure"><span id="fig:tecmap"></span>
-<img src="test_files/figure-html/tecmap-1.png" alt="Map of the estiamted net biome productivity of conterminous U.S. forests for the period 2001-2020. Negative values indicate a net loss of carbon from ecosystems and positive values indicate a net sink of carbon." width="768" />
+<div class="figure"><span id="fig:stockchange"></span>
+<img src="test_files/figure-html/stockchange-1.png" alt="Net change in carbon stocks between 2001-2020. The 'Clim' scenario includes only the effects from climate variability and change; 'LULC' assumes only effects from land use and disturbances; 'LULC+Clim' includes both LULC and climate effects, and 'Ref' assumes no effects from either LULC or climate." width="384" />
 <p class="caption">
-Figure 3.3: Map of the estiamted net biome productivity of conterminous U.S. forests for the period 2001-2020. Negative values indicate a net loss of carbon from ecosystems and positive values indicate a net sink of carbon.
+Figure 3.3: Net change in carbon stocks between 2001-2020. The ‘Clim’ scenario includes only the effects from climate variability and change; ‘LULC’ assumes only effects from land use and disturbances; ‘LULC+Clim’ includes both LULC and climate effects, and ‘Ref’ assumes no effects from either LULC or climate.
+</p>
+</div>
+<p>Talk about species level changes here…</p>
+<div class="figure"><span id="fig:stocksstateclass"></span>
+<img src="test_files/figure-html/stocksstateclass-1.png" alt="Net change in carbon stock for each forest type and state class." width="576" />
+<p class="caption">
+Figure 3.4: Net change in carbon stock for each forest type and state class.
+</p>
+</div>
+<div class="figure"><span id="fig:tecmap"></span>
+<img src="test_files/figure-html/tecmap-1.png" alt="Map of the total ecosystem carbon stored in conterminous U.S. forests in the year 2020." width="768" />
+<p class="caption">
+Figure 3.5: Map of the total ecosystem carbon stored in conterminous U.S. forests in the year 2020.
 </p>
 </div>
 

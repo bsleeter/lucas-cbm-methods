@@ -1,5 +1,23 @@
 # Supplemental Material
 
+```{r, echo=F}
+trans_pal = c("Ag Expansion: Cropland" = "Peru",
+              "Ag Expansion: Pasture" = "LightYellow",
+              "Urbanization: High" = "Black",
+              "Urbanization: Medium" = "DimGray",
+              "Urbanization: Low" = "DarkGray",
+              "Urbanization: Open" = "LightGray",
+              "Forest Harvest: Forest Clearcut" = "Purple4",
+              "Forest Harvest: Forest Selection" = "Purple1",
+              "Fire: High Severity" = "DarkRed",
+              "Fire: Medium Severity" = "Red",
+              "Fire: Low Severity" = "Salmon",
+              "Insect: High Severity" = "DarkGreen",
+              "Insect: Medium Severity" = "Green3",
+              "Insect: Low Severity" = "LightGreen") 
+
+```
+
 ```{r, diagurb, cache=T, echo=F, warning=F, fig.width=3, Fig.height=3, fig.cap="Conceptual diagram of urbanization and urban intensification transitions used within the LUCAS state-and-transition simulation model."}
 
 DiagrammeR::grViz("digraph rmarkdown{
@@ -111,11 +129,11 @@ subgraph {rank = same; Shrubland; Forest}
 
 ```{r, stockresults, cache=T, echo=F, warning=F, message=F, fig.width=8, fig.height=4, fig.cap="Carbon stocks in conterminous U.S. forests from 2001-2020."}
 
-ps1 = ggplot(stocks_ipcc, aes(x=Timestep, y=Amount/1000000, color=ScenarioName, fill=ScenarioName, shape=ScenarioName)) +
+ggplot(stocks_ipcc, aes(x=Timestep, y=Amount/1000000, color=ScenarioName, fill=ScenarioName, shape=ScenarioName)) +
   geom_line() +
-  scale_color_brewer(palette="Dark2") +
+  scale_color_brewer(palette="Set2") +
   geom_point(color="white", size=1.5) +
-  scale_fill_brewer(palette="Dark2") +
+  scale_fill_brewer(palette="Set2") +
   scale_shape_manual(values=c("LULC+Clim"=21, "Clim"=22, "LULC"=23, "Ref"=24)) +
   facet_wrap(~StockGroupID, scales="free_y", ncol=5) +
   theme_custom() +
@@ -127,21 +145,4 @@ ps1 = ggplot(stocks_ipcc, aes(x=Timestep, y=Amount/1000000, color=ScenarioName, 
         legend.box.margin=margin(-10,-10,0,-10))
 ```
 
-```{r, stockchange, cache=T, echo=F, warning=F, message=F, fig.width=8, fig.height=4, fig.cap="Carbon stocks in conterminous U.S. forests from 2001-2020."}
 
-ps2 = ggplot(stocks_ipcc_change, aes(x=ScenarioName, y=Change, fill=ScenarioName)) +
-  geom_bar(stat="identity") +
-  scale_fill_brewer(palette = "Dark2") +
-  facet_wrap(~StockGroupID, scales = "free_y", ncol=5) +
-  geom_hline(yintercept = 0, size=0.2) +
-  theme_custom() +
-  labs(x=NULL, y=expression(Net~flux~(MMT~C)), fill="Scenario", shape="Scenario", color="Scenario") +
-  theme(legend.position = "bottom",
-        legend.key.width = unit(10, "mm"),
-        legend.key.height = unit(3, "mm"),
-        legend.margin=margin(0,0,0,0),
-        legend.box.margin=margin(-10,-10,0,-10),
-        axis.text.x = element_blank())
-
-plot_grid(ps1, ps2, align=c("hv"), nrow=2)
-```

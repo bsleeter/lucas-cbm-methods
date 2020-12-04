@@ -7,6 +7,7 @@ library(tidyverse)
 library(cowplot)
 library(dplyr)
 library(kableExtra)
+library(scales)
 
 theme_custom <- function(...) {
   theme_bw() +
@@ -258,9 +259,48 @@ p = plot_grid(pleft, pright, align=c("hv"), ncol = 2, rel_widths = c(4,6))
 p
 ```
 
-Carbon losses from LULC and disturbances reduced the annual forest carbon sink by `r lulc_losses` MMT C yr^-1^ on average. The cumulative loss of carbon sequestration was primarily from the transfer of carbon to harvest wood products which averaged `r flows_harvest_prim_mean` MMT C yr^-1^ while carbon losses from combusion - primarily due to wildfire - averaged `r flows_emis_prim_mean` MMT C yr^-1^. Carbon losses from fire were highly variable from year-to-year. However, the three highest fire emission years all occurred since 2017. In 2020, emissions from fire, including the record setting megafires in California and Oregon, were estimated to be `r flows_emis_prim_2020` MMT C (`r flows_emis_prim_2020*3.67` MMT CO[2]), more then three times the historical average. In addition to ecosystem carbon removals, LULC and disturbances resulted in the transfer of an additional `r flows_mort_prim_mean` MMT C yr^-1^ from live to DOM pools which will contribute to future years reductions in the carbon sink. This future flux could be accelerated by continued increases in the turnover rate of DOM resulting from continued climate warming. 
+Carbon losses from LULC and disturbances reduced the annual forest carbon sink by `r lulc_losses` MMT C yr^-1^ on average. The cumulative loss of carbon sequestration was primarily from the transfer of carbon to harvest wood products which averaged `r flows_harvest_prim_mean` MMT C yr^-1^ while carbon losses from combusion - primarily due to wildfire - averaged `r flows_emis_prim_mean` MMT C yr^-1^ (Table \@ref(tab:lulcfluxtable)). Carbon losses from fire were highly variable from year-to-year. However, the three highest fire emission years all occurred since 2017. In 2020, emissions from fire, including the record setting megafires in California and Oregon, were estimated to be `r flows_emis_prim_2020` MMT C (`r flows_emis_prim_2020*3.67` MMT CO~2~), more then three times the historical average. In addition to ecosystem carbon removals, LULC and disturbances resulted in the transfer of an additional `r flows_mort_prim_mean` MMT C yr^-1^ from live to DOM pools which will contribute to future years reductions in the carbon sink. This future flux could be accelerated by continued increases in the turnover rate of DOM resulting from continued climate warming. 
 
-Add section here on carbon fluxes from specific LULC transitions.
+```{r, lulcfluxtable, echo=F, warning=F, message=F}
+trans_types_by_group = read_csv("data/tables/transition-types-by-group.csv")
+
+lulc_removals = read_csv("data/results/flows_transitions.csv") %>% 
+  left_join(scenario_ids) %>%
+  filter(ScenarioName=="LULC+Clim", !FlowGroupID %in% c("Net Biome Productivity")) %>%
+  group_by(ScenarioName, FlowGroupID, TransitionTypeID) %>%
+  summarise(Amount=mean(Amount)/1000000) %>%
+  left_join(trans_types_by_group) %>%
+  ungroup() %>%
+  select(TransitionGroupID, TransitionTypeID, FlowGroupID, Amount) 
+
+lulc_removals_sum = lulc_removals %>%
+  group_by(TransitionGroupID, FlowGroupID) %>%
+  summarise(Amount=sum(Amount)) %>%
+  mutate(TransitionTypeID = "Total")
+
+lulc_removals = bind_rows(lulc_removals, lulc_removals_sum) %>%
+  pivot_wider(names_from = FlowGroupID, values_from = Amount) %>%
+  mutate(TransitionGroupID = factor(TransitionGroupID, levels = c("Ag Expansion", "Urbanization", "Forest Harvest", "Fire", "Insect"))) %>%
+  mutate(TransitionTypeID = factor(TransitionTypeID, 
+                                   levels=c("Ag Expansion: Cropland","Ag Expansion: Pasture",
+                                                              "Urbanization: High","Urbanization: Medium","Urbanization: Low","Urbanization: Open",
+                                                              "Forest Harvest: Forest Clearcut","Forest Harvest: Forest Selection",
+                                                              "Fire: High Severity","Fire: Medium Severity","Fire: Low Severity",
+                                                              "Insect: High Severity","Insect: Medium Severity","Insect: Low Severity",
+                                                              "Total"))) %>%
+  arrange(TransitionGroupID, TransitionTypeID) 
+
+options(knitr.kable.NA = "---")
+
+kable(lulc_removals, col.names = c("TransitionGroupID", "Transition Type", "Emission", "Harvest", "Mortality", "Transfer"),
+      digits = 2,
+      booktabs = T,
+      escape = F,
+      caption="Average annual Fluxes of carbon resulting from land use, land-use change, and disturbances for the period 2001-2020. Emissions refer to the direct combustion of carbon to the atmosphere as either carbon monoxide, methane, or carbon dioxide. All emissions are shown in units of carbon. Harvest refers to the transfer of carbon out of the ecosystem to harvested wood products. Mortality is the transfer of live carbon to DOM pools. Transfer refers to the transfer of carbon from one DOM pool to another. Units are in MMT C yr.") %>%
+  kable_paper(font_size=12, full_width = F) %>%
+  collapse_rows(1:2, valign="top")
+
+```
 
 ```{r, resultdata2, echo=F, message=F, warning=F}
 stockypes_live_dom_tec = c("Total Ecosystem", "Biomass: Total", "DOM: Deadwood")
@@ -315,7 +355,7 @@ stocks_live_change_clim = round((stocks_ipcc_change %>% filter(ScenarioName=="Cl
 
 We estimate U.S. forested ecosystems stored `r stocks_tec_2001` MMT C in 2001 with live carbon accounting for `r stocks_live_2001_pct`% (`r stocks_live_2001` MMT C) and DOM pools accounting for `r stocks_dom_2001_pct`% (`r stocks_dom_2001` MMT C). By 2020, the total carbon stored in live carbon pools increased to `r stocks_live_2020` MMT C while DOM pools remained relatively stable. However, the net change in DOM masked dynamics within DOM pools. For example, carbon stored in standing dead snags increased by nearly 250 MMT C while soil pools declined by 420 MMT C (Table \@ref(tab:stocktable)).  
 
-Changes in LULC were an important driver of carbon stock change. When the effects of LULC were included, increases in live carbon were modest (`r stocks_live_change_prim` MMT C) relative to simulations without LULC and disturbances (`r stocks_live_change_clim` MMT C). Changes in LULC and disturbance resulted in increases in litter and deadwood relative to simulations without LULC while soil carbon losses were larger. 
+Changes in LULC were an important driver of carbon stock change. When the effects of LULC were included, increases in live carbon were modest (`r stocks_live_change_prim` MMT C) relative to simulations without LULC and disturbances (`r stocks_live_change_clim` MMT C). Furthermore, changes in LULC and disturbance resulted in increases in litter and deadwood relative to simulations without LULC while soil carbon losses were larger. 
 
 ```{r, stocktable, echo=F, warning=F, message=F}
 stock_groups = read_csv("data/tables/stock-groups.csv")
@@ -354,11 +394,63 @@ kable(stocks_table_merge, col.names = c("Stock", "2001", "2020", "Change"),
                       "Soil" = 4))
 ```
 
+```{r, stockchange, cache=T, echo=F, warning=F, message=F, fig.width=4, fig.height=3, fig.cap="Net change in carbon stocks between 2001-2020. The 'Clim' scenario includes only the effects from climate variability and change; 'LULC' assumes only effects from land use and disturbances; 'LULC+Clim' includes both LULC and climate effects, and 'Ref' assumes no effects from either LULC or climate."}
+
+ggplot(stocks_ipcc_change, aes(x=ScenarioName, y=Change, fill=ScenarioName)) +
+  geom_hline(yintercept = 0, size=0.2) +
+  geom_bar(stat="identity", color="black") +
+  scale_y_continuous(label = comma) +
+  scale_fill_brewer(palette = "Accent") +
+  facet_wrap(~StockGroupID, scales = "free_y", ncol=3) +
+  theme_custom() +
+  labs(x=NULL, y=expression(Net~flux~(MMT~C)), fill="Scenario", shape="Scenario", color="Scenario") +
+  theme(legend.position = c(0.85,0.2),
+        legend.key.width = unit(10, "mm"),
+        legend.key.height = unit(3, "mm"),
+        legend.margin=margin(0,0,0,0),
+        legend.box.margin=margin(-10,-10,0,-10),
+        axis.text.x = element_blank())
+```
+
+Talk about species level changes here...
+
+```{r, stocksstateclass, echo=F, warning=F, message=F, fig.width=6, fig.height=6, fig.cap="Net change in carbon stock for each forest type and state class."}
+
+stocks_state_class = read_csv("data/results/stocks-state-class.csv") %>%
+  left_join(scenario_ids) %>%
+  filter(StockGroupID %in% c("Biomass: Aboveground", "Biomass: Belowground", "DOM: Deadwood", "DOM: Litter", "DOM: Soil"), Timestep %in% c(2001,2020), ScenarioName=="LULC+Clim") %>%
+  group_by(ScenarioName, StockGroupID, StateClassID) %>%
+  arrange(Timestep) %>%
+  mutate(Change = Amount-lag(Amount)) %>%
+  filter(Timestep==2020, Change!=0) %>%
+  mutate(StateClassID = str_remove(StateClassID, " Group"))
+
+tec_state_class = stocks_state_class %>%
+  group_by(StateClassID) %>% summarise(Amount=sum(Amount), Change=sum(Change)) %>%
+  mutate(StockGroupID = "Total Ecosystem")
+
+ggplot() +
+  geom_bar(data=stocks_state_class, aes(x=StateClassID, y=Change/1000000, fill=StockGroupID), stat="identity") +
+  geom_segment(data=tec_state_class, aes(x=StateClassID, xend=StateClassID, yend=0, y=Change/1000000, color="TEC")) +
+  geom_point(data=tec_state_class, aes(x=StateClassID, y=Change/1000000, color="TEC"), shape=16) +
+  scale_color_manual(values = c("TEC"="black")) +
+  scale_fill_brewer(palette = "Set2") +
+  scale_y_continuous(labels = comma) +
+  coord_flip() +
+  labs(x=NULL, y=expression(MMT~C), color=NULL, fill="Stock Group") +
+  theme_custom() +
+  theme(legend.position = c(0.8,0.1),
+        legend.direction = "vertical",
+        legend.key.height = unit(2, "mm"),
+        legend.margin = margin(-1,-1,-10,-10))
+
+```
 
 
 
 
-```{r, tecmap, cache=T, echo=F, warning=F, message=F, fig.width=8, fig.cap="Map of the estiamted net biome productivity of conterminous U.S. forests for the period 2001-2020. Negative values indicate a net loss of carbon from ecosystems and positive values indicate a net sink of carbon."}
+
+```{r, tecmap, cache=T, echo=F, warning=F, message=F, fig.width=8, fig.cap="Map of the total ecosystem carbon stored in conterminous U.S. forests in the year 2020."}
 land_poly = st_read("data/vector/ne_10m_land.shp", quiet=T)
 states_poly = st_read("data/vector/states.shp", quiet=T)
 tec_raster = raster("data/results/stocks-tec-2020.tif")

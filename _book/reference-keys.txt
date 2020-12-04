@@ -62,3 +62,5 @@ net-carbon-flux
 carbon-stocks
 tab:stocktable
 fig:stratumflows
+tab:lulcfluxtable
+fig:stocksstateclass
