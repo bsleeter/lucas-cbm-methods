@@ -5,3 +5,4 @@ _publish.R
 rsconnect
 *.rdb
 _bookdown_files
+.Rproj.user
