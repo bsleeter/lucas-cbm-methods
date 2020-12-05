@@ -24,7 +24,7 @@
 <meta name="author" content="Benjamin M. Sleeter" />
 
 
-<meta name="date" content="2020-12-03" />
+<meta name="date" content="2020-12-04" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -50,7 +50,6 @@
 
 
 
-<script src="libs/accessible-code-block-0.0.1/empty-anchor.js"></script>
 <link href="libs/anchor-sections-1.0/anchor-sections.css" rel="stylesheet" />
 <script src="libs/anchor-sections-1.0/anchor-sections.js"></script>
 <script src="libs/kePrint-0.0.1/kePrint.js"></script>
@@ -515,13 +514,32 @@ Total
 </div>
 <div id="carbon-stocks" class="section level2">
 <h2><span class="header-section-number">3.2</span> Carbon stocks</h2>
-<p>We estimate U.S. forested ecosystems stored 52,027 MMT C in 2001 with live carbon accounting for 31% (16,201 MMT C) and DOM pools accounting for 69% (35,826 MMT C). By 2020, the total carbon stored in live carbon pools increased to 18,814 MMT C while DOM pools remained relatively stable. However, the net change in DOM masked dynamics within DOM pools. For example, carbon stored in standing dead snags increased by nearly 250 MMT C while soil pools declined by 420 MMT C (Table <a href="results.html#tab:stocktable">3.2</a>).</p>
-<p>Changes in LULC were an important driver of carbon stock change. When the effects of LULC were included, increases in live carbon were modest (2,613 MMT C) relative to simulations without LULC and disturbances (5,618 MMT C). Furthermore, changes in LULC and disturbance resulted in increases in litter and deadwood relative to simulations without LULC while soil carbon losses were larger.</p>
-<table class=" lightable-paper lightable-striped" style='font-size: 12px; font-family: "Arial Narrow", arial, helvetica, sans-serif; width: auto !important; margin-left: auto; margin-right: auto;'>
+<p>We estimate U.S. forested ecosystems stored 52,027 MMT C in 2001 with live carbon accounting for 31% (16,201 MMT C) and DOM pools accounting for 69% (35,826 MMT C). By 2020, the total carbon stored in live carbon pools increased to 18,814 MMT C while DOM pools remained relatively stable. However, the net change in DOM masked dynamics within DOM pools. For example, carbon stored in standing dead snags increased by 201 MMT C while soil pools declined by -420 MMT C (Table <a href="results.html#tab:stocktable">3.2</a>).</p>
+<div class="figure"><span id="fig:stockchangeeco"></span>
+<img src="test_files/figure-html/stockchangeeco-1.png" alt="Mean annual net biome productivity (NBP) of conterminous U.S. forests for the period 2002-2020 summarized by ecoregion (a) and states (b). Panel c shows NBP estimated for all forest cells inthe conterminous U.S." width="768" />
+<p class="caption">
+Figure 3.3: Mean annual net biome productivity (NBP) of conterminous U.S. forests for the period 2002-2020 summarized by ecoregion (a) and states (b). Panel c shows NBP estimated for all forest cells inthe conterminous U.S.
+</p>
+</div>
+<table class=" lightable-classic lightable-striped" style='font-size: 12px; font-family: "Arial Narrow", "Source Sans Pro", sans-serif; width: auto !important; margin-left: auto; margin-right: auto;border-bottom: 0;'>
 <caption style="font-size: initial !important;">
 <span id="tab:stocktable">Table 3.2: </span>Carbon stock estimates for forest ecosystems of the conterminous U.S.. Units are in MMT C.
 </caption>
 <thead>
+<tr>
+<th style="empty-cells: hide;" colspan="1">
+</th>
+<th style="padding-bottom:0; padding-left:3px;padding-right:3px;text-align: center; " colspan="2">
+<div style="TRUE">
+Year
+</div>
+</th>
+<th style="padding-bottom:0; padding-left:3px;padding-right:3px;text-align: center; " colspan="2">
+<div style="TRUE">
+Change
+</div>
+</th>
+</tr>
 <tr>
 <th style="text-align:left;">
 Stock
@@ -533,13 +551,16 @@ Stock
 2020
 </th>
 <th style="text-align:right;">
-Change
+MMT C
+</th>
+<th style="text-align:right;">
+%
 </th>
 </tr>
 </thead>
 <tbody>
 <tr grouplength="4">
-<td colspan="4" style="border-bottom: 1px solid;">
+<td colspan="5" style="border-bottom: 1px solid;">
 <strong>Aboveground live</strong>
 </td>
 </tr>
@@ -556,6 +577,9 @@ Biomass: Foliage [Type]
 <td style="text-align:right;">
 92.6
 </td>
+<td style="text-align:right;">
+10.5
+</td>
 </tr>
 <tr>
 <td style="text-align:left; padding-left:  2em;" indentlevel="1">
@@ -569,6 +593,9 @@ Biomass: Merchantable [Type]
 </td>
 <td style="text-align:right;">
 1568.9
+</td>
+<td style="text-align:right;">
+20.0
 </td>
 </tr>
 <tr>
@@ -584,6 +611,9 @@ Biomass: Other Wood [Type]
 <td style="text-align:right;">
 523.0
 </td>
+<td style="text-align:right;">
+12.1
+</td>
 </tr>
 <tr>
 <td style="text-align:left; padding-left:  2em;" indentlevel="1">
@@ -598,9 +628,12 @@ Total
 <td style="text-align:right;">
 2184.5
 </td>
+<td style="text-align:right;">
+16.7
+</td>
 </tr>
 <tr grouplength="3">
-<td colspan="4" style="border-bottom: 1px solid;">
+<td colspan="5" style="border-bottom: 1px solid;">
 <strong>Belowground live</strong>
 </td>
 </tr>
@@ -617,6 +650,9 @@ Biomass: Coarse Root [Type]
 <td style="text-align:right;">
 395.2
 </td>
+<td style="text-align:right;">
+14.7
+</td>
 </tr>
 <tr>
 <td style="text-align:left; padding-left:  2em;" indentlevel="1">
@@ -630,6 +666,9 @@ Biomass: Fine Root [Type]
 </td>
 <td style="text-align:right;">
 33.0
+</td>
+<td style="text-align:right;">
+7.1
 </td>
 </tr>
 <tr>
@@ -645,9 +684,12 @@ Total
 <td style="text-align:right;">
 428.2
 </td>
+<td style="text-align:right;">
+13.6
+</td>
 </tr>
 <tr grouplength="5">
-<td colspan="4" style="border-bottom: 1px solid;">
+<td colspan="5" style="border-bottom: 1px solid;">
 <strong>Deadwood</strong>
 </td>
 </tr>
@@ -664,6 +706,9 @@ DOM: Aboveground Medium [Type]
 <td style="text-align:right;">
 -193.8
 </td>
+<td style="text-align:right;">
+-13.0
+</td>
 </tr>
 <tr>
 <td style="text-align:left; padding-left:  2em;" indentlevel="1">
@@ -677,6 +722,9 @@ DOM: Belowground Fast [Type]
 </td>
 <td style="text-align:right;">
 8.3
+</td>
+<td style="text-align:right;">
+3.4
 </td>
 </tr>
 <tr>
@@ -692,6 +740,9 @@ DOM: Snag Branch [Type]
 <td style="text-align:right;">
 45.4
 </td>
+<td style="text-align:right;">
+19.0
+</td>
 </tr>
 <tr>
 <td style="text-align:left; padding-left:  2em;" indentlevel="1">
@@ -705,6 +756,9 @@ DOM: Snag Stem [Type]
 </td>
 <td style="text-align:right;">
 200.7
+</td>
+<td style="text-align:right;">
+26.5
 </td>
 </tr>
 <tr>
@@ -720,9 +774,12 @@ Total
 <td style="text-align:right;">
 60.5
 </td>
+<td style="text-align:right;">
+2.2
+</td>
 </tr>
 <tr grouplength="3">
-<td colspan="4" style="border-bottom: 1px solid;">
+<td colspan="5" style="border-bottom: 1px solid;">
 <strong>Litter</strong>
 </td>
 </tr>
@@ -739,6 +796,9 @@ DOM: Aboveground Fast [Type]
 <td style="text-align:right;">
 62.3
 </td>
+<td style="text-align:right;">
+4.5
+</td>
 </tr>
 <tr>
 <td style="text-align:left; padding-left:  2em;" indentlevel="1">
@@ -752,6 +812,9 @@ DOM: Aboveground Very Fast [Type]
 </td>
 <td style="text-align:right;">
 84.0
+</td>
+<td style="text-align:right;">
+9.8
 </td>
 </tr>
 <tr>
@@ -767,9 +830,12 @@ Total
 <td style="text-align:right;">
 146.4
 </td>
+<td style="text-align:right;">
+6.5
+</td>
 </tr>
 <tr grouplength="4">
-<td colspan="4" style="border-bottom: 1px solid;">
+<td colspan="5" style="border-bottom: 1px solid;">
 <strong>Soil</strong>
 </td>
 </tr>
@@ -786,6 +852,9 @@ DOM: Aboveground Slow [Type]
 <td style="text-align:right;">
 -293.5
 </td>
+<td style="text-align:right;">
+-4.1
+</td>
 </tr>
 <tr>
 <td style="text-align:left; padding-left:  2em;" indentlevel="1">
@@ -799,6 +868,9 @@ DOM: Belowground Slow [Type]
 </td>
 <td style="text-align:right;">
 -133.2
+</td>
+<td style="text-align:right;">
+-0.6
 </td>
 </tr>
 <tr>
@@ -814,6 +886,9 @@ DOM: Belowground Very Fast [Type]
 <td style="text-align:right;">
 6.6
 </td>
+<td style="text-align:right;">
+4.6
+</td>
 </tr>
 <tr>
 <td style="text-align:left; padding-left:  2em;" indentlevel="1">
@@ -828,22 +903,32 @@ Total
 <td style="text-align:right;">
 -420.1
 </td>
+<td style="text-align:right;">
+-1.4
+</td>
 </tr>
 </tbody>
+<tfoot>
+<tr>
+<td style="padding: 0; " colspan="100%">
+<span style="font-style: italic;">Note: </span>
+</td>
+</tr>
+<tr>
+<td style="padding: 0; " colspan="100%">
+<sup></sup> The Aboveground Slow pool has been included with the IPCC Soil pool rather than the Litter pool as done in the CBM-CFS3 model.
+</td>
+</tr>
+</tfoot>
 </table>
+<p>Changes in LULC were an important driver of carbon stock change. When the effects of LULC were included, increases in live carbon were modest (2,613 MMT C) relative to simulations without LULC and disturbances (5,618 MMT C). Furthermore, changes in LULC and disturbance resulted in increases in litter and deadwood relative to simulations without LULC while soil carbon losses were larger.</p>
 <div class="figure"><span id="fig:stockchange"></span>
 <img src="test_files/figure-html/stockchange-1.png" alt="Net change in carbon stocks between 2001-2020. The 'Clim' scenario includes only the effects from climate variability and change; 'LULC' assumes only effects from land use and disturbances; 'LULC+Clim' includes both LULC and climate effects, and 'Ref' assumes no effects from either LULC or climate." width="384" />
 <p class="caption">
-Figure 3.3: Net change in carbon stocks between 2001-2020. The ‘Clim’ scenario includes only the effects from climate variability and change; ‘LULC’ assumes only effects from land use and disturbances; ‘LULC+Clim’ includes both LULC and climate effects, and ‘Ref’ assumes no effects from either LULC or climate.
+Figure 3.4: Net change in carbon stocks between 2001-2020. The ‘Clim’ scenario includes only the effects from climate variability and change; ‘LULC’ assumes only effects from land use and disturbances; ‘LULC+Clim’ includes both LULC and climate effects, and ‘Ref’ assumes no effects from either LULC or climate.
 </p>
 </div>
 <p>Talk about species level changes here…</p>
-<div class="figure"><span id="fig:stocksstateclass"></span>
-<img src="test_files/figure-html/stocksstateclass-1.png" alt="Net change in carbon stock for each forest type and state class." width="576" />
-<p class="caption">
-Figure 3.4: Net change in carbon stock for each forest type and state class.
-</p>
-</div>
 <div class="figure"><span id="fig:tecmap"></span>
 <img src="test_files/figure-html/tecmap-1.png" alt="Map of the total ecosystem carbon stored in conterminous U.S. forests in the year 2020." width="768" />
 <p class="caption">

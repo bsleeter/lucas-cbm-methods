@@ -145,4 +145,34 @@ ggplot(stocks_ipcc, aes(x=Timestep, y=Amount/1000000, color=ScenarioName, fill=S
         legend.box.margin=margin(-10,-10,0,-10))
 ```
 
+```{r, stocksstateclass, echo=F, warning=F, message=F, fig.width=6, fig.height=6, fig.cap="Net change in carbon stock for each forest type and state class."}
 
+stocks_state_class = read_csv("data/results/stocks-state-class.csv") %>%
+  left_join(scenario_ids) %>%
+  filter(StockGroupID %in% c("Biomass: Aboveground", "Biomass: Belowground", "DOM: Deadwood", "DOM: Litter", "DOM: Soil"), Timestep %in% c(2001,2020), ScenarioName=="LULC+Clim") %>%
+  group_by(ScenarioName, StockGroupID, StateClassID) %>%
+  arrange(Timestep) %>%
+  mutate(Change = Amount-lag(Amount)) %>%
+  filter(Timestep==2020, Change!=0) %>%
+  mutate(StateClassID = str_remove(StateClassID, " Group"))
+
+tec_state_class = stocks_state_class %>%
+  group_by(StateClassID) %>% summarise(Amount=sum(Amount), Change=sum(Change)) %>%
+  mutate(StockGroupID = "Total Ecosystem")
+
+ggplot() +
+  geom_bar(data=stocks_state_class, aes(x=StateClassID, y=Change/1000000, fill=StockGroupID), stat="identity") +
+  geom_segment(data=tec_state_class, aes(x=StateClassID, xend=StateClassID, yend=0, y=Change/1000000, color="TEC")) +
+  geom_point(data=tec_state_class, aes(x=StateClassID, y=Change/1000000, color="TEC"), shape=16) +
+  scale_color_manual(values = c("TEC"="black")) +
+  scale_fill_brewer(palette = "Set2") +
+  scale_y_continuous(labels = comma) +
+  coord_flip() +
+  labs(x=NULL, y=expression(MMT~C), color=NULL, fill="Stock Group") +
+  theme_custom() +
+  theme(legend.position = c(0.8,0.1),
+        legend.direction = "vertical",
+        legend.key.height = unit(2, "mm"),
+        legend.margin = margin(-1,-1,-10,-10))
+
+```

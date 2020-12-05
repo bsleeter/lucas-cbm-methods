@@ -64,3 +64,4 @@ tab:stocktable
 fig:stratumflows
 tab:lulcfluxtable
 fig:stocksstateclass
+fig:stockchangeeco

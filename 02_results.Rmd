@@ -138,7 +138,7 @@ The largest net carbon losses were in found in the mountain regions (Sierra Neva
 
 ```{r, nbpmap, cache=T, echo=F, warning=F, message=F, fig.width=8, fig.cap="Map of the estiamted net biome productivity of conterminous U.S. forests for the period 2001-2020. Negative values indicate a net loss of carbon from ecosystems and positive values indicate a net sink of carbon."}
 land_poly = st_read("data/vector/ne_10m_land.shp", quiet=T)
-states_poly = st_read("data/vector/states.shp", quiet=T)
+states_poly = st_read("data/vector/cb_2018_us_state_20m.shp", quiet=T)
 nbp_raster = raster("data/results/flows-nbp-2020.tif")
 # nbp_raster = aggregate(nbp_raster, fact=4, na.rm=T)
 nbp_raster_df = as.data.frame(nbp_raster, xy=T) %>%
@@ -347,17 +347,10 @@ stocks_ipcc_change = stocks_ipcc %>%
   mutate(Change=Change/1000000)
 
 stocks_live_change_prim = round((stocks_ipcc_change %>% filter(ScenarioName=="LULC+Clim", StockGroupID=="Biomass: Total"))$Change,0)
-
 stocks_live_change_clim = round((stocks_ipcc_change %>% filter(ScenarioName=="Clim", StockGroupID=="Biomass: Total"))$Change,0)
-```
+stocks_soil_change_prim = round((stocks_ipcc_change %>% filter(ScenarioName=="LULC+Clim", StockGroupID=="DOM: Soil"))$Change,0)
 
-## Carbon stocks
-
-We estimate U.S. forested ecosystems stored `r stocks_tec_2001` MMT C in 2001 with live carbon accounting for `r stocks_live_2001_pct`% (`r stocks_live_2001` MMT C) and DOM pools accounting for `r stocks_dom_2001_pct`% (`r stocks_dom_2001` MMT C). By 2020, the total carbon stored in live carbon pools increased to `r stocks_live_2020` MMT C while DOM pools remained relatively stable. However, the net change in DOM masked dynamics within DOM pools. For example, carbon stored in standing dead snags increased by nearly 250 MMT C while soil pools declined by 420 MMT C (Table \@ref(tab:stocktable)).  
-
-Changes in LULC were an important driver of carbon stock change. When the effects of LULC were included, increases in live carbon were modest (`r stocks_live_change_prim` MMT C) relative to simulations without LULC and disturbances (`r stocks_live_change_clim` MMT C). Furthermore, changes in LULC and disturbance resulted in increases in litter and deadwood relative to simulations without LULC while soil carbon losses were larger. 
-
-```{r, stocktable, echo=F, warning=F, message=F}
+# Data for stock change table
 stock_groups = read_csv("data/tables/stock-groups.csv")
 
 stocks_table = read_csv("data/results/stocks_conus.csv") %>% 
@@ -377,78 +370,17 @@ stocks_table_sum = stocks_table %>%
 stocks_table_merge = bind_rows(stocks_table, stocks_table_sum) %>%
   pivot_wider(names_from=Timestep, values_from=Amount) %>%
   mutate(Change=`2020`-`2001`) %>%
+  mutate(PctChange = (`2020`-`2001`)/`2001`*100) %>%
   arrange(StockGroup) %>%
   mutate(StockGroup = factor(StockGroup, levels=c("Aboveground live", "Belowground live", "Deadwood", "Litter", "Soil"))) %>%
   select(-StockGroup)
 
-kable(stocks_table_merge, col.names = c("Stock", "2001", "2020", "Change"),
-      digits = 1,
-      booktabs = T,
-      escape = F,
-      caption="Carbon stock estimates for forest ecosystems of the conterminous U.S.. Units are in MMT C.") %>%
-  kable_paper(lightable_options = c("striped"), font_size=12, full_width = F) %>%
-  pack_rows(index = c("Aboveground live" = 4, 
-                      "Belowground live" = 3, 
-                      "Deadwood" = 5,
-                      "Litter" = 3,
-                      "Soil" = 4))
+stocks_snagstem_change_prim = round((stocks_table_merge %>% filter(StockGroupID=="DOM: Snag Stem [Type]"))$Change,0)
 ```
 
-```{r, stockchange, cache=T, echo=F, warning=F, message=F, fig.width=4, fig.height=3, fig.cap="Net change in carbon stocks between 2001-2020. The 'Clim' scenario includes only the effects from climate variability and change; 'LULC' assumes only effects from land use and disturbances; 'LULC+Clim' includes both LULC and climate effects, and 'Ref' assumes no effects from either LULC or climate."}
+## Carbon stocks
 
-ggplot(stocks_ipcc_change, aes(x=ScenarioName, y=Change, fill=ScenarioName)) +
-  geom_hline(yintercept = 0, size=0.2) +
-  geom_bar(stat="identity", color="black") +
-  scale_y_continuous(label = comma) +
-  scale_fill_brewer(palette = "Accent") +
-  facet_wrap(~StockGroupID, scales = "free_y", ncol=3) +
-  theme_custom() +
-  labs(x=NULL, y=expression(Net~flux~(MMT~C)), fill="Scenario", shape="Scenario", color="Scenario") +
-  theme(legend.position = c(0.85,0.2),
-        legend.key.width = unit(10, "mm"),
-        legend.key.height = unit(3, "mm"),
-        legend.margin=margin(0,0,0,0),
-        legend.box.margin=margin(-10,-10,0,-10),
-        axis.text.x = element_blank())
-```
-
-Talk about species level changes here...
-
-```{r, stocksstateclass, echo=F, warning=F, message=F, fig.width=6, fig.height=6, fig.cap="Net change in carbon stock for each forest type and state class."}
-
-stocks_state_class = read_csv("data/results/stocks-state-class.csv") %>%
-  left_join(scenario_ids) %>%
-  filter(StockGroupID %in% c("Biomass: Aboveground", "Biomass: Belowground", "DOM: Deadwood", "DOM: Litter", "DOM: Soil"), Timestep %in% c(2001,2020), ScenarioName=="LULC+Clim") %>%
-  group_by(ScenarioName, StockGroupID, StateClassID) %>%
-  arrange(Timestep) %>%
-  mutate(Change = Amount-lag(Amount)) %>%
-  filter(Timestep==2020, Change!=0) %>%
-  mutate(StateClassID = str_remove(StateClassID, " Group"))
-
-tec_state_class = stocks_state_class %>%
-  group_by(StateClassID) %>% summarise(Amount=sum(Amount), Change=sum(Change)) %>%
-  mutate(StockGroupID = "Total Ecosystem")
-
-ggplot() +
-  geom_bar(data=stocks_state_class, aes(x=StateClassID, y=Change/1000000, fill=StockGroupID), stat="identity") +
-  geom_segment(data=tec_state_class, aes(x=StateClassID, xend=StateClassID, yend=0, y=Change/1000000, color="TEC")) +
-  geom_point(data=tec_state_class, aes(x=StateClassID, y=Change/1000000, color="TEC"), shape=16) +
-  scale_color_manual(values = c("TEC"="black")) +
-  scale_fill_brewer(palette = "Set2") +
-  scale_y_continuous(labels = comma) +
-  coord_flip() +
-  labs(x=NULL, y=expression(MMT~C), color=NULL, fill="Stock Group") +
-  theme_custom() +
-  theme(legend.position = c(0.8,0.1),
-        legend.direction = "vertical",
-        legend.key.height = unit(2, "mm"),
-        legend.margin = margin(-1,-1,-10,-10))
-
-```
-
-
-
-
+Total ecosystem carbon (TEC) is the sum of all carbon stored in ecosystem pools (i.e. above and belowground biomass, deadwood, litter, and soil). The areas with the largest carbon stores were generally in the western mountain regions which often stored in excess of 300 tons per hectare.
 
 ```{r, tecmap, cache=T, echo=F, warning=F, message=F, fig.width=8, fig.cap="Map of the total ecosystem carbon stored in conterminous U.S. forests in the year 2020."}
 land_poly = st_read("data/vector/ne_10m_land.shp", quiet=T)
@@ -458,6 +390,10 @@ tec_raster = raster("data/results/stocks-tec-2020.tif")
 tec_raster_df = as.data.frame(tec_raster, xy=T) %>%
   rename("Amount"="stocks.tec.2020") %>%
   filter(Amount>0)
+
+breaks = c(min(tec_raster_df$Amount),50,100,150,200,300,max(tec_raster_df$Amount))
+tec_raster_df = tec_raster_df %>% mutate(Class = cut(Amount, breaks=breaks, right=F))
+unique(tec_raster_df$Class)
 
 # min(tec_raster_df$Amount)
 # max(tec_raster_df$Amount)
@@ -470,7 +406,8 @@ ggplot() +
   coord_sf(crs = "+proj=aea +lat_1=29.5 +lat_2=45.5 +lat_0=23 +lon_0=-96 +x_0=0 +y_0=0 +ellps=GRS80 +units=m +no_defs",
            xlim=c(min(tec_raster_df$x), max(tec_raster_df$x)),
            ylim=c(min(tec_raster_df$y), max(tec_raster_df$y))) +
-  scale_fill_fermenter(palette = "YlGnBu", type="seq", direction=1, guide="colorsteps", breaks=c(50,100,130,160,190,250,300,400)) +
+  scale_fill_fermenter(palette = "YlGnBu", type="seq", direction=1, guide="colorsteps", breaks=c(50,100,130,160,190,250,300,400)) + 
+  #scale_fill_manual(values=c("grey90", "grey50", "lightyellow", "orange", "forestgreen", "purple"), guide="colorsteps") +
   labs(x=NULL, y=NULL, fill=expression(Metric~Tons~C~ha^-1)) +
   theme_bw() +
   theme(text=element_text(family="Roboto Condensed"),
@@ -498,4 +435,154 @@ ggplot() +
                                  frame.colour = "black"))
 
 ```
+
+We estimate U.S. forested ecosystems stored `r stocks_tec_2001` MMT C in 2001 with live carbon accounting for `r stocks_live_2001_pct`% (`r stocks_live_2001` MMT C) and DOM pools accounting for `r stocks_dom_2001_pct`% (`r stocks_dom_2001` MMT C). By 2020, the total carbon stored in live carbon pools increased to `r stocks_live_2020` MMT C while DOM pools remained relatively stable. However, the net change in DOM masked dynamics within DOM pools. For example, carbon stored in standing dead snags increased by `r stocks_snagstem_change_prim` MMT C while soil pools declined by `r stocks_soil_change_prim` MMT C (Table \@ref(tab:stocktable)). Net losses in biomass carbon were concentrated in three western U.S. ecoregions (Sierra Nevada Mountains, Klamath Mountains, and Cascades) resulting primarily from the cumulative effect of harvest and fire. All other ecoregions were net sinks of biomass carbon (Figure  \@ref(fig:stockchangeeco)). The Idaho Batholith and Northern Rockies ecoregions were large sinks of biomass carbon resulting primarly from regrowth following high rates of historical disturbance which occured prior to 2001. Consequently, these regions also experienced significant losses in litter and deadwood pools as they decomposed over time.
+
+```{r, stockchangeeco, cache=T, echo=F, warning=F, message=F, fig.width=8, fig.height=4, fig.cap="Net change in carbon pools by ecoegion for the period 2001-2020. "}
+stocks_ecoreg = read_csv("data/results/stocks_ecoregions.csv") %>%
+  left_join(scenario_ids) %>% filter(ScenarioName=="LULC+Clim") %>%
+  mutate(Amount=Amount/1000000) %>%
+  filter(Timestep %in% c(2001,2020)) %>% arrange(Timestep) %>%
+  group_by(StratumID, StockGroupID, ScenarioName) %>%
+  mutate(Change = Amount-lag(Amount)) %>% filter(Timestep==2020) %>%
+  left_join(eco_code, by=c("StratumID"="Name")) %>%
+  mutate(ID = as.character(ID)) %>%
+  left_join(eco_poly, by=c("ID"="US_L3CODE"))
+
+stocks_ecoreg_groups_bio = stocks_ecoreg %>%
+  filter(StockGroupID %in% c("Biomass: Total"))
+
+stocks_ecoreg_groups_dwd = stocks_ecoreg %>%
+  filter(StockGroupID %in% c("DOM: Deadwood"))
+
+stocks_ecoreg_groups_lit = stocks_ecoreg %>%
+  filter(StockGroupID %in% c("DOM: Litter"))
+
+stocks_ecoreg_groups_soc = stocks_ecoreg %>%
+  filter(StockGroupID %in% c("DOM: Soil"))
+
+# Biomass map ----
+bio = 
+  ggplot() +
+  geom_sf(data=stocks_ecoreg_groups_bio, aes(geometry=geometry, fill=Change), color="grey90") +
+  geom_sf(data=states_poly, aes(geometry=geometry), fill=NA, color="grey30") +
+  scale_fill_gradient2(low=muted("red"), mid="beige", high=muted("green"), midpoint=0, guide="colorsteps", n.breaks=7) +
+  coord_sf(crs = "+proj=aea +lat_1=29.5 +lat_2=45.5 +lat_0=23 +lon_0=-96 +x_0=0 +y_0=0 +ellps=GRS80 +units=m +no_defs",
+           xlim=c(-2200000,2100000), ylim=c(380000,3100000)) +
+  labs(fill="MMT C", subtitle="Living biomass") +
+  theme_custom(legend.position = "right",
+               legend.key.height = unit(5, "mm"),
+               legend.key.width = unit(2, "mm"),
+               legend.background = element_blank()) +
+  guides(fill = guide_colorsteps(direction = "vertical",
+                                 title.position = 'top',
+                                 label.position = "right",
+                                 ticks = T,
+                                 ticks.colour = "black",
+                                 ticks.linewidth = 0.8,
+                                 frame.colour = "black"))
+
+# Deadwood map ----
+dwd = 
+  ggplot() +
+  geom_sf(data=stocks_ecoreg_groups_dwd, aes(geometry=geometry, fill=Change), color="grey90") +
+  geom_sf(data=states_poly, aes(geometry=geometry), fill=NA, color="grey30") +
+  scale_fill_gradient2(low=muted("red"), mid="beige", high=muted("green"), midpoint=0, guide="colorsteps", n.breaks=7) +
+  coord_sf(crs = "+proj=aea +lat_1=29.5 +lat_2=45.5 +lat_0=23 +lon_0=-96 +x_0=0 +y_0=0 +ellps=GRS80 +units=m +no_defs",
+           xlim=c(-2200000,2100000), ylim=c(380000,3100000)) +
+  labs(fill="MMT C", subtitle="DOM: Deadwood") +
+  theme_custom(legend.position = "right",
+               legend.key.height = unit(5, "mm"),
+               legend.key.width = unit(2, "mm"),
+               legend.background = element_blank()) +
+  guides(fill = guide_colorsteps(direction = "vertical",
+                                 title.position = 'top',
+                                 label.position = "right",
+                                 ticks = T,
+                                 ticks.colour = "black",
+                                 ticks.linewidth = 0.8,
+                                 frame.colour = "black"))
+# Litter map ----
+lit = 
+  ggplot() +
+  geom_sf(data=stocks_ecoreg_groups_lit, aes(geometry=geometry, fill=Change), color="grey90") +
+  geom_sf(data=states_poly, aes(geometry=geometry), fill=NA, color="grey30") +
+  scale_fill_gradient2(low=muted("red"), mid="beige", high=muted("green"), midpoint=0, guide="colorsteps", n.breaks=7) +
+  coord_sf(crs = "+proj=aea +lat_1=29.5 +lat_2=45.5 +lat_0=23 +lon_0=-96 +x_0=0 +y_0=0 +ellps=GRS80 +units=m +no_defs",
+           xlim=c(-2200000,2100000), ylim=c(380000,3100000)) +
+  labs(fill="MMT C", subtitle="DOM: Litter") +
+  theme_custom(legend.position = "right",
+               legend.key.height = unit(5, "mm"),
+               legend.key.width = unit(2, "mm"),
+               legend.background = element_blank()) +
+  guides(fill = guide_colorsteps(direction = "vertical",
+                                 title.position = 'top',
+                                 label.position = "right",
+                                 ticks = T,
+                                 ticks.colour = "black",
+                                 ticks.linewidth = 0.8,
+                                 frame.colour = "black"))
+# Soil map ----
+soc = 
+  ggplot() +
+  geom_sf(data=stocks_ecoreg_groups_soc, aes(geometry=geometry, fill=Change), color="grey90") +
+  geom_sf(data=states_poly, aes(geometry=geometry), fill=NA, color="grey30") +
+  scale_fill_gradient2(low=muted("red"), mid="beige", high=muted("green"), midpoint=0, guide="colorsteps", n.breaks=7) +
+  coord_sf(crs = "+proj=aea +lat_1=29.5 +lat_2=45.5 +lat_0=23 +lon_0=-96 +x_0=0 +y_0=0 +ellps=GRS80 +units=m +no_defs",
+           xlim=c(-2200000,2100000), ylim=c(380000,3100000)) +
+  labs(fill="MMT C", subtitle="DOM: Soil") +
+  theme_custom(legend.position = "right",
+               legend.key.height = unit(5, "mm"),
+               legend.key.width = unit(2, "mm"),
+               legend.background = element_blank()) +
+  guides(fill = guide_colorsteps(direction = "vertical",
+                                 title.position = 'top',
+                                 label.position = "right",
+                                 ticks = T,
+                                 ticks.colour = "black",
+                                 ticks.linewidth = 0.8,
+                                 frame.colour = "black"))
+# Cowplot ----
+plot_grid(bio, dwd, lit, soc, ncol=2, align="hv", labels="auto", label_size = 10, label_fontface = "plain")
+```
+
+```{r, stocktable, echo=F, warning=F, message=F}
+kable(stocks_table_merge, col.names = c("Stock", "2001", "2020", "MMT C", "%"),
+      digits = 1,
+      booktabs = T,
+      escape = F,
+      caption="Carbon stock estimates for forest ecosystems of the conterminous U.S.. Units are in MMT C.") %>%
+  kable_classic(lightable_options = c("striped"), font_size=12, full_width = F) %>%
+  add_header_above(c(" ", "Year"=2, "Change"=2)) %>%
+  pack_rows(index = c("Aboveground live" = 4, 
+                      "Belowground live" = 3, 
+                      "Deadwood" = 5,
+                      "Litter" = 3,
+                      "Soil" = 4)) %>%
+  footnote(general = "The Aboveground Slow pool has been included with the IPCC Soil pool rather than the Litter pool as done in the CBM-CFS3 model.")
+```
+
+Changes in LULC were an important driver of carbon stock change. When the effects of LULC were included in simulations, increases in live carbon were modest (`r stocks_live_change_prim` MMT C) relative to simulations without LULC and disturbances (`r stocks_live_change_clim` MMT C). Furthermore, changes in LULC and disturbance resulted in increases in litter and deadwood relative to simulations without LULC while soil carbon losses were larger. Results show that while climate is the primary driver of inter-annual variability in NEP and NBP, the effects of LULC and disturbance were the primary controlling process on the overall magnitude of ecosystem carbon storage and flux in the United States. 
+
+```{r, stockchange, cache=T, echo=F, warning=F, message=F, fig.width=4, fig.height=3, fig.cap="Net change in carbon stocks between 2001-2020. The 'Clim' scenario includes only the effects from climate variability and change; 'LULC' assumes only effects from land use and disturbances; 'LULC+Clim' includes both LULC and climate effects, and 'Ref' assumes no effects from either LULC or climate."}
+
+ggplot(stocks_ipcc_change, aes(x=ScenarioName, y=Change, fill=ScenarioName)) +
+  geom_hline(yintercept = 0, size=0.2) +
+  geom_bar(stat="identity", color="black") +
+  scale_y_continuous(label = comma) +
+  scale_fill_brewer(palette = "Accent") +
+  facet_wrap(~StockGroupID, scales = "free_y", ncol=3) +
+  theme_custom() +
+  labs(x=NULL, y=expression(Net~flux~(MMT~C)), fill="Scenario", shape="Scenario", color="Scenario") +
+  theme(legend.position = c(0.85,0.2),
+        legend.key.width = unit(5, "mm"),
+        legend.key.height = unit(3, "mm"),
+        legend.margin=margin(0,0,0,0),
+        legend.box.margin=margin(-10,-10,0,-10),
+        axis.text.x = element_blank())
+```
+
+
+
+
 
