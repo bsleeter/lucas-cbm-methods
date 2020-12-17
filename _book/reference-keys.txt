@@ -65,3 +65,6 @@ fig:stratumflows
 tab:lulcfluxtable
 fig:stocksstateclass
 fig:stockchangeeco
+review-of-major-findings
+comparison-to-other-studies
+limitations-of-the-approach

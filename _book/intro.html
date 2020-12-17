@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+<head>
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>Chapter 2 Introduction | Spatially explicit estimates of carbon stocks and fluxes for the United States: a new approach linking the LUCAS and CBM-CFS3 models</title>
+  <meta name="description" content="This is a minimal example of using the bookdown package to write a book. The output format for this example is bookdown::gitbook." />
+  <meta name="generator" content="bookdown 0.21 and GitBook 2.6.7" />
+
+  <meta property="og:title" content="Chapter 2 Introduction | Spatially explicit estimates of carbon stocks and fluxes for the United States: a new approach linking the LUCAS and CBM-CFS3 models" />
+  <meta property="og:type" content="book" />
+  
+  
+  <meta property="og:description" content="This is a minimal example of using the bookdown package to write a book. The output format for this example is bookdown::gitbook." />
+  <meta name="github-repo" content="rstudio/bookdown-demo" />
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="Chapter 2 Introduction | Spatially explicit estimates of carbon stocks and fluxes for the United States: a new approach linking the LUCAS and CBM-CFS3 models" />
+  
+  <meta name="twitter:description" content="This is a minimal example of using the bookdown package to write a book. The output format for this example is bookdown::gitbook." />
+  
+
+<meta name="author" content="Benjamin M. Sleeter" />
+
+
+<meta name="date" content="2020-12-16" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  
+  
+<link rel="prev" href="index.html"/>
+<link rel="next" href="results.html"/>
+<script src="libs/jquery-2.2.3/jquery.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+
+<link href="libs/anchor-sections-1.0/anchor-sections.css" rel="stylesheet" />
+<script src="libs/anchor-sections-1.0/anchor-sections.js"></script>
+
+
+
+<link rel="stylesheet" href="style.css" type="text/css" />
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li><a href="./">A Minimal Book Example</a></li>
+
+<li class="divider"></li>
+<li class="chapter" data-level="1" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i><b>1</b> Abstract</a></li>
+<li class="chapter" data-level="2" data-path="intro.html"><a href="intro.html"><i class="fa fa-check"></i><b>2</b> Introduction</a></li>
+<li class="chapter" data-level="3" data-path="results.html"><a href="results.html"><i class="fa fa-check"></i><b>3</b> Results</a><ul>
+<li class="chapter" data-level="3.1" data-path="results.html"><a href="results.html#net-carbon-flux"><i class="fa fa-check"></i><b>3.1</b> Net carbon flux</a></li>
+<li class="chapter" data-level="3.2" data-path="results.html"><a href="results.html#carbon-stocks"><i class="fa fa-check"></i><b>3.2</b> Carbon stocks</a></li>
+</ul></li>
+<li class="chapter" data-level="4" data-path="discussion.html"><a href="discussion.html"><i class="fa fa-check"></i><b>4</b> Discussion</a><ul>
+<li class="chapter" data-level="4.1" data-path="discussion.html"><a href="discussion.html#review-of-major-findings"><i class="fa fa-check"></i><b>4.1</b> Review of major findings</a></li>
+<li class="chapter" data-level="4.2" data-path="discussion.html"><a href="discussion.html#comparison-to-other-studies"><i class="fa fa-check"></i><b>4.2</b> Comparison to other studies</a></li>
+<li class="chapter" data-level="4.3" data-path="discussion.html"><a href="discussion.html#limitations-of-the-approach"><i class="fa fa-check"></i><b>4.3</b> Limitations of the approach</a></li>
+</ul></li>
+<li class="chapter" data-level="5" data-path="conclusion.html"><a href="conclusion.html"><i class="fa fa-check"></i><b>5</b> Conclusion</a></li>
+<li class="chapter" data-level="6" data-path="methods.html"><a href="methods.html"><i class="fa fa-check"></i><b>6</b> Methods</a><ul>
+<li class="chapter" data-level="6.1" data-path="methods.html"><a href="methods.html#lucas-state-and-transition-simulation-model"><i class="fa fa-check"></i><b>6.1</b> LUCAS state-and-transition simulation model</a><ul>
+<li class="chapter" data-level="6.1.1" data-path="methods.html"><a href="methods.html#state-class-map"><i class="fa fa-check"></i><b>6.1.1</b> State class map</a></li>
+<li class="chapter" data-level="6.1.2" data-path="methods.html"><a href="methods.html#forest-age"><i class="fa fa-check"></i><b>6.1.2</b> Forest age</a></li>
+<li class="chapter" data-level="6.1.3" data-path="methods.html"><a href="methods.html#lulc-and-disturbance-transitions"><i class="fa fa-check"></i><b>6.1.3</b> LULC and disturbance transitions</a></li>
+</ul></li>
+<li class="chapter" data-level="6.2" data-path="methods.html"><a href="methods.html#lucas-carbon-stock-and-flows"><i class="fa fa-check"></i><b>6.2</b> LUCAS carbon stock and flows</a><ul>
+<li class="chapter" data-level="6.2.1" data-path="methods.html"><a href="methods.html#cbm-cfs3-reference-simulations"><i class="fa fa-check"></i><b>6.2.1</b> CBM-CFS3 reference simulations</a></li>
+<li class="chapter" data-level="6.2.2" data-path="methods.html"><a href="methods.html#carbon-flow-rates-lucas-flow-pathways-module"><i class="fa fa-check"></i><b>6.2.2</b> Carbon flow rates: LUCAS Flow Pathways module</a></li>
+<li class="chapter" data-level="6.2.3" data-path="methods.html"><a href="methods.html#validation"><i class="fa fa-check"></i><b>6.2.3</b> Validation</a></li>
+<li class="chapter" data-level="6.2.4" data-path="methods.html"><a href="methods.html#spin-up-of-dom-pools"><i class="fa fa-check"></i><b>6.2.4</b> Spin-up of DOM pools</a></li>
+<li class="chapter" data-level="6.2.5" data-path="methods.html"><a href="methods.html#mapping-initial-carbon-stocks"><i class="fa fa-check"></i><b>6.2.5</b> Mapping initial carbon stocks</a></li>
+</ul></li>
+<li class="chapter" data-level="6.3" data-path="methods.html"><a href="methods.html#spatial-flow-multipliers"><i class="fa fa-check"></i><b>6.3</b> Spatial flow multipliers</a><ul>
+<li class="chapter" data-level="6.3.1" data-path="methods.html"><a href="methods.html#npp-variability"><i class="fa fa-check"></i><b>6.3.1</b> NPP variability</a></li>
+<li class="chapter" data-level="6.3.2" data-path="methods.html"><a href="methods.html#decay-and-decomposition-of-dom"><i class="fa fa-check"></i><b>6.3.2</b> Decay and decomposition of DOM</a></li>
+</ul></li>
+<li class="chapter" data-level="6.4" data-path="methods.html"><a href="methods.html#scenario-simulations"><i class="fa fa-check"></i><b>6.4</b> Scenario simulations</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="references.html"><a href="references.html"><i class="fa fa-check"></i>References</a></li>
+<li class="chapter" data-level="7" data-path="supplemental-material.html"><a href="supplemental-material.html"><i class="fa fa-check"></i><b>7</b> Supplemental Material</a></li>
+<li class="divider"></li>
+<li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
+
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">Spatially explicit estimates of carbon stocks and fluxes for the United States: a new approach linking the LUCAS and CBM-CFS3 models</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="intro" class="section level1">
+<h1><span class="header-section-number">Chapter 2</span> Introduction</h1>
+<p>Forest ecosystems play a critical role in the global carbon cycle. As ecosystems are increasingly looked to as a means of storing carbon through the implementation of natural climate solutions (NCS), having robust tools which can quantify past and future changes in ecosystem carbon stocks and fluxes is critical for land managers, policy makers, and other scientific research. A range of methodological approaches has been deployed to quantify ecosystem carbon dynamics, ranging from inventory-based methods to highly complex process-based simulation models. Inventory-based approaches rely on field-based measurements and are generally used to estimate changes in carbon stocks between two successive time periods. However, there are several limitations associated with inventory-based carbon accounting, including a) assseements across large geographic areas can be cost-prohibitive due to the need for repeated measurements across a large number of sample sites needed to represent ecosystem heterogeneity; b) inventory-based approaches are not spatially-explicit and often rely on extrapolation methods to develop estimates in areas where no inventory exists; c) stock-change methods do not capture many of the internal dynamics and fluxes of carbon within a system; and d) inventory-based methods are not easily turned into projections under a range of global change scenarios. However, a robust forest inventory program can be used to calibrate and validate ecosystem models which can be then be extended across large geographic areas spanning long temporal intervals. This approach has been utilized in numerous studies, however, not without limitations. Models can be limited in their ability to adequately represent the variation in ecosystem types, often relying on generalization as a trade-off for computational efficiency. Many modeling approaches also lack the ability to characterize socioeconomic processes and their effect on ecosystem carbon dynamics, although this has been an recent area of intensive research. We have sought to bridge the gap between inventory and process-based approaches to develop a spatially-explicit ecosystem carbon monitoring and projection framework capable of providing both a) near real-time estimates of carbon stocks and fluxes, and b) future projections of ecosystem carbon dynamics under a range of alternative scenario assumptions.</p>
+<p>The LUCAS model (Land Use and Carbon Scenario Simulator) is a spatially explicit state-and-transition simulation model with stocks and flows (<span class="citation">Daniel et al. (<a href="#ref-daniel2016state">2016</a>)</span>, <span class="citation">Daniel et al. (<a href="#ref-daniel2018integrating">2018</a>)</span>) developed to assess the impact of land use and land cover change, ecosystem disturbance, and climate change on carbon stocks and fluxes. The LUCAS model has been applied at local (<span class="citation">Sleeter et al. (<a href="#ref-sleeter2017carbon">2017</a>)</span>), state (<span class="citation">Sleeter et al. (<a href="#ref-sleeter2019effects">2019</a>)</span>), and national (<span class="citation">Sleeter et al. (<a href="#ref-sleeter2018effects">2018</a>)</span>) scales as both spatially referenced and spatially-explicit models. LUCAS runs within the SyncroSim software modeling environment (<a href="http://syncrosim.com" class="uri">http://syncrosim.com</a>). For state and national-scale research, the LUCAS carbon model was parameterized with carbon turnover rates derived from the Integrated Biosphere Simulator (IBIS) model (<span class="citation">(<span class="citeproc-not-found" data-reference-id="liu2020critical"><strong>???</strong></span>)</span>). Output from IBIS simulations was transformed into age and ecosystem-dependent carbon growth and turnover rates which were used within LUCAS to estimate total fluxes and stocks. IBIS flux rates could be scaled based on variability in climate and LULC change. However, IBIS is limited to a relatively small number of discrete vegetation classes (plant functional types), which in turn limited the ability to represent heterogeneity of ecosystems within LUCAS. Furthermore, IBIS is a computationally intensive model to run across large landscapes which limits the ability to run a series of calibration and spin-up simulation.</p>
+<p>The CBM-CFS3 model (Carbon Budget Model of the Canadian Forest Sector v3) is an IPCC Tier 3 spatially referenced model of carbon stocks and fluxes which can be applied at multiple scales (<span class="citation">Kurz et al. (<a href="#ref-kurz2009cbm">2009</a>)</span>). The CBM-CFS3 model estimates the impacts of a range of land-use and disturbances on carbon stocks and fluxes. The approach relies on the conversion of user suppllied merchantable volume curves into carbon biomass through the use of biomass expansion factors. Turnover of live carbon and decay and decomposition of dead organic matter (DOM) are specified for each forest type and/or at a regional scale. CBM-CFS3 has been applied and adapted in many other countries using regionally-specific parameters (references here). It’s transparent approach and robust methodology make it an idea model to adapt for the U.S. forest sector. However, the CBM-CFS3 is not spatiall explicit and does not currently incorporate the effects of climate variabiilty and change on the growth of vegetation.</p>
+<p>This paper describes a new approach to estimating land use and land cover change and their effect on ecosystem carbon dynamics by linking the CBM-CFS3 and LUCAS models to produce spatially explicit projections of ecosystem carbon balance in forested ecosystems of the U.S. We have replaced the IBIS-based parameters of carbon flux with parameters derived from CBM-CFS3. We used forest inventory data from the forest inventory and analysis program (FIA) to estimate merchantable volume for 28 forest type-groups in the U.S which were mapped to a 1-km resolution land use/land-cover (LULC) map. Carbon turnover rates were derived from the CBM-CFS3 database and modified for U.S. ecological regions. The effects of climate on vegetation growth were incorporated through an exogenous model of net primary productivity (NPP), while LULC change and disturbances were derived from remote sensing data. Estimates of carbon storage and flux were estimated on an annual timestep for the period 2001-2020, and additionally under two climate scenarios for the period 2020-2050. Furthemore, we show how the approach can be used to provide near real-time estimates of carbon dynamics in response to disturbance events, such as the severe wildfires which impacted several western states in 2020.</p>
+
+</div>
+<h3>References</h3>
+<div id="refs" class="references">
+<div id="ref-daniel2016state">
+<p>Daniel, Colin J, Leonardo Frid, Benjamin M Sleeter, and Marie-Josée Fortin. 2016. “State-and-Transition Simulation Models: A Framework for Forecasting Landscape Change.” <em>Methods in Ecology and Evolution</em> 7 (11): 1413–23.</p>
+</div>
+<div id="ref-daniel2018integrating">
+<p>Daniel, Colin J, Benjamin M Sleeter, Leonardo Frid, and Marie-Josée Fortin. 2018. “Integrating Continuous Stocks and Flows into State-and-Transition Simulation Models of Landscape Change.” <em>Methods in Ecology and Evolution</em> 9 (4): 1133–43.</p>
+</div>
+<div id="ref-kurz2009cbm">
+<p>Kurz, WA, CC Dymond, TM White, G Stinson, CH Shaw, GJ Rampley, C Smyth, et al. 2009. “CBM-Cfs3: A Model of Carbon-Dynamics in Forestry and Land-Use Change Implementing Ipcc Standards.” <em>Ecological Modelling</em> 220 (4): 480–504.</p>
+</div>
+<div id="ref-sleeter2018effects">
+<p>Sleeter, Benjamin M., Jinxun Liu, Colin Daniel, Bronwyn Rayfield, Jason Sherba, Todd J Hawbaker, Zhiliang Zhu, Paul C Selmants, and Thomas R Loveland. 2018. “Effects of Contemporary Land-Use and Land-Cover Change on the Carbon Balance of Terrestrial Ecosystems in the United States.” <em>Environmental Research Letters</em> 13 (4): 045006.</p>
+</div>
+<div id="ref-sleeter2019effects">
+<p>Sleeter, Benjamin M, David C Marvin, D Richard Cameron, Paul C Selmants, A LeRoy Westerling, Jason Kreitler, Colin J Daniel, Jinxun Liu, and Tamara S Wilson. 2019. “Effects of 21st-Century Climate, Land Use, and Disturbances on Ecosystem Carbon Balance in California.” <em>Global Change Biology</em> 25 (10): 3334–53.</p>
+</div>
+<div id="ref-sleeter2017carbon">
+<p>Sleeter, Rachel, Benjamin M Sleeter, Brianna Williams, Dianna Hogan, Todd Hawbaker, and Zhiliang Zhu. 2017. “A Carbon Balance Model for the Great Dismal Swamp Ecosystem.” <em>Carbon Balance and Management</em> 12 (1): 2.</p>
+</div>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="index.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="results.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/lunr.js"></script>
+<script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-clipboard.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": false,
+"facebook": true,
+"twitter": true,
+"linkedin": false,
+"weibo": false,
+"instapaper": false,
+"vk": false,
+"all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": "https://github.com/rstudio/bookdown-demo/edit/master/01-intro.Rmd",
+"text": "Edit"
+},
+"history": {
+"link": null,
+"text": null
+},
+"view": {
+"link": null,
+"text": null
+},
+"download": ["test.pdf", "test.epub"],
+"toc": {
+"collapse": "subsection"
+}
+});
+});
+</script>
+
+</body>
+
+</html>

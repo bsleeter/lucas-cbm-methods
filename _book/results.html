@@ -24,7 +24,7 @@
 <meta name="author" content="Benjamin M. Sleeter" />
 
 
-<meta name="date" content="2020-12-04" />
+<meta name="date" content="2020-12-16" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -81,7 +81,11 @@
 <li class="chapter" data-level="3.1" data-path="results.html"><a href="results.html#net-carbon-flux"><i class="fa fa-check"></i><b>3.1</b> Net carbon flux</a></li>
 <li class="chapter" data-level="3.2" data-path="results.html"><a href="results.html#carbon-stocks"><i class="fa fa-check"></i><b>3.2</b> Carbon stocks</a></li>
 </ul></li>
-<li class="chapter" data-level="4" data-path="discussion.html"><a href="discussion.html"><i class="fa fa-check"></i><b>4</b> Discussion</a></li>
+<li class="chapter" data-level="4" data-path="discussion.html"><a href="discussion.html"><i class="fa fa-check"></i><b>4</b> Discussion</a><ul>
+<li class="chapter" data-level="4.1" data-path="discussion.html"><a href="discussion.html#review-of-major-findings"><i class="fa fa-check"></i><b>4.1</b> Review of major findings</a></li>
+<li class="chapter" data-level="4.2" data-path="discussion.html"><a href="discussion.html#comparison-to-other-studies"><i class="fa fa-check"></i><b>4.2</b> Comparison to other studies</a></li>
+<li class="chapter" data-level="4.3" data-path="discussion.html"><a href="discussion.html#limitations-of-the-approach"><i class="fa fa-check"></i><b>4.3</b> Limitations of the approach</a></li>
+</ul></li>
 <li class="chapter" data-level="5" data-path="conclusion.html"><a href="conclusion.html"><i class="fa fa-check"></i><b>5</b> Conclusion</a></li>
 <li class="chapter" data-level="6" data-path="methods.html"><a href="methods.html"><i class="fa fa-check"></i><b>6</b> Methods</a><ul>
 <li class="chapter" data-level="6.1" data-path="methods.html"><a href="methods.html#lucas-state-and-transition-simulation-model"><i class="fa fa-check"></i><b>6.1</b> LUCAS state-and-transition simulation model</a><ul>
@@ -514,11 +518,11 @@ Total
 </div>
 <div id="carbon-stocks" class="section level2">
 <h2><span class="header-section-number">3.2</span> Carbon stocks</h2>
-<p>We estimate U.S. forested ecosystems stored 52,027 MMT C in 2001 with live carbon accounting for 31% (16,201 MMT C) and DOM pools accounting for 69% (35,826 MMT C). By 2020, the total carbon stored in live carbon pools increased to 18,814 MMT C while DOM pools remained relatively stable. However, the net change in DOM masked dynamics within DOM pools. For example, carbon stored in standing dead snags increased by 201 MMT C while soil pools declined by -420 MMT C (Table <a href="results.html#tab:stocktable">3.2</a>).</p>
+<p>We estimate U.S. forested ecosystems stored 52,027 MMT C in 2001 with live carbon accounting for 31% (16,201 MMT C) and DOM pools accounting for 69% (35,826 MMT C). By 2020, the total carbon stored in live carbon pools increased to 18,814 MMT C while DOM pools remained relatively stable. However, the net change in DOM masked dynamics within DOM pools. For example, carbon stored in standing dead snags increased by 201 MMT C while soil pools declined by -420 MMT C (Table <a href="results.html#tab:stocktable">3.2</a>). Net losses in biomass carbon were concentrated in three western U.S. ecoregions (Sierra Nevada Mountains, Klamath Mountains, and Cascades) resulting primarily from the cumulative effect of harvest and fire. All other ecoregions were net sinks of biomass carbon (Figure <a href="results.html#fig:stockchangeeco">3.3</a>). The Idaho Batholith and Northern Rockies ecoregions were large sinks of biomass carbon resulting primarly from regrowth following high rates of historical disturbance which occured prior to 2001. Consequently, these regions also experienced significant losses in litter and deadwood pools as stocks decomposed over time.</p>
 <div class="figure"><span id="fig:stockchangeeco"></span>
-<img src="test_files/figure-html/stockchangeeco-1.png" alt="Mean annual net biome productivity (NBP) of conterminous U.S. forests for the period 2002-2020 summarized by ecoregion (a) and states (b). Panel c shows NBP estimated for all forest cells inthe conterminous U.S." width="768" />
+<img src="test_files/figure-html/stockchangeeco-1.png" alt="Net change in carbon pools by ecoegion for the period 2001-2020. " width="768" />
 <p class="caption">
-Figure 3.3: Mean annual net biome productivity (NBP) of conterminous U.S. forests for the period 2002-2020 summarized by ecoregion (a) and states (b). Panel c shows NBP estimated for all forest cells inthe conterminous U.S.
+Figure 3.3: Net change in carbon pools by ecoegion for the period 2001-2020.
 </p>
 </div>
 <table class=" lightable-classic lightable-striped" style='font-size: 12px; font-family: "Arial Narrow", "Source Sans Pro", sans-serif; width: auto !important; margin-left: auto; margin-right: auto;border-bottom: 0;'>
@@ -921,18 +925,11 @@ Total
 </tr>
 </tfoot>
 </table>
-<p>Changes in LULC were an important driver of carbon stock change. When the effects of LULC were included, increases in live carbon were modest (2,613 MMT C) relative to simulations without LULC and disturbances (5,618 MMT C). Furthermore, changes in LULC and disturbance resulted in increases in litter and deadwood relative to simulations without LULC while soil carbon losses were larger.</p>
+<p>Changes in LULC were an important driver of carbon stock change. When the effects of LULC were included in simulations, increases in live carbon were modest (2,613 MMT C) relative to simulations without LULC and disturbances (5,618 MMT C). Furthermore, changes in LULC and disturbance resulted in increases in litter and deadwood relative to simulations without LULC while soil carbon losses were larger. Results show that while climate is the primary driver of inter-annual variability in NEP and NBP, the effects of LULC and disturbance were the primary controlling process on the overall magnitude of ecosystem carbon storage and flux in the United States.</p>
 <div class="figure"><span id="fig:stockchange"></span>
 <img src="test_files/figure-html/stockchange-1.png" alt="Net change in carbon stocks between 2001-2020. The 'Clim' scenario includes only the effects from climate variability and change; 'LULC' assumes only effects from land use and disturbances; 'LULC+Clim' includes both LULC and climate effects, and 'Ref' assumes no effects from either LULC or climate." width="384" />
 <p class="caption">
 Figure 3.4: Net change in carbon stocks between 2001-2020. The ‘Clim’ scenario includes only the effects from climate variability and change; ‘LULC’ assumes only effects from land use and disturbances; ‘LULC+Clim’ includes both LULC and climate effects, and ‘Ref’ assumes no effects from either LULC or climate.
-</p>
-</div>
-<p>Talk about species level changes here…</p>
-<div class="figure"><span id="fig:tecmap"></span>
-<img src="test_files/figure-html/tecmap-1.png" alt="Map of the total ecosystem carbon stored in conterminous U.S. forests in the year 2020." width="768" />
-<p class="caption">
-Figure 3.5: Map of the total ecosystem carbon stored in conterminous U.S. forests in the year 2020.
 </p>
 </div>
 
