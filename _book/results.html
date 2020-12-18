@@ -24,7 +24,7 @@
 <meta name="author" content="Benjamin M. Sleeter" />
 
 
-<meta name="date" content="2020-12-16" />
+<meta name="date" content="2020-12-17" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -80,6 +80,7 @@
 <li class="chapter" data-level="3" data-path="results.html"><a href="results.html"><i class="fa fa-check"></i><b>3</b> Results</a><ul>
 <li class="chapter" data-level="3.1" data-path="results.html"><a href="results.html#net-carbon-flux"><i class="fa fa-check"></i><b>3.1</b> Net carbon flux</a></li>
 <li class="chapter" data-level="3.2" data-path="results.html"><a href="results.html#carbon-stocks"><i class="fa fa-check"></i><b>3.2</b> Carbon stocks</a></li>
+<li class="chapter" data-level="3.3" data-path="results.html"><a href="results.html#climate-projections"><i class="fa fa-check"></i><b>3.3</b> Climate projections</a></li>
 </ul></li>
 <li class="chapter" data-level="4" data-path="discussion.html"><a href="discussion.html"><i class="fa fa-check"></i><b>4</b> Discussion</a><ul>
 <li class="chapter" data-level="4.1" data-path="discussion.html"><a href="discussion.html#review-of-major-findings"><i class="fa fa-check"></i><b>4.1</b> Review of major findings</a></li>
@@ -925,13 +926,32 @@ Total
 </tr>
 </tfoot>
 </table>
-<p>Changes in LULC were an important driver of carbon stock change. When the effects of LULC were included in simulations, increases in live carbon were modest (2,613 MMT C) relative to simulations without LULC and disturbances (5,618 MMT C). Furthermore, changes in LULC and disturbance resulted in increases in litter and deadwood relative to simulations without LULC while soil carbon losses were larger. Results show that while climate is the primary driver of inter-annual variability in NEP and NBP, the effects of LULC and disturbance were the primary controlling process on the overall magnitude of ecosystem carbon storage and flux in the United States.</p>
+<p>Changes in LULC were an important driver of carbon stock change. When the effects of LULC were included in simulations, increases in live carbon were modest (2,613 MMT C) relative to simulations without LULC and disturbances (5,618 MMT C). Furthermore, changes in LULC and disturbance resulted in increases in litter and deadwood relative to simulations without LULC while soil carbon losses were larger. Results show that while climate was the primary driver of inter-annual variability in NEP and NBP, the effects of LULC and disturbance were the primary controlling process on the overall magnitude of ecosystem carbon storage and flux in the United States.</p>
 <div class="figure"><span id="fig:stockchange"></span>
 <img src="test_files/figure-html/stockchange-1.png" alt="Net change in carbon stocks between 2001-2020. The 'Clim' scenario includes only the effects from climate variability and change; 'LULC' assumes only effects from land use and disturbances; 'LULC+Clim' includes both LULC and climate effects, and 'Ref' assumes no effects from either LULC or climate." width="384" />
 <p class="caption">
 Figure 3.4: Net change in carbon stocks between 2001-2020. The ‘Clim’ scenario includes only the effects from climate variability and change; ‘LULC’ assumes only effects from land use and disturbances; ‘LULC+Clim’ includes both LULC and climate effects, and ‘Ref’ assumes no effects from either LULC or climate.
 </p>
 </div>
+<pre><code>## # A tibble: 28 x 8
+## # Groups:   StateClassID [28]
+##    ScenarioID Iteration Timestep StockGroupID StateClassID Amount ScenarioName
+##         &lt;dbl&gt;     &lt;dbl&gt;    &lt;dbl&gt; &lt;chr&gt;        &lt;chr&gt;         &lt;dbl&gt; &lt;chr&gt;       
+##  1        128         1     2020 Total Ecosy~ Forest: Whi~  563.  LULC+Clim   
+##  2        128         1     2020 Total Ecosy~ Forest: Spr~  901.  LULC+Clim   
+##  3        128         1     2020 Total Ecosy~ Forest: Lon~  767.  LULC+Clim   
+##  4        128         1     2020 Total Ecosy~ Forest: Lob~ 4181.  LULC+Clim   
+##  5        128         1     2020 Total Ecosy~ Forest: Pin~ 1583.  LULC+Clim   
+##  6        128         1     2020 Total Ecosy~ Forest: Dou~ 8813.  LULC+Clim   
+##  7        128         1     2020 Total Ecosy~ Forest: Pon~ 1323.  LULC+Clim   
+##  8        128         1     2020 Total Ecosy~ Forest: Wes~   14.0 LULC+Clim   
+##  9        128         1     2020 Total Ecosy~ Forest: Fir~ 3064.  LULC+Clim   
+## 10        128         1     2020 Total Ecosy~ Forest: Lod~ 1237.  LULC+Clim   
+## # ... with 18 more rows, and 1 more variable: Change &lt;dbl&gt;</code></pre>
+<p><img src="test_files/figure-html/stateclasstecchange-1.png" width="768" /></p>
+</div>
+<div id="climate-projections" class="section level2">
+<h2><span class="header-section-number">3.3</span> Climate projections</h2>
 
 </div>
 </div>

@@ -68,3 +68,4 @@ fig:stockchangeeco
 review-of-major-findings
 comparison-to-other-studies
 limitations-of-the-approach
+climate-projections

@@ -111,11 +111,217 @@ flows_mort_prim = flows_lulc %>% filter(FlowGroupID=="LULC: Mortality [Type]")
 flows_mort_prim_mean = round(mean(flows_mort_prim$Amount),0)
 ```
 
-## Net carbon flux
+```{r, resultdata2, echo=F, message=F, warning=F}
+stockypes_live_dom_tec = c("Total Ecosystem", "Biomass: Total", "DOM: Deadwood")
 
-We estimate that for the period 2001-2020, U.S. forests were on average, a net sink of carbon at a rate of `r nbp_primary_mean` MMT C yr^-1^. Figure \@ref(fig:flowresults) shows the estimated net primary productivity (NPP), heterotrophic respiration (Rh), net ecosystem productivity (NEP) and net biome productivity (NBP) over time for each of the four simulations. The size of the net sink varied considerably from year-to-year, ranging from `r nbp_primary_min` (source) to `r nbp_primary_max` MMT C yr^-1^. Climate variability was the primary driver of inter-annual variability in the size of the forest sink. When climate was not included in the simulations, the size of the net sink ranged from `r nbp_lulc_min` to `r nbp_lulc_max` MMT C yr^-1^ and showed a declining trend over time due to the lack of increased productivity from recent climate conditions. Land use, land-use change, and disturbances were the primary controlling processes effecting the magnitude of the net carbon sink. When LULC was excluded, the forest carbon sink was `r round((nbp_primary_mean/nbp_climate_mean)*100,0)`% higher (mean of `r nbp_climate_mean` MMT C yr^-1^) than simulations where LULC was incorporated.
+stocks_ipcc = read_csv("data/results/stocks_conus.csv") %>%
+  left_join(scenario_ids) %>%
+  filter(StockGroupID %in% stockypes_live_dom_tec)
 
-Net primary productivity (NPP) of U.S. forests averaged `r npp_primary_mean` MMT C yr^-1^. Incorporating the effects of LULC and disturbances reduced total NPP by `r npp_lulc_abs` MMT C yr^-1^ while incorporating the effects of climate variability and change resulted in an increase in NPP of `r abs(npp_clim_abs)` MMT C yr^-1^ compared to the LULC only simulation. These results suggest that LULC and disturbance have a negative impact on NPP while climate variability and change between 2001-2020 have resulted in increased productivity of U.S. forests. Heterotrophic respiration (Rh) increased under all simulations resulting from increases in productivity and climate warming.
+stocks_litter = c("DOM: Aboveground Very Fast [Type]", "DOM: Aboveground Fast [Type]")
+stocks_soil = c("DOM: Aboveground Slow [Type]", "DOM: Belowground Slow [Type]", "DOM: Belowground Very Fast [Type]")
+
+stocks_ipcc_litter = read_csv("data/results/stocks_conus.csv") %>%
+  left_join(scenario_ids) %>%
+  filter(StockGroupID %in% stocks_litter) %>%
+  mutate(StockGroupID="DOM: Litter") %>%
+  group_by(ScenarioID, Iteration, Timestep, ScenarioName, StockGroupID) %>%
+  summarise(Amount=sum(Amount)) 
+
+stocks_ipcc_soil= read_csv("data/results/stocks_conus.csv") %>%
+  left_join(scenario_ids) %>%
+  filter(StockGroupID %in% stocks_soil) %>%
+  mutate(StockGroupID="DOM: Soil") %>%
+  group_by(ScenarioID, Iteration, Timestep, ScenarioName, StockGroupID) %>%
+  summarise(Amount=sum(Amount)) 
+
+stocks_ipcc = bind_rows(stocks_ipcc, stocks_ipcc_litter, stocks_ipcc_soil)
+
+stocks_primary = stocks_ipcc %>% filter(ScenarioName == "LULC+Clim") %>% mutate(Amount = Amount/1000000)
+stocks_tec_2001 = round((stocks_primary %>% filter(StockGroupID == "Total Ecosystem", Timestep==2001))$Amount,0)
+stocks_live_2001 = round((stocks_primary %>% filter(StockGroupID == "Biomass: Total", Timestep==2001))$Amount,0)
+stocks_live_2001_pct = round((stocks_live_2001/stocks_tec_2001)*100,0)
+stocks_live_2020 = round((stocks_primary %>% filter(StockGroupID == "Biomass: Total", Timestep==2020))$Amount,0)
+
+stocks_dom_2001 = round(sum((stocks_primary %>% filter(StockGroupID %in% c("DOM: Litter", "DOM: Deadwood", "DOM: Soil"), Timestep==2001))$Amount),0)
+stocks_dom_2001_pct = round((stocks_dom_2001/stocks_tec_2001)*100,0)
+stocks_dom_2020 = round(sum((stocks_primary %>% filter(StockGroupID %in% c("DOM: Litter", "DOM: Deadwood", "DOM: Soil"), Timestep==2020))$Amount),0)
+
+stocks_ipcc_change = stocks_ipcc %>%
+  filter(Timestep %in% c(2001,2020)) %>%
+  arrange(Timestep) %>%
+  group_by(ScenarioID, ScenarioName, Iteration, StockGroupID) %>%
+  mutate(Change=Amount-lag(Amount)) %>%
+  filter(Timestep==2020) %>% arrange(StockGroupID) %>%
+  mutate(Change=Change/1000000)
+
+stocks_live_change_prim = round((stocks_ipcc_change %>% filter(ScenarioName=="LULC+Clim", StockGroupID=="Biomass: Total"))$Change,0)
+stocks_live_change_clim = round((stocks_ipcc_change %>% filter(ScenarioName=="Clim", StockGroupID=="Biomass: Total"))$Change,0)
+stocks_soil_change_prim = round((stocks_ipcc_change %>% filter(ScenarioName=="LULC+Clim", StockGroupID=="DOM: Soil"))$Change,0)
+
+# Data for stock change table
+stock_groups = read_csv("data/tables/stock-groups.csv")
+
+stocks_table = read_csv("data/results/stocks_conus.csv") %>% 
+  left_join(scenario_ids) %>%
+  mutate(Amount=Amount/1000000) %>%
+  filter(Timestep %in% c(2001,2020), ScenarioName=="LULC+Clim") %>%
+  select(-ScenarioID, -Iteration, -ScenarioName) %>%
+  arrange(StockGroupID) %>%
+  right_join(stock_groups) %>%
+  arrange(StockGroup) %>%
+  select(StockGroup, StockGroupID, Timestep, Amount)
+
+stocks_table_sum = stocks_table %>%
+  group_by(StockGroup, Timestep) %>% summarise(Amount=sum(Amount)) %>%
+  mutate(StockGroupID = "Total")
+
+stocks_table_merge = bind_rows(stocks_table, stocks_table_sum) %>%
+  pivot_wider(names_from=Timestep, values_from=Amount) %>%
+  mutate(Change=`2020`-`2001`) %>%
+  mutate(PctChange = (`2020`-`2001`)/`2001`*100) %>%
+  arrange(StockGroup) %>%
+  mutate(StockGroup = factor(StockGroup, levels=c("Aboveground live", "Belowground live", "Deadwood", "Litter", "Soil"))) %>%
+  select(-StockGroup)
+
+stocks_snagstem_change_prim = round((stocks_table_merge %>% filter(StockGroupID=="DOM: Snag Stem [Type]"))$Change,0)
+```
+
+## Recent change in carbon stocks and fluxes
+
+We estimate U.S. forested ecosystems stored `r stocks_tec_2001` MMT C in 2001 with live carbon accounting for `r stocks_live_2001_pct`% (`r stocks_live_2001` MMT C) and DOM pools accounting for `r stocks_dom_2001_pct`% (`r stocks_dom_2001` MMT C). By 2020, the total carbon stored in live carbon pools increased to `r stocks_live_2020` MMT C while DOM pools remained relatively stable. However, the net change in DOM masked dynamics within DOM pools. For example, carbon stored in standing dead snags increased by `r stocks_snagstem_change_prim` MMT C while soil pools declined by `r stocks_soil_change_prim` MMT C (Table \@ref(tab:stocktable)). Net losses in biomass carbon were concentrated in three western U.S. ecoregions (Sierra Nevada Mountains, Klamath Mountains, and Cascades) resulting primarily from the cumulative effect of harvest and fire. All other ecoregions were net sinks of biomass carbon (Figure  \@ref(fig:stockchangeeco)). The Idaho Batholith and Northern Rockies ecoregions were large sinks of biomass carbon resulting primarly from regrowth following high rates of historical disturbance which occured prior to 2001. Consequently, these regions also experienced significant losses in litter and deadwood pools as stocks decomposed over time.
+
+```{r, stockchangeeco, cache=T, echo=F, warning=F, message=F, fig.width=8, fig.height=4, fig.cap="Net change in carbon pools by ecoegion for the period 2001-2020. "}
+stocks_ecoreg = read_csv("data/results/stocks_ecoregions.csv") %>%
+  left_join(scenario_ids) %>% filter(ScenarioName=="LULC+Clim") %>%
+  mutate(Amount=Amount/1000000) %>%
+  filter(Timestep %in% c(2001,2020)) %>% arrange(Timestep) %>%
+  group_by(StratumID, StockGroupID, ScenarioName) %>%
+  mutate(Change = Amount-lag(Amount)) %>% filter(Timestep==2020) %>%
+  left_join(eco_code, by=c("StratumID"="Name")) %>%
+  mutate(ID = as.character(ID)) %>%
+  left_join(eco_poly, by=c("ID"="US_L3CODE"))
+
+stocks_ecoreg_groups_bio = stocks_ecoreg %>%
+  filter(StockGroupID %in% c("Biomass: Total"))
+
+stocks_ecoreg_groups_dwd = stocks_ecoreg %>%
+  filter(StockGroupID %in% c("DOM: Deadwood"))
+
+stocks_ecoreg_groups_lit = stocks_ecoreg %>%
+  filter(StockGroupID %in% c("DOM: Litter"))
+
+stocks_ecoreg_groups_soc = stocks_ecoreg %>%
+  filter(StockGroupID %in% c("DOM: Soil"))
+
+# Biomass map ----
+bio = 
+  ggplot() +
+  geom_sf(data=stocks_ecoreg_groups_bio, aes(geometry=geometry, fill=Change), color="grey90") +
+  geom_sf(data=states_poly, aes(geometry=geometry), fill=NA, color="grey30") +
+  scale_fill_gradient2(low=muted("red"), mid="beige", high=muted("green"), midpoint=0, guide="colorsteps", n.breaks=7) +
+  coord_sf(crs = "+proj=aea +lat_1=29.5 +lat_2=45.5 +lat_0=23 +lon_0=-96 +x_0=0 +y_0=0 +ellps=GRS80 +units=m +no_defs",
+           xlim=c(-2200000,2100000), ylim=c(380000,3100000)) +
+  labs(fill="MMT C", subtitle="Living biomass") +
+  theme_custom(legend.position = "right",
+               legend.key.height = unit(5, "mm"),
+               legend.key.width = unit(2, "mm"),
+               legend.background = element_blank()) +
+  guides(fill = guide_colorsteps(direction = "vertical",
+                                 title.position = 'top',
+                                 label.position = "right",
+                                 ticks = T,
+                                 ticks.colour = "black",
+                                 ticks.linewidth = 0.8,
+                                 frame.colour = "black"))
+
+# Deadwood map ----
+dwd = 
+  ggplot() +
+  geom_sf(data=stocks_ecoreg_groups_dwd, aes(geometry=geometry, fill=Change), color="grey90") +
+  geom_sf(data=states_poly, aes(geometry=geometry), fill=NA, color="grey30") +
+  scale_fill_gradient2(low=muted("red"), mid="beige", high=muted("green"), midpoint=0, guide="colorsteps", n.breaks=7) +
+  coord_sf(crs = "+proj=aea +lat_1=29.5 +lat_2=45.5 +lat_0=23 +lon_0=-96 +x_0=0 +y_0=0 +ellps=GRS80 +units=m +no_defs",
+           xlim=c(-2200000,2100000), ylim=c(380000,3100000)) +
+  labs(fill="MMT C", subtitle="DOM: Deadwood") +
+  theme_custom(legend.position = "right",
+               legend.key.height = unit(5, "mm"),
+               legend.key.width = unit(2, "mm"),
+               legend.background = element_blank()) +
+  guides(fill = guide_colorsteps(direction = "vertical",
+                                 title.position = 'top',
+                                 label.position = "right",
+                                 ticks = T,
+                                 ticks.colour = "black",
+                                 ticks.linewidth = 0.8,
+                                 frame.colour = "black"))
+# Litter map ----
+lit = 
+  ggplot() +
+  geom_sf(data=stocks_ecoreg_groups_lit, aes(geometry=geometry, fill=Change), color="grey90") +
+  geom_sf(data=states_poly, aes(geometry=geometry), fill=NA, color="grey30") +
+  scale_fill_gradient2(low=muted("red"), mid="beige", high=muted("green"), midpoint=0, guide="colorsteps", n.breaks=7) +
+  coord_sf(crs = "+proj=aea +lat_1=29.5 +lat_2=45.5 +lat_0=23 +lon_0=-96 +x_0=0 +y_0=0 +ellps=GRS80 +units=m +no_defs",
+           xlim=c(-2200000,2100000), ylim=c(380000,3100000)) +
+  labs(fill="MMT C", subtitle="DOM: Litter") +
+  theme_custom(legend.position = "right",
+               legend.key.height = unit(5, "mm"),
+               legend.key.width = unit(2, "mm"),
+               legend.background = element_blank()) +
+  guides(fill = guide_colorsteps(direction = "vertical",
+                                 title.position = 'top',
+                                 label.position = "right",
+                                 ticks = T,
+                                 ticks.colour = "black",
+                                 ticks.linewidth = 0.8,
+                                 frame.colour = "black"))
+# Soil map ----
+soc = 
+  ggplot() +
+  geom_sf(data=stocks_ecoreg_groups_soc, aes(geometry=geometry, fill=Change), color="grey90") +
+  geom_sf(data=states_poly, aes(geometry=geometry), fill=NA, color="grey30") +
+  scale_fill_gradient2(low=muted("red"), mid="beige", high=muted("green"), midpoint=0, guide="colorsteps", n.breaks=7) +
+  coord_sf(crs = "+proj=aea +lat_1=29.5 +lat_2=45.5 +lat_0=23 +lon_0=-96 +x_0=0 +y_0=0 +ellps=GRS80 +units=m +no_defs",
+           xlim=c(-2200000,2100000), ylim=c(380000,3100000)) +
+  labs(fill="MMT C", subtitle="DOM: Soil") +
+  theme_custom(legend.position = "right",
+               legend.key.height = unit(5, "mm"),
+               legend.key.width = unit(2, "mm"),
+               legend.background = element_blank()) +
+  guides(fill = guide_colorsteps(direction = "vertical",
+                                 title.position = 'top',
+                                 label.position = "right",
+                                 ticks = T,
+                                 ticks.colour = "black",
+                                 ticks.linewidth = 0.8,
+                                 frame.colour = "black"))
+# Cowplot ----
+plot_grid(bio, dwd, lit, soc, ncol=2, align="hv", labels="auto", label_size = 10, label_fontface = "plain")
+```
+
+Changes in LULC were an important driver of carbon stock change. When the effects of LULC were included in simulations, increases in live carbon were modest (`r stocks_live_change_prim` MMT C) relative to simulations without LULC and disturbances (`r stocks_live_change_clim` MMT C). Furthermore, changes in LULC and disturbance resulted in increases in litter and deadwood relative to simulations without LULC while soil carbon losses were larger. Results show that while climate was the primary driver of inter-annual variability in the annual net flux of carbon, LULC and disturbance were the primary controlling processes governing the magnitude of ecosystem carbon storage and flux in the United States. 
+
+```{r, stockchange, cache=T, echo=F, warning=F, message=F, fig.width=4, fig.height=3, fig.cap="Net change in carbon stocks between 2001-2020. The 'Clim' scenario includes only the effects from climate variability and change; 'LULC' assumes only effects from land use and disturbances; 'LULC+Clim' includes both LULC and climate effects, and 'Ref' assumes no effects from either LULC or climate."}
+
+ggplot(stocks_ipcc_change, aes(x=ScenarioName, y=Change, fill=ScenarioName)) +
+  geom_hline(yintercept = 0, size=0.2) +
+  geom_bar(stat="identity", color="black") +
+  scale_y_continuous(label = comma) +
+  scale_fill_brewer(palette = "Accent") +
+  facet_wrap(~StockGroupID, scales = "free_y", ncol=3) +
+  theme_custom() +
+  labs(x=NULL, y=expression(Net~flux~(MMT~C)), fill="Scenario", shape="Scenario", color="Scenario") +
+  theme(legend.position = c(0.85,0.2),
+        legend.key.width = unit(5, "mm"),
+        legend.key.height = unit(3, "mm"),
+        legend.margin=margin(0,0,0,0),
+        legend.box.margin=margin(-10,-10,0,-10),
+        axis.text.x = element_blank())
+```
+
+For the period 2001-2020, U.S. forests were on average, a net sink of carbon at a rate of `r nbp_primary_mean` MMT C yr^-1^. Figure \@ref(fig:flowresults) shows the estimated net primary productivity (NPP), heterotrophic respiration (Rh), net ecosystem productivity (NEP) and net biome productivity (NBP) over time for each of the four simulations. The size of the net sink varied considerably from year-to-year, ranging from `r nbp_primary_min` (source) to `r nbp_primary_max` MMT C yr^-1^. Climate was the primary driver of inter-annual variability in the size of the forest sink. When climate was not included in simulations, the size of the net sink ranged from `r nbp_lulc_min` to `r nbp_lulc_max` MMT C yr^-1^ and showed a declining trend over time due to the absence of increased productivity from recent climate conditions. Land use, land-use change, and disturbances were the primary controlling processes effecting the magnitude of the net carbon sink. When LULC was excluded, the forest carbon sink was `r round((nbp_primary_mean/nbp_climate_mean)*100,0)`% higher (mean of `r nbp_climate_mean` MMT C yr^-1^) than simulations where LULC was included. 
+
+Net primary productivity (NPP) of U.S. forests averaged `r npp_primary_mean` MMT C yr^-1^. Incorporating the effects of LULC and disturbances reduced total NPP by `r npp_lulc_abs` MMT C yr^-1^ while incorporating the effects of climate resulted in an increase in NPP of `r abs(npp_clim_abs)` MMT C yr^-1^ compared to the LULC only simulation. These results suggest that LULC and disturbance have a negative impact on NPP while climate variability and change between 2001-2020 have resulted in increased productivity of U.S. forests. Heterotrophic respiration (Rh) increased under all simulations resulting from increases in productivity and climate warming.
 
 ```{r, flowresults, cache=T, echo=F, warning=F, message=F, fig.width=8, fig.height=3, fig.cap="Net fluxes of carbon in conterminous U.S. forests for the period 2002-2020."}
 
@@ -134,7 +340,7 @@ ggplot(flows_net, aes(x=Timestep, y=Amount/1000000, color=ScenarioName, fill=Sce
         legend.box.margin=margin(-10,-10,0,-10))
 ```
 
-The largest net carbon losses were in found in the mountain regions (Sierra Nevada, Klamath and Cascades ecoregions) of California and Oregon and were largely driven by stand-replacing wildifres (California) and forest harvest (Oregon). While remaining a net sink of carbon, the southeast experienced declines to to high rates of harvest of plantation forests and urbanization. However, the high rates of productivity in the region, along with afforestation, offset carbon losses resulting in a modest net sink. Texas was the state with the largest net sink, largely the result of forest ageing and low rates of stand-replacing disturbances.
+The largest net carbon losses were in found in the mountain regions (Sierra Nevada, Klamath and Cascades ecoregions) of California and Oregon and were largely driven by stand-replacing wildifres and forest harvest. While remaining a net sink of carbon, the southeast experienced declines due to high rates of harvest of plantation forests and urbanization. However, high rates of productivity in the region, along with afforestation, offset carbon losses resulting in a modest net sink. Texas was the state with the largest net sink, largely the result of forest ageing and low rates of stand-replacing disturbances.
 
 ```{r, nbpmap, cache=T, echo=F, warning=F, message=F, fig.width=8, fig.cap="Map of the estiamted net biome productivity of conterminous U.S. forests for the period 2001-2020. Negative values indicate a net loss of carbon from ecosystems and positive values indicate a net sink of carbon."}
 land_poly = st_read("data/vector/ne_10m_land.shp", quiet=T)
@@ -259,7 +465,7 @@ p = plot_grid(pleft, pright, align=c("hv"), ncol = 2, rel_widths = c(4,6))
 p
 ```
 
-Carbon losses from LULC and disturbances reduced the annual forest carbon sink by `r lulc_losses` MMT C yr^-1^ on average. The cumulative loss of carbon sequestration was primarily from the transfer of carbon to harvest wood products which averaged `r flows_harvest_prim_mean` MMT C yr^-1^ while carbon losses from combusion - primarily due to wildfire - averaged `r flows_emis_prim_mean` MMT C yr^-1^ (Table \@ref(tab:lulcfluxtable)). Carbon losses from fire were highly variable from year-to-year. However, the three highest fire emission years all occurred since 2017. In 2020, emissions from fire, including the record setting megafires in California and Oregon, were estimated to be `r flows_emis_prim_2020` MMT C (`r flows_emis_prim_2020*3.67` MMT CO~2~), more then three times the historical average. In addition to ecosystem carbon removals, LULC and disturbances resulted in the transfer of an additional `r flows_mort_prim_mean` MMT C yr^-1^ from live to DOM pools which will contribute to future years reductions in the carbon sink. This future flux could be accelerated by continued increases in the turnover rate of DOM resulting from continued climate warming. 
+Carbon losses from LULC and disturbances reduced the annual forest carbon sink by `r lulc_losses` MMT C yr^-1^ on average. The cumulative loss of carbon sequestration was primarily from the transfer of carbon to harvest wood products which averaged `r flows_harvest_prim_mean` MMT C yr^-1^ while carbon losses from combustion averaged `r flows_emis_prim_mean` MMT C yr^-1^ (Table \@ref(tab:lulcfluxtable)). Carbon losses from fire were highly variable from year to year. However, the three highest fire emission years all occurred since 2017. In 2020, emissions from fire, including the record setting megafires in California and Oregon, were estimated to be `r flows_emis_prim_2020` MMT C (`r flows_emis_prim_2020*3.67` MMT CO~2~), more then three times the historical average. In addition to ecosystem carbon removals, LULC and disturbances resulted in the transfer of an additional `r flows_mort_prim_mean` MMT C yr^-1^ from live to DOM pools which will contribute to future years reductions in the carbon sink. This future flux could be accelerated by continued increases in the turnover rate of DOM resulting from continued climate warming. 
 
 ```{r, lulcfluxtable, echo=F, warning=F, message=F}
 trans_types_by_group = read_csv("data/tables/transition-types-by-group.csv")
@@ -302,194 +508,6 @@ kable(lulc_removals, col.names = c("TransitionGroupID", "Transition Type", "Emis
 
 ```
 
-```{r, resultdata2, echo=F, message=F, warning=F}
-stockypes_live_dom_tec = c("Total Ecosystem", "Biomass: Total", "DOM: Deadwood")
-
-stocks_ipcc = read_csv("data/results/stocks_conus.csv") %>%
-  left_join(scenario_ids) %>%
-  filter(StockGroupID %in% stockypes_live_dom_tec)
-
-stocks_litter = c("DOM: Aboveground Very Fast [Type]", "DOM: Aboveground Fast [Type]")
-stocks_soil = c("DOM: Aboveground Slow [Type]", "DOM: Belowground Slow [Type]", "DOM: Belowground Very Fast [Type]")
-
-stocks_ipcc_litter = read_csv("data/results/stocks_conus.csv") %>%
-  left_join(scenario_ids) %>%
-  filter(StockGroupID %in% stocks_litter) %>%
-  mutate(StockGroupID="DOM: Litter") %>%
-  group_by(ScenarioID, Iteration, Timestep, ScenarioName, StockGroupID) %>%
-  summarise(Amount=sum(Amount)) 
-
-stocks_ipcc_soil= read_csv("data/results/stocks_conus.csv") %>%
-  left_join(scenario_ids) %>%
-  filter(StockGroupID %in% stocks_soil) %>%
-  mutate(StockGroupID="DOM: Soil") %>%
-  group_by(ScenarioID, Iteration, Timestep, ScenarioName, StockGroupID) %>%
-  summarise(Amount=sum(Amount)) 
-
-stocks_ipcc = bind_rows(stocks_ipcc, stocks_ipcc_litter, stocks_ipcc_soil)
-
-stocks_primary = stocks_ipcc %>% filter(ScenarioName == "LULC+Clim") %>% mutate(Amount = Amount/1000000)
-stocks_tec_2001 = round((stocks_primary %>% filter(StockGroupID == "Total Ecosystem", Timestep==2001))$Amount,0)
-stocks_live_2001 = round((stocks_primary %>% filter(StockGroupID == "Biomass: Total", Timestep==2001))$Amount,0)
-stocks_live_2001_pct = round((stocks_live_2001/stocks_tec_2001)*100,0)
-stocks_live_2020 = round((stocks_primary %>% filter(StockGroupID == "Biomass: Total", Timestep==2020))$Amount,0)
-
-stocks_dom_2001 = round(sum((stocks_primary %>% filter(StockGroupID %in% c("DOM: Litter", "DOM: Deadwood", "DOM: Soil"), Timestep==2001))$Amount),0)
-stocks_dom_2001_pct = round((stocks_dom_2001/stocks_tec_2001)*100,0)
-stocks_dom_2020 = round(sum((stocks_primary %>% filter(StockGroupID %in% c("DOM: Litter", "DOM: Deadwood", "DOM: Soil"), Timestep==2020))$Amount),0)
-
-stocks_ipcc_change = stocks_ipcc %>%
-  filter(Timestep %in% c(2001,2020)) %>%
-  arrange(Timestep) %>%
-  group_by(ScenarioID, ScenarioName, Iteration, StockGroupID) %>%
-  mutate(Change=Amount-lag(Amount)) %>%
-  filter(Timestep==2020) %>% arrange(StockGroupID) %>%
-  mutate(Change=Change/1000000)
-
-stocks_live_change_prim = round((stocks_ipcc_change %>% filter(ScenarioName=="LULC+Clim", StockGroupID=="Biomass: Total"))$Change,0)
-stocks_live_change_clim = round((stocks_ipcc_change %>% filter(ScenarioName=="Clim", StockGroupID=="Biomass: Total"))$Change,0)
-stocks_soil_change_prim = round((stocks_ipcc_change %>% filter(ScenarioName=="LULC+Clim", StockGroupID=="DOM: Soil"))$Change,0)
-
-# Data for stock change table
-stock_groups = read_csv("data/tables/stock-groups.csv")
-
-stocks_table = read_csv("data/results/stocks_conus.csv") %>% 
-  left_join(scenario_ids) %>%
-  mutate(Amount=Amount/1000000) %>%
-  filter(Timestep %in% c(2001,2020), ScenarioName=="LULC+Clim") %>%
-  select(-ScenarioID, -Iteration, -ScenarioName) %>%
-  arrange(StockGroupID) %>%
-  right_join(stock_groups) %>%
-  arrange(StockGroup) %>%
-  select(StockGroup, StockGroupID, Timestep, Amount)
-
-stocks_table_sum = stocks_table %>%
-  group_by(StockGroup, Timestep) %>% summarise(Amount=sum(Amount)) %>%
-  mutate(StockGroupID = "Total")
-
-stocks_table_merge = bind_rows(stocks_table, stocks_table_sum) %>%
-  pivot_wider(names_from=Timestep, values_from=Amount) %>%
-  mutate(Change=`2020`-`2001`) %>%
-  mutate(PctChange = (`2020`-`2001`)/`2001`*100) %>%
-  arrange(StockGroup) %>%
-  mutate(StockGroup = factor(StockGroup, levels=c("Aboveground live", "Belowground live", "Deadwood", "Litter", "Soil"))) %>%
-  select(-StockGroup)
-
-stocks_snagstem_change_prim = round((stocks_table_merge %>% filter(StockGroupID=="DOM: Snag Stem [Type]"))$Change,0)
-```
-
-## Carbon stocks
-
-We estimate U.S. forested ecosystems stored `r stocks_tec_2001` MMT C in 2001 with live carbon accounting for `r stocks_live_2001_pct`% (`r stocks_live_2001` MMT C) and DOM pools accounting for `r stocks_dom_2001_pct`% (`r stocks_dom_2001` MMT C). By 2020, the total carbon stored in live carbon pools increased to `r stocks_live_2020` MMT C while DOM pools remained relatively stable. However, the net change in DOM masked dynamics within DOM pools. For example, carbon stored in standing dead snags increased by `r stocks_snagstem_change_prim` MMT C while soil pools declined by `r stocks_soil_change_prim` MMT C (Table \@ref(tab:stocktable)). Net losses in biomass carbon were concentrated in three western U.S. ecoregions (Sierra Nevada Mountains, Klamath Mountains, and Cascades) resulting primarily from the cumulative effect of harvest and fire. All other ecoregions were net sinks of biomass carbon (Figure  \@ref(fig:stockchangeeco)). The Idaho Batholith and Northern Rockies ecoregions were large sinks of biomass carbon resulting primarly from regrowth following high rates of historical disturbance which occured prior to 2001. Consequently, these regions also experienced significant losses in litter and deadwood pools as stocks decomposed over time.
-
-```{r, stockchangeeco, cache=T, echo=F, warning=F, message=F, fig.width=8, fig.height=4, fig.cap="Net change in carbon pools by ecoegion for the period 2001-2020. "}
-stocks_ecoreg = read_csv("data/results/stocks_ecoregions.csv") %>%
-  left_join(scenario_ids) %>% filter(ScenarioName=="LULC+Clim") %>%
-  mutate(Amount=Amount/1000000) %>%
-  filter(Timestep %in% c(2001,2020)) %>% arrange(Timestep) %>%
-  group_by(StratumID, StockGroupID, ScenarioName) %>%
-  mutate(Change = Amount-lag(Amount)) %>% filter(Timestep==2020) %>%
-  left_join(eco_code, by=c("StratumID"="Name")) %>%
-  mutate(ID = as.character(ID)) %>%
-  left_join(eco_poly, by=c("ID"="US_L3CODE"))
-
-stocks_ecoreg_groups_bio = stocks_ecoreg %>%
-  filter(StockGroupID %in% c("Biomass: Total"))
-
-stocks_ecoreg_groups_dwd = stocks_ecoreg %>%
-  filter(StockGroupID %in% c("DOM: Deadwood"))
-
-stocks_ecoreg_groups_lit = stocks_ecoreg %>%
-  filter(StockGroupID %in% c("DOM: Litter"))
-
-stocks_ecoreg_groups_soc = stocks_ecoreg %>%
-  filter(StockGroupID %in% c("DOM: Soil"))
-
-# Biomass map ----
-bio = 
-  ggplot() +
-  geom_sf(data=stocks_ecoreg_groups_bio, aes(geometry=geometry, fill=Change), color="grey90") +
-  geom_sf(data=states_poly, aes(geometry=geometry), fill=NA, color="grey30") +
-  scale_fill_gradient2(low=muted("red"), mid="beige", high=muted("green"), midpoint=0, guide="colorsteps", n.breaks=7) +
-  coord_sf(crs = "+proj=aea +lat_1=29.5 +lat_2=45.5 +lat_0=23 +lon_0=-96 +x_0=0 +y_0=0 +ellps=GRS80 +units=m +no_defs",
-           xlim=c(-2200000,2100000), ylim=c(380000,3100000)) +
-  labs(fill="MMT C", subtitle="Living biomass") +
-  theme_custom(legend.position = "right",
-               legend.key.height = unit(5, "mm"),
-               legend.key.width = unit(2, "mm"),
-               legend.background = element_blank()) +
-  guides(fill = guide_colorsteps(direction = "vertical",
-                                 title.position = 'top',
-                                 label.position = "right",
-                                 ticks = T,
-                                 ticks.colour = "black",
-                                 ticks.linewidth = 0.8,
-                                 frame.colour = "black"))
-
-# Deadwood map ----
-dwd = 
-  ggplot() +
-  geom_sf(data=stocks_ecoreg_groups_dwd, aes(geometry=geometry, fill=Change), color="grey90") +
-  geom_sf(data=states_poly, aes(geometry=geometry), fill=NA, color="grey30") +
-  scale_fill_gradient2(low=muted("red"), mid="beige", high=muted("green"), midpoint=0, guide="colorsteps", n.breaks=7) +
-  coord_sf(crs = "+proj=aea +lat_1=29.5 +lat_2=45.5 +lat_0=23 +lon_0=-96 +x_0=0 +y_0=0 +ellps=GRS80 +units=m +no_defs",
-           xlim=c(-2200000,2100000), ylim=c(380000,3100000)) +
-  labs(fill="MMT C", subtitle="DOM: Deadwood") +
-  theme_custom(legend.position = "right",
-               legend.key.height = unit(5, "mm"),
-               legend.key.width = unit(2, "mm"),
-               legend.background = element_blank()) +
-  guides(fill = guide_colorsteps(direction = "vertical",
-                                 title.position = 'top',
-                                 label.position = "right",
-                                 ticks = T,
-                                 ticks.colour = "black",
-                                 ticks.linewidth = 0.8,
-                                 frame.colour = "black"))
-# Litter map ----
-lit = 
-  ggplot() +
-  geom_sf(data=stocks_ecoreg_groups_lit, aes(geometry=geometry, fill=Change), color="grey90") +
-  geom_sf(data=states_poly, aes(geometry=geometry), fill=NA, color="grey30") +
-  scale_fill_gradient2(low=muted("red"), mid="beige", high=muted("green"), midpoint=0, guide="colorsteps", n.breaks=7) +
-  coord_sf(crs = "+proj=aea +lat_1=29.5 +lat_2=45.5 +lat_0=23 +lon_0=-96 +x_0=0 +y_0=0 +ellps=GRS80 +units=m +no_defs",
-           xlim=c(-2200000,2100000), ylim=c(380000,3100000)) +
-  labs(fill="MMT C", subtitle="DOM: Litter") +
-  theme_custom(legend.position = "right",
-               legend.key.height = unit(5, "mm"),
-               legend.key.width = unit(2, "mm"),
-               legend.background = element_blank()) +
-  guides(fill = guide_colorsteps(direction = "vertical",
-                                 title.position = 'top',
-                                 label.position = "right",
-                                 ticks = T,
-                                 ticks.colour = "black",
-                                 ticks.linewidth = 0.8,
-                                 frame.colour = "black"))
-# Soil map ----
-soc = 
-  ggplot() +
-  geom_sf(data=stocks_ecoreg_groups_soc, aes(geometry=geometry, fill=Change), color="grey90") +
-  geom_sf(data=states_poly, aes(geometry=geometry), fill=NA, color="grey30") +
-  scale_fill_gradient2(low=muted("red"), mid="beige", high=muted("green"), midpoint=0, guide="colorsteps", n.breaks=7) +
-  coord_sf(crs = "+proj=aea +lat_1=29.5 +lat_2=45.5 +lat_0=23 +lon_0=-96 +x_0=0 +y_0=0 +ellps=GRS80 +units=m +no_defs",
-           xlim=c(-2200000,2100000), ylim=c(380000,3100000)) +
-  labs(fill="MMT C", subtitle="DOM: Soil") +
-  theme_custom(legend.position = "right",
-               legend.key.height = unit(5, "mm"),
-               legend.key.width = unit(2, "mm"),
-               legend.background = element_blank()) +
-  guides(fill = guide_colorsteps(direction = "vertical",
-                                 title.position = 'top',
-                                 label.position = "right",
-                                 ticks = T,
-                                 ticks.colour = "black",
-                                 ticks.linewidth = 0.8,
-                                 frame.colour = "black"))
-# Cowplot ----
-plot_grid(bio, dwd, lit, soc, ncol=2, align="hv", labels="auto", label_size = 10, label_fontface = "plain")
-```
-
 ```{r, stocktable, echo=F, warning=F, message=F}
 kable(stocks_table_merge, col.names = c("Stock", "2001", "2020", "MMT C", "%"),
       digits = 1,
@@ -506,29 +524,100 @@ kable(stocks_table_merge, col.names = c("Stock", "2001", "2020", "MMT C", "%"),
   footnote(general = "The Aboveground Slow pool has been included with the IPCC Soil pool rather than the Litter pool as done in the CBM-CFS3 model.")
 ```
 
-Changes in LULC were an important driver of carbon stock change. When the effects of LULC were included in simulations, increases in live carbon were modest (`r stocks_live_change_prim` MMT C) relative to simulations without LULC and disturbances (`r stocks_live_change_clim` MMT C). Furthermore, changes in LULC and disturbance resulted in increases in litter and deadwood relative to simulations without LULC while soil carbon losses were larger. Results show that while climate is the primary driver of inter-annual variability in NEP and NBP, the effects of LULC and disturbance were the primary controlling process on the overall magnitude of ecosystem carbon storage and flux in the United States. 
+## Projections of carbon change
 
-```{r, stockchange, cache=T, echo=F, warning=F, message=F, fig.width=4, fig.height=3, fig.cap="Net change in carbon stocks between 2001-2020. The 'Clim' scenario includes only the effects from climate variability and change; 'LULC' assumes only effects from land use and disturbances; 'LULC+Clim' includes both LULC and climate effects, and 'Ref' assumes no effects from either LULC or climate."}
+For the western U.S., we projected future carbon storage and flux out to 2050 under two climate scenarios. We used the CanESM2 and HADGEM2-ES365 downscaled climate futures for RCP 4.5 to project changes in carbon storage and flux for U.S. forested ecosystems. Downscaled climate data were from the Multivariate Adaptive Constructed Analogs (MACA) (@abatzoglou2012comparison). Future LULC and disturbances were sampled, with replacement, from historical rates of change following methods described in @sleeter2019effects. 
 
-ggplot(stocks_ipcc_change, aes(x=ScenarioName, y=Change, fill=ScenarioName)) +
-  geom_hline(yintercept = 0, size=0.2) +
-  geom_bar(stat="identity", color="black") +
-  scale_y_continuous(label = comma) +
-  scale_fill_brewer(palette = "Accent") +
-  facet_wrap(~StockGroupID, scales = "free_y", ncol=3) +
+```{r, fluxprojection, echo=F, warning=F, message=F, fig.width=8, fig.height=4}
+scenario_ids_proj = data.frame(ScenarioID = c(74,94,95),
+                               ScenarioName = c("Historical", "CanESM2", "HadGEM2-ES365"))
+flux_proj = read_csv("data/results/flows_west.csv") %>%
+  left_join(scenario_ids_proj) %>%
+  filter(FlowGroupID %in% c("Net Biome Productivity")) %>%
+  group_by(ScenarioName, FlowGroupID) %>%
+  summarise(Mean=mean(Amount)/1000000)
+flux_proj
+
+stock_proj = read_csv("data/results/stocks_west.csv") %>%
+  left_join(scenario_ids_proj) %>%
+  filter(StockGroupID %in% c("Biomass: Total", "DOM: Total", "Total Ecosystem")) %>%
+  mutate(StockGroupID = factor(StockGroupID, levels=c("Biomass: Total", "DOM: Total", "Total Ecosystem")))
+  # filter(StockGroupID %in% c("Biomass: Aboveground", "Biomass: Belowground", "DOM: Litter", "DOM: Deadwood", "DOM: Soil",
+  #                            "Biomass: Total", "DOM: Total", "Total Ecosystem")) %>%
+  # mutate(StockGroupID = factor(StockGroupID, levels=c("Biomass: Aboveground", "Biomass: Belowground", "DOM: Litter", "DOM: Deadwood", "DOM: Soil",
+  #                            "Biomass: Total", "DOM: Total", "Total Ecosystem")))
+
+p1 = ggplot(stock_proj, aes(x=Timestep, y=Amount/1000000, color=ScenarioName)) +
+  geom_line() +
+  #geom_point() +
+  scale_color_manual(values=c("Historical"="black", "CanESM2"="forestgreen", "HadGEM2-ES365"="red3")) +
+  facet_wrap(~StockGroupID, scales="free_y", ncol=1) +
   theme_custom() +
-  labs(x=NULL, y=expression(Net~flux~(MMT~C)), fill="Scenario", shape="Scenario", color="Scenario") +
-  theme(legend.position = c(0.85,0.2),
-        legend.key.width = unit(5, "mm"),
-        legend.key.height = unit(3, "mm"),
-        legend.margin=margin(0,0,0,0),
-        legend.box.margin=margin(-10,-10,0,-10),
-        axis.text.x = element_blank())
+  labs(x="Year", y="MMT C", color="Scenario") +
+  theme(legend.position = "bottom")
+
+###########
+# Maps of NBP
+###########
+states_raster = raster("data/raster/ic-states.tif")
+filter = states_raster %in% c(4,6,8,16,30,32,35,41,49,53,56)
+western_states_raster = mask(states_raster, filter, maskvalue=0)
+
+projection_raster = stack("data/results/canesm-flows-nbp-2050.tif", "data/results/hadgem2-flows-nbp-2050.tif")
+projection_raster = mask(projection_raster, western_states_raster)
+plot(projection_raster)
+
+projection_raster_df = as.data.frame(projection_raster, xy=T) %>%
+  rename("CanESM"="canesm.flows.nbp.2050", "HadGEM2"="hadgem2.flows.nbp.2050") %>%
+  filter(!is.na(CanESM), !is.na(HadGEM2)) %>%
+  pivot_longer(cols=c(-x, -y), names_to="GCM", values_to="Amount")
+
+land_poly = st_read("data/vector/ne_10m_land.shp", quiet=T)
+states_poly = st_read("data/vector/cb_2018_us_state_20m.shp", quiet=T) %>%
+  filter(STUSPS %in% c("CA","OR","WA","ID","MT","WY","NV","UT","CO","NM","AZ"))
+
+p2 = ggplot() +
+  geom_sf(data=land_poly, aes(geometry=geometry), fill="white", color=NA) +
+  geom_tile(data=projection_raster_df, aes(x=x, y=y, fill=Amount)) +
+  geom_sf(data=states_poly, aes(geometry=geometry), fill=NA, color="grey20", size=0.2) +
+  coord_sf(crs = "+proj=aea +lat_1=29.5 +lat_2=45.5 +lat_0=23 +lon_0=-96 +x_0=0 +y_0=0 +ellps=GRS80 +units=m +no_defs",
+           xlim=c(min(projection_raster_df$x), max(projection_raster_df$x)),
+           ylim=c(min(projection_raster_df$y), max(projection_raster_df$y))) +
+  scale_fill_fermenter(palette = "BrBG", type="seq", direction=1, guide="colorsteps", breaks=c(-100,-20,-10,-5,-2,2,5,10,20, 50)) +
+  facet_wrap(~GCM) +
+  labs(x=NULL, y=NULL, fill=expression(Metric~Tons~C~ha^-1)) +
+  theme_bw(10) +
+  theme(#text=element_text(family="Roboto Condensed"),
+    legend.position = "bottom",
+    legend.text.align = 0,
+    legend.text = element_text(size = 7, hjust = 0, color = "#4e4d47"),
+    legend.title = element_text(size = 8),
+    plot.margin = unit(c(1,1,1,1), "mm"),
+    legend.key.height = unit(2, "mm"),
+    legend.key.width = unit(8, "mm"),
+    legend.background = element_blank(),
+    axis.text.x = element_text(size=8),
+    axis.text.y = element_text(size=8),
+    panel.background = element_rect(fill="grey90")) +
+  guides(fill = guide_colorsteps(direction = "horizontal",
+                                 title.position = 'top',
+                                 title.hjust = 0,
+                                 label.hjust = 1,
+                                 nrow = 1,
+                                 byrow = T,
+                                 reverse = F,
+                                 label.position = "bottom",
+                                 ticks = T,
+                                 ticks.colour = "black",
+                                 ticks.linewidth = 0.8,
+                                 frame.colour = "black"))
+
+p = plot_grid(p2,p1, ncol = 2, align=c("hv"), rel_widths = c(6,4))
+p
 ```
 
 
 
-## Climate projections
 
 
 
