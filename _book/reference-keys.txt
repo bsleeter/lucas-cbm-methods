@@ -69,3 +69,9 @@ review-of-major-findings
 comparison-to-other-studies
 limitations-of-the-approach
 climate-projections
+recent-change-in-carbon-stocks-and-fluxes
+projections-of-carbon-change
+carbon-stock-change
+regional-variability
+effects-of-land-use-and-disturbance
+effects-of-lulc-and-disturbance

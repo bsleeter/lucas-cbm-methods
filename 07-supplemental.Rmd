@@ -257,3 +257,195 @@ ggplot(stocks_state_class, aes(x=fct_reorder(StateClassID, Change), y=Change, fi
         legend.box.margin=margin(-10,-10,0,-10))
 
 ```
+
+
+
+```{r}
+
+###########
+# Maps of NBP
+###########
+states_raster = raster("data/raster/ic-states.tif")
+filter = states_raster %in% c(4,6,8,16,30,32,35,41,49,53,56)
+western_states_raster = mask(states_raster, filter, maskvalue=0)
+
+projection_raster = stack("data/results/canesm-flows-nbp-2050.tif", "data/results/hadgem2-flows-nbp-2050.tif")
+projection_raster = mask(projection_raster, western_states_raster)
+plot(projection_raster)
+
+projection_raster_df = as.data.frame(projection_raster, xy=T) %>%
+  rename("CanESM"="canesm.flows.nbp.2050", "HadGEM2"="hadgem2.flows.nbp.2050") %>%
+  filter(!is.na(CanESM), !is.na(HadGEM2)) %>%
+  pivot_longer(cols=c(-x, -y), names_to="GCM", values_to="Amount")
+
+land_poly = st_read("data/vector/ne_10m_land.shp", quiet=T)
+states_poly = st_read("data/vector/cb_2018_us_state_20m.shp", quiet=T) %>%
+  filter(STUSPS %in% c("CA","OR","WA","ID","MT","WY","NV","UT","CO","NM","AZ"))
+
+p2 = ggplot() +
+  geom_sf(data=land_poly, aes(geometry=geometry), fill="white", color=NA) +
+  geom_tile(data=projection_raster_df, aes(x=x, y=y, fill=Amount)) +
+  geom_sf(data=states_poly, aes(geometry=geometry), fill=NA, color="grey20", size=0.2) +
+  coord_sf(crs = "+proj=aea +lat_1=29.5 +lat_2=45.5 +lat_0=23 +lon_0=-96 +x_0=0 +y_0=0 +ellps=GRS80 +units=m +no_defs",
+           xlim=c(min(projection_raster_df$x), max(projection_raster_df$x)),
+           ylim=c(min(projection_raster_df$y), max(projection_raster_df$y))) +
+  scale_fill_fermenter(palette = "BrBG", type="seq", direction=1, guide="colorsteps", breaks=c(-100,-20,-10,-5,-2,2,5,10,20, 50)) +
+  facet_wrap(~GCM) +
+  labs(x=NULL, y=NULL, fill=expression(Metric~Tons~C~ha^-1)) +
+  theme_bw(10) +
+  theme(#text=element_text(family="Roboto Condensed"),
+    legend.position = "bottom",
+    legend.text.align = 0,
+    legend.text = element_text(size = 7, hjust = 0, color = "#4e4d47"),
+    legend.title = element_text(size = 8),
+    plot.margin = unit(c(1,1,1,1), "mm"),
+    legend.key.height = unit(2, "mm"),
+    legend.key.width = unit(8, "mm"),
+    legend.background = element_blank(),
+    axis.text.x = element_text(size=8),
+    axis.text.y = element_text(size=8),
+    panel.background = element_rect(fill="grey90")) +
+  guides(fill = guide_colorsteps(direction = "horizontal",
+                                 title.position = 'top',
+                                 title.hjust = 0,
+                                 label.hjust = 1,
+                                 nrow = 1,
+                                 byrow = T,
+                                 reverse = F,
+                                 label.position = "bottom",
+                                 ticks = T,
+                                 ticks.colour = "black",
+                                 ticks.linewidth = 0.8,
+                                 frame.colour = "black"))
+
+p = plot_grid(p2,p1, ncol = 2, align=c("hv"), rel_widths = c(6,4))
+p
+```
+
+
+## Regional variability
+
+The largest net carbon losses were in found in the mountain regions of California and Oregon (Sierra Nevada, Klamath and Cascades ecoregions) and were largely driven by stand-replacing wildfires and forest harvest. While remaining a net sink of carbon, the southeast experienced declines due to high rates of forest harvest and urbanization. However, high rates of productivity in the region, along with reforestation of agricultural lands, offset carbon losses ultimately resulting in a modest net sink. Texas was the state with the largest net sink, largely the result of forest aging and low rates of stand-replacing disturbances over the study period.
+
+```{r, nbpmap, cache=T, echo=F, warning=F, message=F, fig.width=8, fig.cap="Map of the estiamted net biome productivity of conterminous U.S. forests for the period 2001-2020. Negative values indicate a net loss of carbon from ecosystems and positive values indicate a net sink of carbon."}
+land_poly = st_read("data/vector/ne_10m_land.shp", quiet=T)
+states_poly = st_read("data/vector/cb_2018_us_state_20m.shp", quiet=T)
+nbp_raster = raster("data/results/flows-nbp-2020.tif")
+# nbp_raster = aggregate(nbp_raster, fact=4, na.rm=T)
+nbp_raster_df = as.data.frame(nbp_raster, xy=T) %>%
+  rename("Amount"="flows.nbp.2020") %>%
+  filter(!is.na(Amount))
+# 
+# min(nbp_raster_df$Amount)
+# max(nbp_raster_df$Amount)
+# quantile(nbp_raster_df$Amount, probs = seq(0, 1, length.out = 9 + 1))
+
+p1 = ggplot() +
+  geom_sf(data=land_poly, aes(geometry=geometry), fill="white", color=NA) +
+  geom_tile(data=nbp_raster_df, aes(x=x, y=y, fill=Amount)) +
+  geom_sf(data=states_poly, aes(geometry=geometry), fill=NA, color="grey20", size=0.2) +
+  coord_sf(crs = "+proj=aea +lat_1=29.5 +lat_2=45.5 +lat_0=23 +lon_0=-96 +x_0=0 +y_0=0 +ellps=GRS80 +units=m +no_defs",
+           xlim=c(min(nbp_raster_df$x), max(nbp_raster_df$x)),
+           ylim=c(min(nbp_raster_df$y), max(nbp_raster_df$y))) +
+  scale_fill_fermenter(palette = "BrBG", type="seq", direction=1, guide="colorsteps", breaks=c(-100,-20,-10,-5,-2,2,5,10,20, 50)) +
+  labs(x=NULL, y=NULL, fill=expression(Metric~Tons~C~ha^-1)) +
+  theme_bw() +
+  theme(#text=element_text(family="Roboto Condensed"),
+        legend.position = c(0.2,0.1),
+        legend.text.align = 0,
+        legend.text = element_text(size = 7, hjust = 0, color = "#4e4d47"),
+        legend.title = element_text(size = 8),
+        plot.margin = unit(c(1,1,1,1), "mm"),
+        legend.key.height = unit(2, "mm"),
+        legend.key.width = unit(8, "mm"),
+        legend.background = element_blank(),
+        axis.text.x = element_text(size=8),
+        axis.text.y = element_text(size=8),
+        panel.background = element_rect(fill="grey90")) +
+  guides(fill = guide_colorsteps(direction = "horizontal",
+                                 title.position = 'top',
+                                 title.hjust = 0,
+                                 label.hjust = 1,
+                                 nrow = 1,
+                                 byrow = T,
+                                 reverse = F,
+                                 label.position = "bottom",
+                                 ticks = T,
+                                 ticks.colour = "black",
+                                 ticks.linewidth = 0.8,
+                                 frame.colour = "black"))
+
+```
+
+```{r, stratumflows, cache=T, echo=F, warning=F, message=F, fig.width=8, fig.height=3, fig.cap="Mean annual net biome productivity (NBP) of conterminous U.S. forests for the period 2002-2020 summarized by ecoregion (a) and states (b). Panel c shows NBP estimated for all forest cells inthe conterminous U.S."}
+# Ecoregion chloropleth map NBP ----
+
+eco_poly = st_read("data/vector/us_eco_l3_no_st_simp.shp", quiet=T) %>%
+  st_simplify()
+eco_code = read_csv("data/tables/ecoregions.csv")
+
+flows_ecoreg = read_csv("data/results/flows_ecoregions.csv") %>%
+  left_join(scenario_ids) %>%
+  mutate(Amount = Amount/1000000) %>%
+  filter(FlowGroupID == "Net Biome Productivity", ScenarioName == "LULC+Clim") %>%
+  group_by(ScenarioName, FromStratumID, FlowGroupID) %>%
+  summarise(Mean=mean(Amount), Min=quantile(Amount, 0.025), Max=quantile(Amount, 0.975)) %>%
+  arrange(Mean) %>%
+  left_join(eco_code, by=c("FromStratumID"="Name")) %>%
+  mutate(ID = as.character(ID)) %>%
+  left_join(eco_poly, by=c("ID"="US_L3CODE"))
+
+p2 = ggplot(flows_ecoreg, aes(geometry=geometry, fill = Mean)) +
+  geom_sf(color="black", size=0.1) +
+  coord_sf(crs = "+proj=aea +lat_1=29.5 +lat_2=45.5 +lat_0=23 +lon_0=-96 +x_0=0 +y_0=0 +ellps=GRS80 +units=m +no_defs") +
+  #scale_fill_fermenter(palette = "BrBG", direction=1 , type="seq", guide="colorsteps", breaks=c(-4,-2,-1,-0.5,0.5,1,2,4,8)) +
+  scale_fill_gradient2(low=muted("red"), mid="white", high=muted("green"), midpoint=0, guide="colorsteps", n.breaks=9) +
+  theme_bw(9) +
+  labs(fill=expression(MMT~C~yr^-1)) +
+  theme(legend.key.height = unit(5, "mm"),
+        legend.key.width = unit(2, "mm"),
+        plot.margin = margin(2,2,2,2, "mm")) +
+  guides(fill = guide_colorsteps(ticks = T,
+                                 ticks.colour = "black",
+                                 ticks.linewidth = 0.8,
+                                 frame.colour = "black"))
+
+# State chloropleth map NBP ----
+
+state_poly = st_read("data/vector/cb_2018_us_state_20m.shp", quiet=T) %>% 
+  mutate(STATEFP = as.character(STATEFP)) %>%
+  st_transform(crs=crs)
+state_code = read_csv("data/tables/states.csv")
+
+flows_states = read_csv("data/results/flows_states.csv") %>%
+  left_join(scenario_ids) %>%
+  mutate(Amount = Amount/1000000) %>%
+  filter(FlowGroupID == "Net Biome Productivity", ScenarioName == "LULC+Clim") %>%
+  group_by(ScenarioName, FromSecondaryStratumID, FlowGroupID) %>%
+  summarise(Mean=mean(Amount), Min=quantile(Amount, 0.025), Max=quantile(Amount, 0.975)) %>%
+  arrange(Mean) %>%
+  left_join(state_code, by=c("FromSecondaryStratumID"="Name")) %>%
+  mutate(ID = as.character(ID)) %>%
+  left_join(state_poly, by=c("ID"="STATEFP"))
+
+p3 = ggplot(flows_states, aes(geometry=geometry, fill=Mean)) +
+  geom_sf(color="black", size=0.1) +
+  coord_sf(crs = "+proj=aea +lat_1=29.5 +lat_2=45.5 +lat_0=23 +lon_0=-96 +x_0=0 +y_0=0 +ellps=GRS80 +units=m +no_defs") +
+  #scale_fill_fermenter(palette = "BrBG", direction=1 , type="seq", guide="colorsteps", breaks=c(-4,-2,-1,-0.5,0.5,1,2,4,8)) +
+  scale_fill_gradient2(low=muted("red"), mid="white", high=muted("green"), midpoint=0, guide="colorsteps", n.breaks=9) +
+  theme_bw(9) +
+  labs(fill=expression(MMT~C~yr^-1)) +
+  theme(legend.key.height = unit(5, "mm"),
+        legend.key.width = unit(2, "mm"),
+        plot.margin = margin(2,2,2,2, "mm")) +
+  guides(fill = guide_colorsteps(ticks = T,
+                                 ticks.colour = "black",
+                                 ticks.linewidth = 0.8,
+                                 frame.colour = "black"))
+
+# Create the plot ----
+pleft = plot_grid(p2,p3, align=c("hv"), ncol = 1, labels=c("a", "b"), label_size = 10, label_fontface = "plain")
+pright = plot_grid(p1, align=c("hv"), ncol = 1, labels=c("c"), label_size = 10, label_fontface = "plain")
+p = plot_grid(pleft, pright, align=c("hv"), ncol = 2, rel_widths = c(4,6))
+p
+```
