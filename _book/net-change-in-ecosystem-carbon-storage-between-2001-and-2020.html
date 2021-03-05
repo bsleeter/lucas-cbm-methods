@@ -1,0 +1,1014 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+<head>
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>Chapter 4 Net change in ecosystem carbon storage between 2001 and 2020 | Spatially explicit estimates of carbon stocks and fluxes for the United States: a new approach linking the LUCAS and CBM-CFS3 models</title>
+  <meta name="description" content="This is a minimal example of using the bookdown package to write a book. The output format for this example is bookdown::gitbook." />
+  <meta name="generator" content="bookdown 0.21 and GitBook 2.6.7" />
+
+  <meta property="og:title" content="Chapter 4 Net change in ecosystem carbon storage between 2001 and 2020 | Spatially explicit estimates of carbon stocks and fluxes for the United States: a new approach linking the LUCAS and CBM-CFS3 models" />
+  <meta property="og:type" content="book" />
+  
+  
+  <meta property="og:description" content="This is a minimal example of using the bookdown package to write a book. The output format for this example is bookdown::gitbook." />
+  <meta name="github-repo" content="rstudio/bookdown-demo" />
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="Chapter 4 Net change in ecosystem carbon storage between 2001 and 2020 | Spatially explicit estimates of carbon stocks and fluxes for the United States: a new approach linking the LUCAS and CBM-CFS3 models" />
+  
+  <meta name="twitter:description" content="This is a minimal example of using the bookdown package to write a book. The output format for this example is bookdown::gitbook." />
+  
+
+<meta name="author" content="Benjamin M. Sleeter" />
+
+
+<meta name="date" content="2021-02-04" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  
+  
+<link rel="prev" href="results.html"/>
+<link rel="next" href="discussion.html"/>
+<script src="libs/header-attrs-2.5/header-attrs.js"></script>
+<script src="libs/jquery-2.2.3/jquery.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+
+<link href="libs/anchor-sections-1.0/anchor-sections.css" rel="stylesheet" />
+<script src="libs/anchor-sections-1.0/anchor-sections.js"></script>
+<script src="libs/kePrint-0.0.1/kePrint.js"></script>
+<link href="libs/lightable-0.0.1/lightable.css" rel="stylesheet" />
+<link href="libs/bsTable-3.3.7/bootstrapTable.min.css" rel="stylesheet" />
+<script src="libs/bsTable-3.3.7/bootstrapTable.js"></script>
+
+
+
+<link rel="stylesheet" href="style.css" type="text/css" />
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li><a href="./">A Minimal Book Example</a></li>
+
+<li class="divider"></li>
+<li class="chapter" data-level="1" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i><b>1</b> Abstract</a></li>
+<li class="chapter" data-level="2" data-path="intro.html"><a href="intro.html"><i class="fa fa-check"></i><b>2</b> Introduction</a></li>
+<li class="chapter" data-level="3" data-path="results.html"><a href="results.html"><i class="fa fa-check"></i><b>3</b> Results</a>
+<ul>
+<li class="chapter" data-level="3.1" data-path="results.html"><a href="results.html#estimation-of-carbon-storage-in-live-dead-and-soil-pools"><i class="fa fa-check"></i><b>3.1</b> Estimation of carbon storage in live, dead, and soil pools</a></li>
+</ul></li>
+<li class="chapter" data-level="4" data-path="net-change-in-ecosystem-carbon-storage-between-2001-and-2020.html"><a href="net-change-in-ecosystem-carbon-storage-between-2001-and-2020.html"><i class="fa fa-check"></i><b>4</b> Net change in ecosystem carbon storage between 2001 and 2020</a>
+<ul>
+<li class="chapter" data-level="4.1" data-path="net-change-in-ecosystem-carbon-storage-between-2001-and-2020.html"><a href="net-change-in-ecosystem-carbon-storage-between-2001-and-2020.html#net-carbon-flux"><i class="fa fa-check"></i><b>4.1</b> Net carbon flux</a></li>
+<li class="chapter" data-level="4.2" data-path="net-change-in-ecosystem-carbon-storage-between-2001-and-2020.html"><a href="net-change-in-ecosystem-carbon-storage-between-2001-and-2020.html#effects-of-lulc-and-disturbance"><i class="fa fa-check"></i><b>4.2</b> Effects of LULC and disturbance</a></li>
+<li class="chapter" data-level="4.3" data-path="net-change-in-ecosystem-carbon-storage-between-2001-and-2020.html"><a href="net-change-in-ecosystem-carbon-storage-between-2001-and-2020.html#projections-of-carbon-change"><i class="fa fa-check"></i><b>4.3</b> Projections of carbon change</a></li>
+</ul></li>
+<li class="chapter" data-level="5" data-path="discussion.html"><a href="discussion.html"><i class="fa fa-check"></i><b>5</b> Discussion</a>
+<ul>
+<li class="chapter" data-level="5.1" data-path="discussion.html"><a href="discussion.html#review-of-major-findings"><i class="fa fa-check"></i><b>5.1</b> Review of major findings</a></li>
+<li class="chapter" data-level="5.2" data-path="discussion.html"><a href="discussion.html#comparison-to-other-studies"><i class="fa fa-check"></i><b>5.2</b> Comparison to other studies</a></li>
+<li class="chapter" data-level="5.3" data-path="discussion.html"><a href="discussion.html#limitations-of-the-approach"><i class="fa fa-check"></i><b>5.3</b> Limitations of the approach</a></li>
+</ul></li>
+<li class="chapter" data-level="6" data-path="conclusion.html"><a href="conclusion.html"><i class="fa fa-check"></i><b>6</b> Conclusion</a></li>
+<li class="chapter" data-level="7" data-path="methods.html"><a href="methods.html"><i class="fa fa-check"></i><b>7</b> Methods</a>
+<ul>
+<li class="chapter" data-level="7.1" data-path="methods.html"><a href="methods.html#lucas-state-and-transition-simulation-model"><i class="fa fa-check"></i><b>7.1</b> LUCAS state-and-transition simulation model</a>
+<ul>
+<li class="chapter" data-level="7.1.1" data-path="methods.html"><a href="methods.html#state-class-map"><i class="fa fa-check"></i><b>7.1.1</b> State class map</a></li>
+<li class="chapter" data-level="7.1.2" data-path="methods.html"><a href="methods.html#forest-age"><i class="fa fa-check"></i><b>7.1.2</b> Forest age</a></li>
+<li class="chapter" data-level="7.1.3" data-path="methods.html"><a href="methods.html#lulc-and-disturbance-transitions"><i class="fa fa-check"></i><b>7.1.3</b> LULC and disturbance transitions</a></li>
+</ul></li>
+<li class="chapter" data-level="7.2" data-path="methods.html"><a href="methods.html#lucas-carbon-stock-and-flows"><i class="fa fa-check"></i><b>7.2</b> LUCAS carbon stock and flows</a>
+<ul>
+<li class="chapter" data-level="7.2.1" data-path="methods.html"><a href="methods.html#cbm-cfs3-reference-simulations"><i class="fa fa-check"></i><b>7.2.1</b> CBM-CFS3 reference simulations</a></li>
+<li class="chapter" data-level="7.2.2" data-path="methods.html"><a href="methods.html#carbon-flow-rates-lucas-flow-pathways-module"><i class="fa fa-check"></i><b>7.2.2</b> Carbon flow rates: LUCAS Flow Pathways module</a></li>
+<li class="chapter" data-level="7.2.3" data-path="methods.html"><a href="methods.html#validation"><i class="fa fa-check"></i><b>7.2.3</b> Validation</a></li>
+<li class="chapter" data-level="7.2.4" data-path="methods.html"><a href="methods.html#spin-up-of-dom-pools"><i class="fa fa-check"></i><b>7.2.4</b> Spin-up of DOM pools</a></li>
+<li class="chapter" data-level="7.2.5" data-path="methods.html"><a href="methods.html#mapping-initial-carbon-stocks"><i class="fa fa-check"></i><b>7.2.5</b> Mapping initial carbon stocks</a></li>
+</ul></li>
+<li class="chapter" data-level="7.3" data-path="methods.html"><a href="methods.html#spatial-flow-multipliers"><i class="fa fa-check"></i><b>7.3</b> Spatial flow multipliers</a>
+<ul>
+<li class="chapter" data-level="7.3.1" data-path="methods.html"><a href="methods.html#npp-variability"><i class="fa fa-check"></i><b>7.3.1</b> NPP variability</a></li>
+<li class="chapter" data-level="7.3.2" data-path="methods.html"><a href="methods.html#decay-and-decomposition-of-dom"><i class="fa fa-check"></i><b>7.3.2</b> Decay and decomposition of DOM</a></li>
+</ul></li>
+<li class="chapter" data-level="7.4" data-path="methods.html"><a href="methods.html#scenario-simulations"><i class="fa fa-check"></i><b>7.4</b> Scenario simulations</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="references.html"><a href="references.html"><i class="fa fa-check"></i>References</a></li>
+<li class="chapter" data-level="8" data-path="supplemental-material.html"><a href="supplemental-material.html"><i class="fa fa-check"></i><b>8</b> Supplemental Material</a>
+<ul>
+<li class="chapter" data-level="8.1" data-path="supplemental-material.html"><a href="supplemental-material.html#regional-variability"><i class="fa fa-check"></i><b>8.1</b> Regional variability</a></li>
+</ul></li>
+<li class="divider"></li>
+<li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
+
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">Spatially explicit estimates of carbon stocks and fluxes for the United States: a new approach linking the LUCAS and CBM-CFS3 models</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="net-change-in-ecosystem-carbon-storage-between-2001-and-2020" class="section level1" number="4">
+<h1><span class="header-section-number">Chapter 4</span> Net change in ecosystem carbon storage between 2001 and 2020</h1>
+<p>Between 2001 and 2020, TEC increased from 52,027 MMT C to 54,392 MMT C, resulting in a total forest carbon sink of 2,365 MMT C over the 19-year period. On an annualized basis, the net forest carbon sink was 51,653.74 MMT C yr<sup>-1</sup>.</p>
+<p>By 2020, carbon stored in live pools increased to 18,810 MMT C while DOM pools remained relatively stable. However, the net change in the overall amount of DOM masked important internal dynamics within DOM pools (Table <a href="net-change-in-ecosystem-carbon-storage-between-2001-and-2020.html#tab:stocktable">4.1</a>). For example, carbon stored in standing dead snags increased by 202 MMT C while soil pools declined by -408 MMT C.</p>
+<table class=" lightable-classic lightable-striped" style="font-size: 12px; font-family: &quot;Arial Narrow&quot;, &quot;Source Sans Pro&quot;, sans-serif; width: auto !important; margin-left: auto; margin-right: auto;border-bottom: 0;">
+<caption style="font-size: initial !important;">
+<span id="tab:stocktable">Table 4.1: </span>Carbon stock estimates for forest ecosystems of the conterminous U.S.. Units are in MMT C.
+</caption>
+<thead>
+<tr>
+<th style="empty-cells: hide;" colspan="1">
+</th>
+<th style="padding-bottom:0; padding-left:3px;padding-right:3px;text-align: center; " colspan="2">
+<div style="TRUE">
+Year
+</div>
+</th>
+<th style="padding-bottom:0; padding-left:3px;padding-right:3px;text-align: center; " colspan="2">
+<div style="TRUE">
+Change
+</div>
+</th>
+</tr>
+<tr>
+<th style="text-align:left;">
+Stock
+</th>
+<th style="text-align:right;">
+2001
+</th>
+<th style="text-align:right;">
+2020
+</th>
+<th style="text-align:right;">
+MMT C
+</th>
+<th style="text-align:right;">
+%
+</th>
+</tr>
+</thead>
+<tbody>
+<tr grouplength="4">
+<td colspan="5" style="border-bottom: 1px solid;">
+<strong>Aboveground live</strong>
+</td>
+</tr>
+<tr>
+<td style="text-align:left; padding-left:  2em;" indentlevel="1">
+Biomass: Foliage [Type]
+</td>
+<td style="text-align:right;">
+881.5
+</td>
+<td style="text-align:right;">
+949.6
+</td>
+<td style="text-align:right;">
+68.2
+</td>
+<td style="text-align:right;">
+7.7
+</td>
+</tr>
+<tr>
+<td style="text-align:left; padding-left:  2em;" indentlevel="1">
+Biomass: Merchantable [Type]
+</td>
+<td style="text-align:right;">
+7859.7
+</td>
+<td style="text-align:right;">
+9461.5
+</td>
+<td style="text-align:right;">
+1601.8
+</td>
+<td style="text-align:right;">
+20.4
+</td>
+</tr>
+<tr>
+<td style="text-align:left; padding-left:  2em;" indentlevel="1">
+Biomass: Other Wood [Type]
+</td>
+<td style="text-align:right;">
+4306.0
+</td>
+<td style="text-align:right;">
+4827.3
+</td>
+<td style="text-align:right;">
+521.2
+</td>
+<td style="text-align:right;">
+12.1
+</td>
+</tr>
+<tr>
+<td style="text-align:left; padding-left:  2em;" indentlevel="1">
+Total
+</td>
+<td style="text-align:right;">
+13047.1
+</td>
+<td style="text-align:right;">
+15238.4
+</td>
+<td style="text-align:right;">
+2191.2
+</td>
+<td style="text-align:right;">
+16.8
+</td>
+</tr>
+<tr grouplength="3">
+<td colspan="5" style="border-bottom: 1px solid;">
+<strong>Belowground live</strong>
+</td>
+</tr>
+<tr>
+<td style="text-align:left; padding-left:  2em;" indentlevel="1">
+Biomass: Coarse Root [Type]
+</td>
+<td style="text-align:right;">
+2689.4
+</td>
+<td style="text-align:right;">
+3090.9
+</td>
+<td style="text-align:right;">
+401.5
+</td>
+<td style="text-align:right;">
+14.9
+</td>
+</tr>
+<tr>
+<td style="text-align:left; padding-left:  2em;" indentlevel="1">
+Biomass: Fine Root [Type]
+</td>
+<td style="text-align:right;">
+464.6
+</td>
+<td style="text-align:right;">
+480.4
+</td>
+<td style="text-align:right;">
+15.7
+</td>
+<td style="text-align:right;">
+3.4
+</td>
+</tr>
+<tr>
+<td style="text-align:left; padding-left:  2em;" indentlevel="1">
+Total
+</td>
+<td style="text-align:right;">
+3154.1
+</td>
+<td style="text-align:right;">
+3571.3
+</td>
+<td style="text-align:right;">
+417.2
+</td>
+<td style="text-align:right;">
+13.2
+</td>
+</tr>
+<tr grouplength="5">
+<td colspan="5" style="border-bottom: 1px solid;">
+<strong>Deadwood</strong>
+</td>
+</tr>
+<tr>
+<td style="text-align:left; padding-left:  2em;" indentlevel="1">
+DOM: Aboveground Medium [Type]
+</td>
+<td style="text-align:right;">
+1488.9
+</td>
+<td style="text-align:right;">
+1295.8
+</td>
+<td style="text-align:right;">
+-193.1
+</td>
+<td style="text-align:right;">
+-13.0
+</td>
+</tr>
+<tr>
+<td style="text-align:left; padding-left:  2em;" indentlevel="1">
+DOM: Belowground Fast [Type]
+</td>
+<td style="text-align:right;">
+246.9
+</td>
+<td style="text-align:right;">
+253.0
+</td>
+<td style="text-align:right;">
+6.1
+</td>
+<td style="text-align:right;">
+2.5
+</td>
+</tr>
+<tr>
+<td style="text-align:left; padding-left:  2em;" indentlevel="1">
+DOM: Snag Branch [Type]
+</td>
+<td style="text-align:right;">
+238.6
+</td>
+<td style="text-align:right;">
+282.6
+</td>
+<td style="text-align:right;">
+44.0
+</td>
+<td style="text-align:right;">
+18.5
+</td>
+</tr>
+<tr>
+<td style="text-align:left; padding-left:  2em;" indentlevel="1">
+DOM: Snag Stem [Type]
+</td>
+<td style="text-align:right;">
+756.9
+</td>
+<td style="text-align:right;">
+958.9
+</td>
+<td style="text-align:right;">
+202.0
+</td>
+<td style="text-align:right;">
+26.7
+</td>
+</tr>
+<tr>
+<td style="text-align:left; padding-left:  2em;" indentlevel="1">
+Total
+</td>
+<td style="text-align:right;">
+2731.3
+</td>
+<td style="text-align:right;">
+2790.4
+</td>
+<td style="text-align:right;">
+59.0
+</td>
+<td style="text-align:right;">
+2.2
+</td>
+</tr>
+<tr grouplength="3">
+<td colspan="5" style="border-bottom: 1px solid;">
+<strong>Litter</strong>
+</td>
+</tr>
+<tr>
+<td style="text-align:left; padding-left:  2em;" indentlevel="1">
+DOM: Aboveground Fast [Type]
+</td>
+<td style="text-align:right;">
+1382.9
+</td>
+<td style="text-align:right;">
+1435.2
+</td>
+<td style="text-align:right;">
+52.3
+</td>
+<td style="text-align:right;">
+3.8
+</td>
+</tr>
+<tr>
+<td style="text-align:left; padding-left:  2em;" indentlevel="1">
+DOM: Aboveground Very Fast [Type]
+</td>
+<td style="text-align:right;">
+856.0
+</td>
+<td style="text-align:right;">
+908.9
+</td>
+<td style="text-align:right;">
+52.9
+</td>
+<td style="text-align:right;">
+6.2
+</td>
+</tr>
+<tr>
+<td style="text-align:left; padding-left:  2em;" indentlevel="1">
+Total
+</td>
+<td style="text-align:right;">
+2238.9
+</td>
+<td style="text-align:right;">
+2344.1
+</td>
+<td style="text-align:right;">
+105.2
+</td>
+<td style="text-align:right;">
+4.7
+</td>
+</tr>
+<tr grouplength="4">
+<td colspan="5" style="border-bottom: 1px solid;">
+<strong>Soil</strong>
+</td>
+</tr>
+<tr>
+<td style="text-align:left; padding-left:  2em;" indentlevel="1">
+DOM: Aboveground Slow [Type]
+</td>
+<td style="text-align:right;">
+7140.2
+</td>
+<td style="text-align:right;">
+6846.8
+</td>
+<td style="text-align:right;">
+-293.4
+</td>
+<td style="text-align:right;">
+-4.1
+</td>
+</tr>
+<tr>
+<td style="text-align:left; padding-left:  2em;" indentlevel="1">
+DOM: Belowground Slow [Type]
+</td>
+<td style="text-align:right;">
+23572.1
+</td>
+<td style="text-align:right;">
+23457.6
+</td>
+<td style="text-align:right;">
+-114.5
+</td>
+<td style="text-align:right;">
+-0.5
+</td>
+</tr>
+<tr>
+<td style="text-align:left; padding-left:  2em;" indentlevel="1">
+DOM: Belowground Very Fast [Type]
+</td>
+<td style="text-align:right;">
+143.3
+</td>
+<td style="text-align:right;">
+143.5
+</td>
+<td style="text-align:right;">
+0.2
+</td>
+<td style="text-align:right;">
+0.2
+</td>
+</tr>
+<tr>
+<td style="text-align:left; padding-left:  2em;" indentlevel="1">
+Total
+</td>
+<td style="text-align:right;">
+30855.6
+</td>
+<td style="text-align:right;">
+30447.9
+</td>
+<td style="text-align:right;">
+-407.7
+</td>
+<td style="text-align:right;">
+-1.3
+</td>
+</tr>
+</tbody>
+<tfoot>
+<tr>
+<td style="padding: 0; " colspan="100%">
+<span style="font-style: italic;">Note: </span>
+</td>
+</tr>
+<tr>
+<td style="padding: 0; " colspan="100%">
+<sup></sup> The Aboveground Slow pool has been included with the IPCC Soil pool rather than the Litter pool as done in the CBM-CFS3 model.
+</td>
+</tr>
+</tfoot>
+</table>
+<p>Net losses in live biomass carbon were concentrated in three western U.S. ecoregions (Sierra Nevada Mountains, Klamath Mountains, Cascades), primarily the result recent high rates wildfire. All other ecoregions in the U.S. were net sinks of live carbon (Figure <a href="net-change-in-ecosystem-carbon-storage-between-2001-and-2020.html#fig:stockchangeeco">4.1</a>). The Middle Rockies and Northern Rockies ecoregions were large sinks of live carbon resulting primarily from regrowth following high rates of historical disturbance which occurred prior to 2001. Consequently, these regions also experienced significant net declines in litter and deadwood pools as stocks decomposed over time.</p>
+<div class="figure"><span id="fig:stockchangeeco"></span>
+<img src="test_files/figure-html/stockchangeeco-1.png" alt="Net change in carbon pools by ecoegion for the period 2001-2020. " width="768" />
+<p class="caption">
+Figure 4.1: Net change in carbon pools by ecoegion for the period 2001-2020.
+</p>
+</div>
+<p>Changes in LULC and disturbance (LULC-D) were an important driver of carbon stock change. Figure <a href="net-change-in-ecosystem-carbon-storage-between-2001-and-2020.html#fig:stockchange">4.2</a> shows the net change in carbon pools a climate only scenario (“Clim”), a LULC and disturbance only scenario (“LULC”), a LULC and climate scenario (“LULC+Clim”) and a scenario where neither climate or LULC effects were considered (“Ref”). When the effects of LULC-D were included in simulations, increases in live carbon were modest (2,608 MMT C) relative to simulations without LULC-D (5,537 MMT C). Furthermore, incorporating changes in LULC-D resulted in relatively larger increases in litter and deadwood relative to simulations without LULC-D. Wildfire and forest harvest transitions result in large fluxes of carbon from live to DOM pools, either the result of root and branch biomass left on-site after harvest or through mortality of live vegetation. The subsequent increases in DOM pools post-disturbance provide large quantities of carbon as inputs to the soil pool over time. Excluding LULC-D changes from the model results in large declines in SOC relative to scenarios where LULC-D are considered. In total, the inclusion of LULC/disturbances in simulations reduced the total size of the net carbon sink in the conterminous US by 53%&gt;% compared to simulations where only the effects of climate were considered. Results show that while climate was the primary driver of inter-annual variability in the annual net flux of carbon <a href="net-change-in-ecosystem-carbon-storage-between-2001-and-2020.html#fig:flowresults">4.3</a>, LULC and disturbance were the primary controlling processes governing the magnitude of ecosystem carbon storage and flux in the United States.</p>
+<div class="figure"><span id="fig:stockchange"></span>
+<img src="test_files/figure-html/stockchange-1.png" alt="Net change in carbon stocks between 2001-2020. The 'Clim' scenario includes only the effects from climate variability and change; 'LULC' assumes only effects from land use and disturbances; 'LULC+Clim' includes both LULC and climate effects, and 'Ref' assumes no effects from either LULC or climate." width="768" />
+<p class="caption">
+Figure 4.2: Net change in carbon stocks between 2001-2020. The ‘Clim’ scenario includes only the effects from climate variability and change; ‘LULC’ assumes only effects from land use and disturbances; ‘LULC+Clim’ includes both LULC and climate effects, and ‘Ref’ assumes no effects from either LULC or climate.
+</p>
+</div>
+<div id="net-carbon-flux" class="section level2" number="4.1">
+<h2><span class="header-section-number">4.1</span> Net carbon flux</h2>
+<p>For the period 2001-2020, U.S. forests were on average, a net sink of carbon at a rate of 132 MMT C yr<sup>-1</sup>. Figure <a href="net-change-in-ecosystem-carbon-storage-between-2001-and-2020.html#fig:flowresults">4.3</a> shows the estimated net primary productivity (NPP), heterotrophic respiration (Rh), net ecosystem productivity (NEP) and net biome productivity (NBP) over time for each of the four simulations. The size of the net sink varied considerably from year-to-year, ranging from -22 MMT C yr<sup>-1</sup> (source) to 242 MMT C yr<sup>-1</sup> (sink). Climate was the primary driver of inter-annual variability in the size of the forest sink. When climate was not included in simulations, the size of the net sink ranged from 67 to 200 MMT C yr<sup>-1</sup> and showed a declining trend over time due to the absence of increased productivity from recent climate conditions. Land use, land-use change, and disturbances were the primary controlling processes effecting the magnitude of the net carbon sink. When LULC was excluded, the forest carbon sink was 49% higher (mean of 271 MMT C yr<sup>-1</sup>) than simulations where LULC was included.</p>
+<p>Net primary productivity (NPP) of U.S. forests averaged 1,238 MMT C yr<sup>-1</sup>. Incorporating the effects of LULC and disturbances reduced total NPP by 49 MMT C yr<sup>-1</sup> while incorporating the effects of climate resulted in an increase in NPP of 9 MMT C yr<sup>-1</sup> compared to the LULC only simulation. These results suggest that LULC and disturbance have a negative impact on NPP while climate variability and change between 2001-2020 have resulted in increased productivity of U.S. forests. Heterotrophic respiration (Rh) increased under all simulations resulting from increases in productivity and climate warming.</p>
+<div class="figure"><span id="fig:flowresults"></span>
+<img src="test_files/figure-html/flowresults-1.png" alt="Net fluxes of carbon in conterminous U.S. forests for the period 2002-2020. Need to delete this part..." width="768" />
+<p class="caption">
+Figure 4.3: Net fluxes of carbon in conterminous U.S. forests for the period 2002-2020. Need to delete this part…
+</p>
+</div>
+</div>
+<div id="effects-of-lulc-and-disturbance" class="section level2" number="4.2">
+<h2><span class="header-section-number">4.2</span> Effects of LULC and disturbance</h2>
+<p>Table <a href="net-change-in-ecosystem-carbon-storage-between-2001-and-2020.html#tab:lulcfluxtable">4.2</a> shows the emission, harvest, and mortality fluxes for the LULC and disturbances transitions considered in this study. Carbon losses from LULC and disturbances reduced the annual forest carbon sink by 81 MMT C yr<sup>-1</sup> on average. The cumulative loss of carbon sequestration was primarily from the transfer of carbon to harvested wood products (67 MMT C yr<sup>-1</sup>) with clearcut harvest accounting for more than 90% of the carbon removal from ecosystems. Harvest activities also resulted in a similar amount of carbon transferred from live to DOM pools.</p>
+<p>Ecosystem carbon losses from combustion averaged 14 MMT C yr<sup>-1</sup>, with wildfire accounting for 65% of all LULC and disturbance related emissions; emissions from urbanization and agricultural expansion accounted for 27% and 8%, respectfully. Emissions from wildfire were highly variable from year-to-year. However, the three highest fire emission years all occurred since 2017. In 2020, wildfire burned ~3.7 million hectares, primarily in California and Oregon, an amount 0% greater than the historical average. Emissions were estimated to be 45.93 MMT C (168.58 MMT CO<sub>2</sub>), which were more then three times the historical average.</p>
+<p>In addition to ecosystem carbon removals, LULC and disturbances resulted in the transfer of an additional 94 MMT C yr<sup>-1</sup> from live to DOM pools which will contribute to future years reductions in the carbon sink through their decay and decomposition. This future flux could be accelerated by continued increases in the turnover rate of DOM resulting from climate warming.</p>
+<table class=" lightable-paper" style="font-size: 12px; font-family: &quot;Arial Narrow&quot;, arial, helvetica, sans-serif; width: auto !important; margin-left: auto; margin-right: auto;">
+<caption style="font-size: initial !important;">
+<span id="tab:lulcfluxtable">Table 4.2: </span>Average annual Fluxes of carbon resulting from land use, land-use change, and disturbances for the period 2001-2020. Emissions refer to the direct combustion of carbon to the atmosphere as either carbon monoxide, methane, or carbon dioxide. All emissions are shown in units of carbon. Harvest refers to the transfer of carbon out of the ecosystem to harvested wood products. Mortality is the transfer of live carbon to DOM pools. Transfer refers to the transfer of carbon from one DOM pool to another. Units are in MMT C yr.
+</caption>
+<thead>
+<tr>
+<th style="text-align:left;">
+TransitionGroupID
+</th>
+<th style="text-align:left;">
+Transition Type
+</th>
+<th style="text-align:right;">
+Emission
+</th>
+<th style="text-align:right;">
+Harvest
+</th>
+<th style="text-align:right;">
+Mortality
+</th>
+<th style="text-align:right;">
+Transfer
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;vertical-align: top !important;" rowspan="3">
+Ag Expansion
+</td>
+<td style="text-align:left;">
+Ag Expansion: Cropland
+</td>
+<td style="text-align:right;">
+0.56
+</td>
+<td style="text-align:right;">
+0.42
+</td>
+<td style="text-align:right;">
+0.25
+</td>
+<td style="text-align:right;">
+—
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Ag Expansion: Pasture
+</td>
+<td style="text-align:right;">
+0.55
+</td>
+<td style="text-align:right;">
+0.48
+</td>
+<td style="text-align:right;">
+0.25
+</td>
+<td style="text-align:right;">
+—
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Total
+</td>
+<td style="text-align:right;">
+1.11
+</td>
+<td style="text-align:right;">
+0.90
+</td>
+<td style="text-align:right;">
+0.50
+</td>
+<td style="text-align:right;">
+—
+</td>
+</tr>
+<tr>
+<td style="text-align:left;vertical-align: top !important;" rowspan="5">
+Urbanization
+</td>
+<td style="text-align:left;">
+Urbanization: High
+</td>
+<td style="text-align:right;">
+0.21
+</td>
+<td style="text-align:right;">
+0.08
+</td>
+<td style="text-align:right;">
+—
+</td>
+<td style="text-align:right;">
+—
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Urbanization: Medium
+</td>
+<td style="text-align:right;">
+0.70
+</td>
+<td style="text-align:right;">
+0.26
+</td>
+<td style="text-align:right;">
+—
+</td>
+<td style="text-align:right;">
+—
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Urbanization: Low
+</td>
+<td style="text-align:right;">
+1.19
+</td>
+<td style="text-align:right;">
+0.44
+</td>
+<td style="text-align:right;">
+—
+</td>
+<td style="text-align:right;">
+—
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Urbanization: Open
+</td>
+<td style="text-align:right;">
+1.75
+</td>
+<td style="text-align:right;">
+0.67
+</td>
+<td style="text-align:right;">
+—
+</td>
+<td style="text-align:right;">
+—
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Total
+</td>
+<td style="text-align:right;">
+3.85
+</td>
+<td style="text-align:right;">
+1.45
+</td>
+<td style="text-align:right;">
+—
+</td>
+<td style="text-align:right;">
+—
+</td>
+</tr>
+<tr>
+<td style="text-align:left;vertical-align: top !important;" rowspan="3">
+Forest Harvest
+</td>
+<td style="text-align:left;">
+Forest Harvest: Forest Clearcut
+</td>
+<td style="text-align:right;">
+—
+</td>
+<td style="text-align:right;">
+62.02
+</td>
+<td style="text-align:right;">
+59.68
+</td>
+<td style="text-align:right;">
+7.13
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Forest Harvest: Forest Selection
+</td>
+<td style="text-align:right;">
+—
+</td>
+<td style="text-align:right;">
+2.19
+</td>
+<td style="text-align:right;">
+2.14
+</td>
+<td style="text-align:right;">
+—
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Total
+</td>
+<td style="text-align:right;">
+—
+</td>
+<td style="text-align:right;">
+64.21
+</td>
+<td style="text-align:right;">
+61.82
+</td>
+<td style="text-align:right;">
+7.13
+</td>
+</tr>
+<tr>
+<td style="text-align:left;vertical-align: top !important;" rowspan="4">
+Fire
+</td>
+<td style="text-align:left;">
+Fire: High Severity
+</td>
+<td style="text-align:right;">
+3.81
+</td>
+<td style="text-align:right;">
+—
+</td>
+<td style="text-align:right;">
+7.60
+</td>
+<td style="text-align:right;">
+6.89
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Fire: Medium Severity
+</td>
+<td style="text-align:right;">
+2.26
+</td>
+<td style="text-align:right;">
+—
+</td>
+<td style="text-align:right;">
+4.73
+</td>
+<td style="text-align:right;">
+2.39
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Fire: Low Severity
+</td>
+<td style="text-align:right;">
+3.16
+</td>
+<td style="text-align:right;">
+—
+</td>
+<td style="text-align:right;">
+6.89
+</td>
+<td style="text-align:right;">
+2.08
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Total
+</td>
+<td style="text-align:right;">
+9.23
+</td>
+<td style="text-align:right;">
+—
+</td>
+<td style="text-align:right;">
+19.22
+</td>
+<td style="text-align:right;">
+11.36
+</td>
+</tr>
+<tr>
+<td style="text-align:left;vertical-align: top !important;" rowspan="4">
+Insect
+</td>
+<td style="text-align:left;">
+Insect: High Severity
+</td>
+<td style="text-align:right;">
+—
+</td>
+<td style="text-align:right;">
+—
+</td>
+<td style="text-align:right;">
+6.09
+</td>
+<td style="text-align:right;">
+—
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Insect: Medium Severity
+</td>
+<td style="text-align:right;">
+—
+</td>
+<td style="text-align:right;">
+—
+</td>
+<td style="text-align:right;">
+4.95
+</td>
+<td style="text-align:right;">
+—
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Insect: Low Severity
+</td>
+<td style="text-align:right;">
+—
+</td>
+<td style="text-align:right;">
+—
+</td>
+<td style="text-align:right;">
+6.24
+</td>
+<td style="text-align:right;">
+—
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Total
+</td>
+<td style="text-align:right;">
+—
+</td>
+<td style="text-align:right;">
+—
+</td>
+<td style="text-align:right;">
+17.29
+</td>
+<td style="text-align:right;">
+—
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div id="projections-of-carbon-change" class="section level2" number="4.3">
+<h2><span class="header-section-number">4.3</span> Projections of carbon change</h2>
+<p>For the western U.S., we projected future carbon storage and flux between 2020 and 2050 under for two climate models under the RCP 4.5 radiative forcing scenario. We used the CanESM2 and HADGEM2-ES365 downscaled climate futures for RCP 4.5 to project changes in carbon storage and flux for U.S. forested ecosystems. Climate data from the Coupled Model Inter-comparison Project (CMIP5) were downscaled using the Multivariate Adaptive Constructed Analogs (MACA) (<span class="citation"><a href="supplemental-material.html#ref-abatzoglou2012comparison" role="doc-biblioref">Abatzoglou and Brown</a> (<a href="supplemental-material.html#ref-abatzoglou2012comparison" role="doc-biblioref">2012</a>)</span>). Downscaled climate data were used to produce annual spatial flow multipliers used to scale vegetation growth and the decay and decomposition of DOM at the pixel level. MACA data were downscaled from their native ~4km resolution to 1km using a bilinear method. Future LULC and disturbances were sampled, with replacement, from historical rates of change following methods described in <span class="citation"><a href="supplemental-material.html#ref-sleeter2019effects" role="doc-biblioref">Benjamin M. Sleeter et al.</a> (<a href="supplemental-material.html#ref-sleeter2019effects" role="doc-biblioref">2019</a>)</span>. Additional details are described in the methods section.</p>
+<p>Total ecosystem carbon storage was projected to continue to increase under both climate model simulations, with larger gains realized under the CanESM2 model as opposed to HadGEM2-ES365. However, the projected net carbon sink rate under both models was projected to be lower than that of the historical period. The</p>
+<p><img src="test_files/figure-html/fluxprojection-1.png" width="768" /><img src="test_files/figure-html/fluxprojection-2.png" width="768" /><img src="test_files/figure-html/fluxprojection-3.png" width="768" /></p>
+
+</div>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="results.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="discussion.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/lunr.js"></script>
+<script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-clipboard.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": false,
+"facebook": true,
+"twitter": true,
+"linkedin": false,
+"weibo": false,
+"instapaper": false,
+"vk": false,
+"all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": "https://github.com/rstudio/bookdown-demo/edit/master/02_results.Rmd",
+"text": "Edit"
+},
+"history": {
+"link": null,
+"text": null
+},
+"view": {
+"link": null,
+"text": null
+},
+"download": ["test.pdf", "test.epub"],
+"toc": {
+"collapse": "subsection"
+}
+});
+});
+</script>
+
+</body>
+
+</html>

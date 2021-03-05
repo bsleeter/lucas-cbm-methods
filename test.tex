@@ -1,0 +1,371 @@
+% Options for packages loaded elsewhere
+\PassOptionsToPackage{unicode}{hyperref}
+\PassOptionsToPackage{hyphens}{url}
+%
+\documentclass[
+]{book}
+\usepackage{lmodern}
+\usepackage{amsmath}
+\usepackage{ifxetex,ifluatex}
+\ifnum 0\ifxetex 1\fi\ifluatex 1\fi=0 % if pdftex
+  \usepackage[T1]{fontenc}
+  \usepackage[utf8]{inputenc}
+  \usepackage{textcomp} % provide euro and other symbols
+  \usepackage{amssymb}
+\else % if luatex or xetex
+  \usepackage{unicode-math}
+  \defaultfontfeatures{Scale=MatchLowercase}
+  \defaultfontfeatures[\rmfamily]{Ligatures=TeX,Scale=1}
+\fi
+% Use upquote if available, for straight quotes in verbatim environments
+\IfFileExists{upquote.sty}{\usepackage{upquote}}{}
+\IfFileExists{microtype.sty}{% use microtype if available
+  \usepackage[]{microtype}
+  \UseMicrotypeSet[protrusion]{basicmath} % disable protrusion for tt fonts
+}{}
+\makeatletter
+\@ifundefined{KOMAClassName}{% if non-KOMA class
+  \IfFileExists{parskip.sty}{%
+    \usepackage{parskip}
+  }{% else
+    \setlength{\parindent}{0pt}
+    \setlength{\parskip}{6pt plus 2pt minus 1pt}}
+}{% if KOMA class
+  \KOMAoptions{parskip=half}}
+\makeatother
+\usepackage{xcolor}
+\IfFileExists{xurl.sty}{\usepackage{xurl}}{} % add URL line breaks if available
+\IfFileExists{bookmark.sty}{\usepackage{bookmark}}{\usepackage{hyperref}}
+\hypersetup{
+  pdftitle={Spatially explicit estimates of carbon stocks and fluxes for the United States: a new approach linking the LUCAS and CBM-CFS3 models},
+  pdfauthor={Benjamin M. Sleeter},
+  hidelinks,
+  pdfcreator={LaTeX via pandoc}}
+\urlstyle{same} % disable monospaced font for URLs
+\usepackage{color}
+\usepackage{fancyvrb}
+\newcommand{\VerbBar}{|}
+\newcommand{\VERB}{\Verb[commandchars=\\\{\}]}
+\DefineVerbatimEnvironment{Highlighting}{Verbatim}{commandchars=\\\{\}}
+% Add ',fontsize=\small' for more characters per line
+\usepackage{framed}
+\definecolor{shadecolor}{RGB}{248,248,248}
+\newenvironment{Shaded}{\begin{snugshade}}{\end{snugshade}}
+\newcommand{\AlertTok}[1]{\textcolor[rgb]{0.94,0.16,0.16}{#1}}
+\newcommand{\AnnotationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\AttributeTok}[1]{\textcolor[rgb]{0.77,0.63,0.00}{#1}}
+\newcommand{\BaseNTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\BuiltInTok}[1]{#1}
+\newcommand{\CharTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\CommentTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textit{#1}}}
+\newcommand{\CommentVarTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\ConstantTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\ControlFlowTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{#1}}}
+\newcommand{\DataTypeTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{#1}}
+\newcommand{\DecValTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\DocumentationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\ErrorTok}[1]{\textcolor[rgb]{0.64,0.00,0.00}{\textbf{#1}}}
+\newcommand{\ExtensionTok}[1]{#1}
+\newcommand{\FloatTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\FunctionTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\ImportTok}[1]{#1}
+\newcommand{\InformationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\KeywordTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{#1}}}
+\newcommand{\NormalTok}[1]{#1}
+\newcommand{\OperatorTok}[1]{\textcolor[rgb]{0.81,0.36,0.00}{\textbf{#1}}}
+\newcommand{\OtherTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{#1}}
+\newcommand{\PreprocessorTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textit{#1}}}
+\newcommand{\RegionMarkerTok}[1]{#1}
+\newcommand{\SpecialCharTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\SpecialStringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\StringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\VariableTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\VerbatimStringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\WarningTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\usepackage{longtable,booktabs}
+\usepackage{calc} % for calculating minipage widths
+% Correct order of tables after \paragraph or \subparagraph
+\usepackage{etoolbox}
+\makeatletter
+\patchcmd\longtable{\par}{\if@noskipsec\mbox{}\fi\par}{}{}
+\makeatother
+% Allow footnotes in longtable head/foot
+\IfFileExists{footnotehyper.sty}{\usepackage{footnotehyper}}{\usepackage{footnote}}
+\makesavenoteenv{longtable}
+\usepackage{graphicx}
+\makeatletter
+\def\maxwidth{\ifdim\Gin@nat@width>\linewidth\linewidth\else\Gin@nat@width\fi}
+\def\maxheight{\ifdim\Gin@nat@height>\textheight\textheight\else\Gin@nat@height\fi}
+\makeatother
+% Scale images if necessary, so that they will not overflow the page
+% margins by default, and it is still possible to overwrite the defaults
+% using explicit options in \includegraphics[width, height, ...]{}
+\setkeys{Gin}{width=\maxwidth,height=\maxheight,keepaspectratio}
+% Set default figure placement to htbp
+\makeatletter
+\def\fps@figure{htbp}
+\makeatother
+\setlength{\emergencystretch}{3em} % prevent overfull lines
+\providecommand{\tightlist}{%
+  \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+\setcounter{secnumdepth}{5}
+\usepackage{booktabs}
+\usepackage{amsthm}
+\makeatletter
+\def\thm@space@setup{%
+  \thm@preskip=8pt plus 2pt minus 4pt
+  \thm@postskip=\thm@preskip
+}
+\makeatother
+\ifluatex
+  \usepackage{selnolig}  % disable illegal ligatures
+\fi
+\usepackage[]{natbib}
+\bibliographystyle{apalike}
+
+\title{Spatially explicit estimates of carbon stocks and fluxes for the United States: a new approach linking the LUCAS and CBM-CFS3 models}
+\author{Benjamin M. Sleeter}
+\date{2021-03-05}
+
+\begin{document}
+\maketitle
+
+{
+\setcounter{tocdepth}{1}
+\tableofcontents
+}
+Running Title: Ecosystem carbon balance in US Forests
+
+Benjamin M. Sleeter\textsuperscript{1}*, Leonardo Frid\textsuperscript{2}, Bronwyrn Rayfield\textsuperscript{2}, Paul C. Selmants\textsuperscript{3}, Jinxun Liu\textsuperscript{3}, Colin J. Daniel\textsuperscript{2}
+
+\textbf{Author Affiliations}
+\textsuperscript{1}U.S. Geological Survey, Seattle, WA, USA; \href{mailto:bsleeter@usgs.gov}{\nolinkurl{bsleeter@usgs.gov}}; (253) 343-3363\\
+\textsuperscript{2}Apex Resource Management Solutions Ltd., Ottawa, ON, CAN\\
+\textsuperscript{3}U.S. Geological Survey, Menlo Park, CA, USA
+
+*Corresponding author
+
+\hypertarget{abstract}{%
+\chapter{Abstract}\label{abstract}}
+
+\textbf{Background}
+
+\textbf{Results}
+
+\textbf{Conclusions}
+
+\textbf{Keywords}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{install.packages}\NormalTok{(}\StringTok{"bookdown"}\NormalTok{)}
+\CommentTok{\# or the development version}
+\CommentTok{\# devtools::install\_github("rstudio/bookdown")}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{library}\NormalTok{(DT)}
+\FunctionTok{library}\NormalTok{(tidyverse)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## -- Attaching packages --------------------------------------- tidyverse 1.3.0 --
+\end{verbatim}
+
+\begin{verbatim}
+## v ggplot2 3.3.2     v purrr   0.3.4
+## v tibble  3.0.4     v dplyr   1.0.2
+## v tidyr   1.1.2     v stringr 1.4.0
+## v readr   1.4.0     v forcats 0.5.0
+\end{verbatim}
+
+\begin{verbatim}
+## -- Conflicts ------------------------------------------ tidyverse_conflicts() --
+## x dplyr::filter() masks stats::filter()
+## x dplyr::lag()    masks stats::lag()
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{library}\NormalTok{(scales)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## 
+## Attaching package: 'scales'
+\end{verbatim}
+
+\begin{verbatim}
+## The following object is masked from 'package:purrr':
+## 
+##     discard
+\end{verbatim}
+
+\begin{verbatim}
+## The following object is masked from 'package:readr':
+## 
+##     col_factor
+\end{verbatim}
+
+Remember each Rmd file contains one and only one chapter, and a chapter is defined by the first-level heading \texttt{\#}.
+
+To compile this example to PDF, you need XeLaTeX. You are recommended to install TinyTeX (which includes XeLaTeX): \url{https://yihui.name/tinytex/}.
+
+\hypertarget{intro}{%
+\chapter{Introduction}\label{intro}}
+
+Forest ecosystems play a critical role in the global carbon cycle and represent the largest carbon sink in the terrestrial biosphere. Annually, the global forest sink has been estimated at \textasciitilde1.1 Pg C yr\textsuperscript{-1} \citep{pan2011large}, with more recent studies placing the sink as high as 2.0 Pg C yr\textsuperscript{-1} although uncertainties in those estimates are substantial \citep{harris2021global}. Temperate forests of North America have been estimated as a large and persistent sink, with estimates ranging from 0.3 - 0.9 Pg C yr\textsuperscript{-1} \citep{hayes2012reconciling}, with U.S. forests accounting for \textasciitilde80\% of the net uptake \citep{usgcrp2018soccr2}. However, large uncertainties remain, largely stemming from the methodological approach used \citep{hayes2012reconciling}. As ecosystems - and in particular forests - are increasingly looked to as a means of storing carbon through the implementation of natural climate solutions (NCS) \citep{fargione2018natural, griscom2017natural, cameron2017ecosystem}, having robust tools which can quantify past and future changes in ecosystem carbon stocks and fluxes is critical for land managers and policy makers.
+
+Process-based ecosystem models (e.g.~dynamic global vegetation models; DGVM's) are designed to represent underlying biogeochemical processes, including a wide range of carbon dynamics. DGVMs are typically used to simulate vegetation responses to a range of controlling processes and applied at global to national scales. Benefits of this class of model includes the ability to understand the relative effects of major controlling processes through development of manipulative experiments. DGVMs can be applied across large geographic areas, and can be used to make future projections based on changes in drivers of ecosystem change \citep{huntzinger2012north}. However, large uncertainties exist, due to the large number of relatively poorly understood processes and the quality of data used for model parameteization \citep{hayes2012reconciling, huntzinger2012north}. In a review of 17 process-based ecosystem models, \citet{hayes2012reconciling} estimated a mean forest carbon net sink of 157.6 Tg C yr\textsuperscript{-1} with a standard deviation of 309.5 Tg C yr\textsuperscript{-1}.Furthermore, ecosystem models can be limited in their ability to adequately represent sufficient variation in ecosystem types, often relying on generalization as a trade-off for computational efficiency. As an example, DGVM's often generalize vegetation into a discrete set of plant functional types (PFTs), as opposed to using specific forest types or groups found in many forest inventories. Many DGVM approaches also lack the ability to characterize complex socioeconomic processes and their effect on ecosystem carbon dynamics, although this has been an recent area of intensive research \citep{bachelet2015projected, liu2020critical}.
+
+Inventory-based approaches rely on field-based measurements and are generally used to estimate changes in carbon stocks between two successive time periods. Using the U.S. Department of Agriculture Forest Inventory and Analysis (FIA) data, estimates of carbon stock-change are produced annually for U.S. ecosystems and reported to the United Nations Framework Convention on Climate (UNFCC)\citep{epa2020inventory}. FIA data provide a comprehensive set of plot-level data characterizing forest attributes including carbon stocks and net fluxes and have been used in a number of national studies aimed at quantifying the U.S. forest carbon sink \citep{birdsey1992carbon, birdsey1995carbon, woodbury2007carbon, goodale2002forest, hayes2012reconciling}.
+
+However, there are several limitations associated with inventory-based carbon accounting, including a) asseements across large geographic areas can be cost-prohibitive due to the need for repeated measurements across a large number of sample sites needed to represent ecosystem heterogeneity; b) inventory-based approaches are not spatially-explicit and often rely on extrapolation methods to develop estimates in areas where no inventory exists; c) stock-change methods do not capture many of the internal dynamics and fluxes of carbon within a system; and d) inventory-based methods are not easily turned into projections under a range of global change scenarios. However, a robust forest inventory program can be used to calibrate and validate ecosystem models which can be then be extended across large geographic areas spanning long temporal intervals \citep{kurz2009cbm, liu2020critical} . We have sought to bridge the gap between inventory and process-based approaches to develop a spatially-explicit ecosystem carbon monitoring and projection framework capable of providing near real-time spatially explicit estimates of carbon stocks and fluxes.
+
+The LUCAS model (Land Use and Carbon Scenario Simulator) is a spatially explicit state-and-transition simulation model with stocks and flows \citep[\citet{daniel2018integrating}]{daniel2016state} developed to assess the impact of land use and land cover change, ecosystem disturbance, and climate change on carbon stocks and fluxes. The LUCAS model has been applied at local \citep{sleeter2017carbon}, state \citep{sleeter2019effects}, and national \citep{sleeter2018effects} scales as both spatially referenced and spatially-explicit models. LUCAS runs within the SyncroSim software modeling environment (\url{http://syncrosim.com}). For state and national-scale research, the LUCAS carbon model was parameterized with carbon turnover rates derived from the Integrated Biosphere Simulator (IBIS) dynamic global vegetation model \citep{liu2020critical}. Output from IBIS simulations was transformed into age and ecosystem-dependent carbon growth and turnover rates which were used within LUCAS to estimate total fluxes and stocks. However, IBIS is limited to a relatively small number of discrete vegetation classes (plant functional types), which in turn limit the ability to represent heterogeneity of ecosystems within LUCAS. Furthermore, IBIS is a computationally intensive model to run across large landscapes which limits the ability to run a series of calibration and spin-up simulation.
+
+The CBM-CFS3 model (Carbon Budget Model of the Canadian Forest Sector v3) is an IPCC Tier 3 spatially referenced model of carbon stocks and fluxes which can be applied at multiple scales (\citet{kurz2009cbm}). The approach relies on provincial level forest inventory data to model forest carbon fluxes and the response to a range of socio-environmental processes such as land use change, disturbance, and climate warming. User supplied merchantable volume curves are converted into carbon biomass through the use of species-specific biomass expansion factors. Turnover of live carbon and decay and decomposition of dead organic matter (DOM) are specified for each forest type and/or at a regional scale. CBM-CFS3 has been applied and adapted in many other countries using regionally-specific parameters \citep{pilli2013application, kim2017estimating, jevvsenak2020effect, pilli2018carbon}. It's transparent approach and robust methodology, combined with the robustness of the FIA forest inventory data, make it an ideal model to adapt for the U.S. forest sector. However, the CBM-CFS3 is not spatially explicit and does not currently incorporate the effects of climate variabiilty and change on the growth of vegetation.
+
+In this study our goal was to develop a land change and carbon monitoring system capable of producing near real-time estimates of carbon stocks and fluxes for any forested location in the conterminous United States. The objectives of the study were to 1) produce annual, spatially-explicit estimates of carbon stocks and fluxes for the period 2001-2020, 2) estimate the contribution of a wide range of LULC and disturbances, and 3) identify the major controlling forces on the magnitude and variability of the carbon sink. The approach relies on developing a methodological approach to link the CBM-CFS3 and LUCAS models while utilizing national forest inventory data, remote sensing data, and an exogenous model of vegetation productivity.
+
+\hypertarget{results}{%
+\chapter{Results}\label{results}}
+
+Placeholder
+
+\hypertarget{estimation-of-carbon-storage-in-live-dead-and-soil-pools}{%
+\section{Estimation of carbon storage in live, dead, and soil pools}\label{estimation-of-carbon-storage-in-live-dead-and-soil-pools}}
+
+\hypertarget{net-change-in-ecosystem-carbon-storage}{%
+\section{Net change in ecosystem carbon storage}\label{net-change-in-ecosystem-carbon-storage}}
+
+\hypertarget{net-change-in-carbon-stocks}{%
+\section{Net change in carbon stocks}\label{net-change-in-carbon-stocks}}
+
+\hypertarget{carbon-fluxes}{%
+\section{Carbon fluxes}\label{carbon-fluxes}}
+
+\hypertarget{effects-of-lulc-and-disturbance}{%
+\section{Effects of LULC and disturbance}\label{effects-of-lulc-and-disturbance}}
+
+\hypertarget{projections-of-carbon-change}{%
+\section{Projections of carbon change}\label{projections-of-carbon-change}}
+
+\hypertarget{carbon-emissions-from-wildfire-in-california}{%
+\section{Carbon emissions from wildfire in California}\label{carbon-emissions-from-wildfire-in-california}}
+
+\hypertarget{discussion}{%
+\chapter{Discussion}\label{discussion}}
+
+This paper describes efforts to link the LUCAS state-and-transition simulation model with the CBM-CFS3 model of ecosystem carbon dynamics to produce detailed, spatially explicit estimates of land change and ecosystem carbon dynamics for the conterminous United States. The approach leverages the robust capabilities of LUCAS to represent a wide range of LULC and disturbance types derived from state of the art remote sensing techniques. We used the CBM-CFS3 model of carbon dynamics to parameterize a stock-flow sub-model and added a dynamic growth module to represent the effects of climate variability and change on the NPP of forested ecosytems. Results show strong agreement with a range of other studies, including those produced by inventory methods alone, such as the annual U.S. EPA greenhouse gas assessment. Because the method relies on the modeling of carbon fluxes to estimate stocks, the LUCAS-CBM approach provides the added benefit of providing rich detail in the underlying transfer of carbon between ecosystem pools, which is lacking in traditional inventory-based stock-change approaches. Additionally, because the model is parameterized at the pixel scale, all outputs are provided as a time-series of spatially explicit maps, providing much needed resolution suitable for land management decision making.
+
+Results using the integrated LUCAS-CBM approach compare well with published results from a range of other studies utilizing a variety of methodological approaches. \citet{hayes2012reconciling} reviewed 17 terrestrial biosphere models and found a mean net ecosystem exchange (NEE) in U.S. forest of -157.6 (SD=309.5) Tg C yr\textsuperscript{-1} (here, negative values denote a net sink of carbon in ecosystems and product pools). The Second State of the Carbon Cycle Report (SOCCR2) estimated an net carbon sink of 154 Tg C yr\textsuperscript{-1} for U.S. forested ecosystems (forestland remaining forestland). Our estimate for the 2001-2010 period was a net sink of 159 Tg C yr\textsuperscript{-1}, which compares well to both SOCCR2's inventory based approach and the estimate derived from process models.
+
+The linked LUCAS-CBM approach provides a middle ground between inventory-based stock-change methods and complex process-based biogeochemical models. Our method overcomes many of the limitations of inventory based estimates, notable a lack of ability to attribute controlling processes, coarse temporal resolution, and typically a lack of spatially explicit estimates. Furthermore, inventory based methods often prioritize live biomass pools and in many cases under-sample other important DOM pools. We address each of these limitations while also utilizing detailed forest inventory data to parameterize key aspects of the the model. In this study we used merchantable volume curves derived from FIA data \citep{bechtold2005enhanced} to estimate standing stocks of carbon based on default biomass expansion factors and turnover rates from the CBM-CFS3 model.
+
+Unlike inventory-based approaches, biogeochemical models represent a wide range of underlying processes and lend themselves well to attribution of change. By design, process models are also sensitive to the effects of weather and climate variability and change. However, the disadvantages of this class of models is their inherent complexity and large uncertainties resulting from the wide range of parameter estimates which need to be made \citep{hayes2012reconciling}. Furthermore, this class of models have been designed to work over large areas at relatively coarse resolution, which can be difficult to utilize at ecosystem management scales. The LUCAS-CBM approach was developed to overcome many of these obstacles by running on an annual timestep (as opposed to hourly or daily) and representing basic carbon transfer processes such as growth, mortality, turnover, decay, and decomposition. The relatively small number of carbon flux rates requiring parameterization still provides for attribution of change while reducing the internal complexity of the model. Furthermore, by incorporating the NPP sub-model to estimate variability in annual growth rates, our model is sensitive to the effects of climate variability and change. Lastly, the model framework we have developed is agnostic in terms of spatial resolution, meaning it can be run at any resolution across any sized landscape provided key inputs can be obtained (e.g.~downscaled climate data) and computational resources are available.
+
+The LUCAS model was designed using the SyncroSim modeling environment which originated as a tool to model landscape change \citep{daniel2016state}. As a result, the model contains a robust set of features to simulate a wide range of landscape change processes including vegetation dynamics \citep{ford2019tool, miller2015combining}, spread and management of invasive species \citep{jarnevich2020assessing}, and habitat conservation \citep{d2019coupled}. We developed the LUCAS model to account for a variety of land-use and land-cover changes, including urbanization, agricultural expansion and contraction, fire, harvest, and drought mortality. However, features exist to include a range of other biophysical and socio-economic processes. For example, \citet{wilson2016future} used the LUCAS model to track changes in water use under alternative LULC scenarios and \citet{sleeter2017projecting} used the model to project changes in community vulnerability to coastal hazards. A range of studies have used LUCAS to assess ecosystem carbon dynamics, including a spatially explicit assessment for the state of Hawaii \citep{sleeter2017projected}, an analysis of historical changes in the conterminous U.S. \citep{sleeter2018effects}, and future projections for the state of California under alternative LULC and climate scenarios \citep{sleeter2019effects}. \citet{sleeter2017carbon} used a high resolution version of the LUCAS framework to model carbon dynamics in a forested peatland wildlife refuge in response to repeated stand replacing fires and changes in hydrologic land management \citep{sleeter2021enhanced}.
+
+The current implementation of the LUCAS-CBM approach utilizes a number of default parameters developed for forested ecosystem of Canada. For example, while we supplied U.S. specific merchantable growth rates based on FIA forest inventory data, we relied on the default biomass expansion factors from CBM-CFS3 to convert merchantable volume into carbon stock estimates. Additionally, we assigned each U.S. level 3 ecoregion and state to a corresponding Canadian ecozone and province so as to leverage existing DOM turnover rates. Default rates were then modified based on mean annual temperature for each U.S. region. Future research should focus on incorporating U.S. specific biomass expansion factors for individual tree species \citep{jenkins2003national} and incorporating regionally specific DOM turnover rates obtained from literature. Additionally, the LUCAS-CBM approach is well suited to exploring uncertainty in carbon model parameters by drawing from statistical distributions and then sampling using Monte Carlo methods. This capability is highly conducive to exploring uncertainties in model parameters through sensitivity analysis \citep{sleeter2019effects, white2008practical}.
+
+The effect of CO\textsubscript{2} fertilization is among the larger uncertainties associated with estimating the terrestrial carbon budget \citep{smith2016large}. It is not currently possible to model the effects of CO\textsubscript{2} enrichment on forest productivity within the CBM-CFS3 model and thus was not included in this study. However, the effects of CO\textsubscript{2} enrichment could be incorporated directly within the LUCAS framework through the use of a series of temporal growth multipliers much in the same way NPP variability was modeled. This approach was used by \citet{sleeter2019effects} to model the effects of CO\textsubscript{2} enrichment on California ecosystems under multiple climate scenarios.
+
+The effects of LULC and disturbance are a major controlling process of ecosystem carbon dynamics. However, uncertainties in LULC can be large, depending on the underlying source of data used. Advances in remote sensing have provide a new era of land change data for modelers, yet there are significant limitations when it comes to incorporating remote sensing data into carbon assessments. Large area and high temporal frequency data describing forest disturbance, such as the North American Forest Dynamics \citep{goward2012nacp}and the Global Forest Change \citep{hansen2013high} datasets are an important contribution towards our understanding of forest disturbance dynamics. However, attribution of forest changes - i.e.~harvest, fire, drought, land use - are not yet provided. As a result, we relied on the Landfire Program's annual disturbance maps \citep{landfire2014disturbance}, which provide change attribution data. Results suggest that based on Landfire disturbance data we underestimated the area of forest harvest, and in particular, the areal extent of selection harvest, which can be difficult to identify using synoptic-scale remote sensing data such as Landsat. Reconciling these differences should be a major point of emphasis for any carbon monitoring program.
+
+The generalized modeling framework also allows for additional carbon stocks fluxes to be included, such as the lateral flux of carbon between terrestrial and aquatic ecosystems. While not included in this study, this lateral flux is considered an important factor in regional to global carbon budgets and estimated to account for \textasciitilde1.0 Pg C yr\textsuperscript{-1} globally \citep{regnier2013anthropogenic} and is perhaps equal to the size of the total net terrestrial sink \citep{ciais2008impact}. The LUCAS framework is also well suited to tracking the fate of carbon resulting from other lateral fluxes, such as carbon removed in harvested products. \citet{smyth2014quantifying} used the CBM-CFS3 model linked with a harvested wood products (HWP) model that estimates emissions based on product half-life decay times to estimate carbon mitigation potential under alternative scenarios. The LUCAS framework readily allows for adding additional stock and flow pathways which could be used to track the fate of harvested carbon (see table \ref{tab:lulcfluxtable}) through a range of product pools to provide a more complete understanding of forest carbon dynamics.
+
+While we developed this study to analyze upland forested ecosystems, the framework can be extended to estimate carbon dynamics in other ecosystems as well, such as grasslands, shrublands, wetlands, agricultural lands, and urban/suburban landscapes. LUCAS has been used to model carbon dynamics in many of these systems using parameters derived from DGVM's \citep{sleeter2018effects}. Future research will focus on translating those parameters into the new LUCAS-CBM framework. Additionally, researchers are using the LUCAS framework, along with the carbon stock and flow structure adapted from the CBM-CFS3 and described in this paper, to develop a spatially explicit model of ecosystem carbon dynamics in coastal herbaceous wetlands \citep{stagg2020national}.
+
+Quantifying the effects of land management actions on carbon stocks and fluxes is increasingly needed to assess the effectiveness of natural climate solutions (NCS). The LUCAS-CBM approach is well suited to modeling the effectiveness of a range of NCS strategies, such as changing harvest rates and geographic patterns, protecting old growth forests, reducing deforestation, and implementing reforestation programs. To date, most studies aimed at quantifying the benefits of NCS have relied on non-spatial or spatially-referenced approaches which only factor in the biophysical suitability of reforestation \citep[\citet{griscom2017natural}]{fargione2018natural} but do not consider other factors, such as areas that may provide additional co-benefits beyond increased carbon sequestration and storage \citep{cook2020lower}. The LUCAS-CBM approach described in this study, along with a new set of spatially explicit maps of reforestation potential \citep{cook2020lower}, can be used to refine estimates carbon sequestration benefits.
+
+\hypertarget{conclusion}{%
+\chapter{Conclusion}\label{conclusion}}
+
+Temperate forests of North America have been estimated as a large and persistent carbon sink over recent decades with U.S. forests accounting for the vast majority of the continental sink. However, uncertainty in the size and variability of the sink is large, owing primarily to the wide range of methodological approaches used to for estimation. Because the U.S. relies on a stock-change approach for its official reporting, there is a paucity of information and data on underlying carbon fluxes, making attribution of changes in the annual sink rate difficult. Additionally, while carbon stock-change estimates are updated annually, they are not spatially explicit, making utility by land managers difficult.
+
+We developed a modeling approach to fill these important gaps. The approach described in this study was designed to serve as a middle ground between inventory-based stock-change methods and more complex process-based biogeochemical models. The LUCAS-CBM carbon monitoring and projection tool builds off a robust national forest inventory program with the added capability of producing spatially explicit carbon stocks and flows on an annual timestep. At the same time, the reduced complexity of the underlying system represented by the model makes the approach more accessible to a wider range of users. The approach is particularly well suited to producing rapid updates in response to major events (e.g.~wildfire), assessing uncertainties of key parameters (e.g.~CO\textsubscript{2} fertilization, LULC change), or making projections over short, medium, or long time horizons. Lastly, the generalized structure of the modeling framework makes expanding the framework to cover other ecosystem types possible, as does including additional carbon flows such as lateral transfers between terrestrial and aquatic systems and harvested products.
+
+\hypertarget{methods}{%
+\chapter{Methods}\label{methods}}
+
+Placeholder
+
+\hypertarget{lucas-state-and-transition-simulation-model}{%
+\section{LUCAS state-and-transition simulation model}\label{lucas-state-and-transition-simulation-model}}
+
+\hypertarget{state-class-map}{%
+\subsection{State class map}\label{state-class-map}}
+
+\hypertarget{forest-age}{%
+\subsection{Forest age}\label{forest-age}}
+
+\hypertarget{lulc-and-disturbance-transitions}{%
+\subsection{LULC and disturbance transitions}\label{lulc-and-disturbance-transitions}}
+
+\hypertarget{land-use-change}{%
+\subsubsection{Land use change}\label{land-use-change}}
+
+\hypertarget{forest-harvest}{%
+\subsubsection{Forest harvest}\label{forest-harvest}}
+
+\hypertarget{droughtinsect-damage}{%
+\subsubsection{Drought/insect damage}\label{droughtinsect-damage}}
+
+\hypertarget{wildfire}{%
+\subsubsection{Wildfire}\label{wildfire}}
+
+\hypertarget{lucas-carbon-stock-and-flows}{%
+\section{LUCAS carbon stock and flows}\label{lucas-carbon-stock-and-flows}}
+
+\hypertarget{cbm-cfs3-reference-simulations}{%
+\subsection{CBM-CFS3 reference simulations}\label{cbm-cfs3-reference-simulations}}
+
+\hypertarget{merchantable-volume-curves}{%
+\subsubsection{Merchantable volume curves}\label{merchantable-volume-curves}}
+
+\hypertarget{carbon-flow-rates-lucas-flow-pathways-module}{%
+\subsection{Carbon flow rates: LUCAS Flow Pathways module}\label{carbon-flow-rates-lucas-flow-pathways-module}}
+
+\hypertarget{net-primary-productivity}{%
+\subsubsection{Net Primary Productivity}\label{net-primary-productivity}}
+
+\hypertarget{carbon-flux-rates}{%
+\subsubsection{Carbon flux rates}\label{carbon-flux-rates}}
+
+\hypertarget{validation}{%
+\subsection{Validation}\label{validation}}
+
+\hypertarget{spin-up-of-dom-pools}{%
+\subsection{Spin-up of DOM pools}\label{spin-up-of-dom-pools}}
+
+\hypertarget{mapping-initial-carbon-stocks}{%
+\subsection{Mapping initial carbon stocks}\label{mapping-initial-carbon-stocks}}
+
+\hypertarget{spatial-flow-multipliers}{%
+\section{Spatial flow multipliers}\label{spatial-flow-multipliers}}
+
+\hypertarget{npp-variability}{%
+\subsection{NPP variability}\label{npp-variability}}
+
+\hypertarget{decay-and-decomposition-of-dom}{%
+\subsection{Decay and decomposition of DOM}\label{decay-and-decomposition-of-dom}}
+
+\hypertarget{scenario-simulations}{%
+\section{Scenario simulations}\label{scenario-simulations}}
+
+\hypertarget{supplemental-material}{%
+\chapter{Supplemental Material}\label{supplemental-material}}
+
+Placeholder
+
+\hypertarget{regional-variability}{%
+\section{Regional variability}\label{regional-variability}}
+
+  \bibliography{book.bib,packages.bib,references.bib}
+
+\end{document}

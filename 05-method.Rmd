@@ -1,3 +1,8 @@
+
+
+
+# Methods
+
 ```{r, libraries, echo=F}
 library(raster)
 library(sf)
@@ -28,8 +33,6 @@ theme_custom <- function(...) {
   )
 }
 ```
-
-# Methods
 
 To estimate carbon stocks and fluxes for CONUS, we linked the CBM-CFS3 spatially referenced model of ecosystem carbon dynamics with the LUCAS spatially explicit model of LULC change. The CBM-CFS3 model was used to generate a set of forest species and ecoregion-level carbon flux rates which were then used within the LUCAS model to produce spatially explicit maps of carbon stocks and fluxes based on LULC change, disturbances, forest ageing, and climate variability and change.
 
@@ -223,7 +226,7 @@ Forest mortality time series maps spanning the period 2001-2015 were used to mod
 
 #### Wildfire
 
-To simulate wildfire we used annual fire perimeters from the National Interagency Fire Consortium (NIFC) for the period 2001-2020 which were converted into spatial multipliers in each timestep of the simulation. To estimate fire severity (high, medium, and low), we calculated severity multipliers, for each ecoregion, for all fires contained within the Monitoring Trends in Burn Severity database [@eidenshink2007project] for the period 2001-2016. Severity multipliers were then applied to the annual burn maps in each timestep and for each ecoregion resulting in stochastic estiamtes of severity within each mapped fire perimeter. For grassland and shrubland state classes, all severity types were assumed to transition back into the original state class. For forest state classes, high severity fires resulted in a transition to a post-fire shrubland class which had a 0.064 annual transition probability back into forest [@sleeter2019effects]. Medium and low severity fire reverted back into the original forest state class with no change in forest age.
+To simulate wildfire we used annual fire perimeters from the National Interagency Fire Consortium (NIFC) for the period 2001-2020 which were converted into spatial multipliers in each timestep of the simulation. To estimate fire severity (high, medium, and low), we calculated severity multipliers, for each ecoregion, for all fires contained within the Monitoring Trends in Burn Severity database [@eidenshink2007project] for the period 2001-2016. Severity multipliers were then applied to the annual burn maps in each timestep and for each ecoregion resulting in stochastic estimates of severity within each mapped fire perimeter. For grassland and shrubland state classes, all severity types were assumed to transition back into the original state class. For forest state classes, high severity fires resulted in a transition to a post-fire shrubland class which had a 0.064 annual transition probability back into forest [@sleeter2019effects]. Medium and low severity fire reverted back into the original forest state class with no change in forest age.
 
 ## LUCAS carbon stock and flows
 
@@ -454,8 +457,7 @@ multgrowth_df = as.data.frame(multgrowth, xy=T) %>%
   pivot_longer(cols=c(-x, -y), names_to="Year", values_to="Amount") %>%
   mutate(Year = str_remove(Year, "X")) %>%
   filter(!is.na(Amount)) %>%
-  mutate(Amount=Amount*0.01) %>%
-  filter(Year<2020)
+  mutate(Amount=Amount*0.01) 
 
 nppMin = round(min(multgrowth_df$Amount, na.rm=T),1)
 nppMax = round(max(multgrowth_df$Amount, na.rm=T),1)
@@ -473,13 +475,13 @@ ggplot() +
   theme_bw() +
   labs(x=NULL, y=NULL, fill="NPP Multiplier") +
   theme(text=element_text(family="Roboto Condensed"),
-        legend.position = c(0.75, 0.05),
+        legend.position = "bottom",
         legend.text.align = 0,
         legend.text = element_text(size = 7, hjust = 0, color = "#4e4d47"),
         legend.title = element_text(size = 8),
         plot.margin = unit(c(1,1,1,1), "mm"),
         legend.key.height = unit(2, "mm"),
-        legend.key.width = unit(10, "mm"),
+        legend.key.width = unit(15, "mm"),
         axis.text.x = element_text(size=8),
         axis.text.y = element_text(size=8),
         panel.background = element_rect(fill="grey90"),
@@ -521,8 +523,7 @@ multdom_df = as.data.frame(multdom, xy=T) %>%
   pivot_longer(cols=c(-x, -y), names_to="Year", values_to="Amount") %>%
   mutate(Year = str_remove(Year, "X")) %>%
   filter(!is.na(Amount)) %>%
-  mutate(Amount=Amount*0.01) %>%
-  filter(Year<2020)
+  mutate(Amount=Amount*0.01) 
 
 domMin = round(min(multdom_df$Amount, na.rm=T),1)
 domMax = round(max(multdom_df$Amount, na.rm=T),1)
@@ -540,13 +541,13 @@ ggplot() +
   theme_bw() +
   labs(x=NULL, y=NULL, fill="DOM Decay Multiplier") +
   theme(text=element_text(family="Roboto Condensed"),
-        legend.position = c(0.75, 0.05),
+        legend.position = "bottom",
         legend.text.align = 0,
         legend.text = element_text(size = 7, hjust = 0, color = "#4e4d47"),
         legend.title = element_text(size = 8),
         plot.margin = unit(c(1,1,1,1), "mm"),
         legend.key.height = unit(2, "mm"),
-        legend.key.width = unit(10, "mm"),
+        legend.key.width = unit(15, "mm"),
         axis.text.x = element_text(size=8),
         axis.text.y = element_text(size=8),
         panel.background = element_rect(fill="grey90"),
@@ -568,7 +569,7 @@ ggplot() +
 
 ## Scenario simulations
 
-All scenario simulations were run on an annual timestep for the period 2001-2020 at 1-km x 1-km spatial resolution. The primary simulation included the combined effects of LULC change, ecosystem disturbance, and climate change on the carbon balance of forest ecosystems in the conterminous United States. The better understand the major controlling processes of carbon dynamics, we also ran three additional simulations where 1) no LULC or disturbance was simulated, 2) no climate variability was simulated and 3) no climate or LULC effects were simulated. Outputs from the simulations are available as both spatial and tabular files. Spatial outputs include annual carbon stocks and fluxes, LULC composition (i.e. state class maps and forest age), and LULC transitions. 
+All scenario simulations were run on an annual timestep for the period 2001-2020 at 1-km x 1-km spatial resolution. The primary simulation included the combined effects of LULC change, ecosystem disturbance, and climate change on the carbon balance of forest ecosystems in the conterminous United States. The better understand the major controlling processes of carbon dynamics, we also ran three additional simulations where 1) no LULC or disturbance was simulated, 2) no climate variability was simulated and 3) no climate or LULC effects were simulated. Outputs from the simulations are available as both spatial and tabular files. Spatial outputs include annual carbon stocks and fluxes, LULC composition (i.e. state class maps and forest age), and LULC transitions. All simulations were run on a desktop workstation running Windows 10 with 24 cores and 256 Gb of RAM. 
 
 
 

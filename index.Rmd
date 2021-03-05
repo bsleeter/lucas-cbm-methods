@@ -3,7 +3,7 @@ title: "Spatially explicit estimates of carbon stocks and fluxes for the United 
 author: "Benjamin M. Sleeter"
 date: "`r Sys.Date()`"
 site: bookdown::bookdown_site
-output: bookdown::gitbook
+output: bookdown::word_document2
 documentclass: book
 bibliography: [book.bib, packages.bib, references.bib]
 biblio-style: apalike
@@ -33,25 +33,4 @@ Benjamin M. Sleeter^1^*, Leonardo Frid^2^, Bronwyrn Rayfield^2^, Paul C. Selmant
 
 **Keywords**
 
-```{r eval=FALSE}
-install.packages("bookdown")
-# or the development version
-# devtools::install_github("rstudio/bookdown")
-```
 
-```{r}
-library(DT)
-library(tidyverse)
-library(scales)
-```
-
-Remember each Rmd file contains one and only one chapter, and a chapter is defined by the first-level heading `#`.
-
-To compile this example to PDF, you need XeLaTeX. You are recommended to install TinyTeX (which includes XeLaTeX): <https://yihui.name/tinytex/>.
-
-```{r include=FALSE}
-# automatically create a bib database for R packages
-knitr::write_bib(c(
-  .packages(), 'bookdown', 'knitr', 'rmarkdown'
-), 'packages.bib')
-```
