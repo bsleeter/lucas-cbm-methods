@@ -4,11 +4,11 @@
 
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <title>Chapter 2 Introduction | Spatially explicit estimates of carbon stocks and fluxes for the United States: a new approach linking the LUCAS and CBM-CFS3 models</title>
+  <title>Chapter 8 Introduction | lucas-cbm-v01</title>
   <meta name="description" content="This is a minimal example of using the bookdown package to write a book. The output format for this example is bookdown::gitbook." />
   <meta name="generator" content="bookdown 0.21 and GitBook 2.6.7" />
 
-  <meta property="og:title" content="Chapter 2 Introduction | Spatially explicit estimates of carbon stocks and fluxes for the United States: a new approach linking the LUCAS and CBM-CFS3 models" />
+  <meta property="og:title" content="Chapter 8 Introduction | lucas-cbm-v01" />
   <meta property="og:type" content="book" />
   
   
@@ -16,7 +16,7 @@
   <meta name="github-repo" content="rstudio/bookdown-demo" />
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="Chapter 2 Introduction | Spatially explicit estimates of carbon stocks and fluxes for the United States: a new approach linking the LUCAS and CBM-CFS3 models" />
+  <meta name="twitter:title" content="Chapter 8 Introduction | lucas-cbm-v01" />
   
   <meta name="twitter:description" content="This is a minimal example of using the bookdown package to write a book. The output format for this example is bookdown::gitbook." />
   
@@ -24,15 +24,15 @@
 <meta name="author" content="Benjamin M. Sleeter" />
 
 
-<meta name="date" content="2021-03-05" />
+<meta name="date" content="2021-03-08" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
   <meta name="apple-mobile-web-app-status-bar-style" content="black" />
   
   
-<link rel="prev" href="index.html"/>
-<link rel="next" href="results.html"/>
+<link rel="prev" href="supplemental-material.html"/>
+
 <script src="libs/header-attrs-2.5/header-attrs.js"></script>
 <script src="libs/jquery-2.2.3/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
@@ -114,6 +114,7 @@
 <ul>
 <li class="chapter" data-level="7.1" data-path="supplemental-material.html"><a href="supplemental-material.html#regional-variability"><i class="fa fa-check"></i><b>7.1</b> Regional variability</a></li>
 </ul></li>
+<li class="chapter" data-level="8" data-path="intro.html"><a href="intro.html#intro"><i class="fa fa-check"></i><b>8</b> Introduction</a></li>
 <li class="divider"></li>
 <li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
 
@@ -126,7 +127,7 @@
       <div class="body-inner">
         <div class="book-header" role="navigation">
           <h1>
-            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">Spatially explicit estimates of carbon stocks and fluxes for the United States: a new approach linking the LUCAS and CBM-CFS3 models</a>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">lucas-cbm-v01</a>
           </h1>
         </div>
 
@@ -134,24 +135,167 @@
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="intro" class="section level1" number="2">
-<h1><span class="header-section-number">Chapter 2</span> Introduction</h1>
-<p>Forest ecosystems play a critical role in the global carbon cycle and represent the largest carbon sink in the terrestrial biosphere. Annually, the global forest sink has been estimated at ~1.1 Pg C yr<sup>-1</sup> <span class="citation">(<a href="supplemental-material.html#ref-pan2011large" role="doc-biblioref">Pan et al. 2011</a>)</span>, with more recent studies placing the sink as high as 2.0 Pg C yr<sup>-1</sup> although uncertainties in those estimates are substantial <span class="citation">(<a href="supplemental-material.html#ref-harris2021global" role="doc-biblioref">Harris et al. 2021</a>)</span>. Temperate forests of North America have been estimated as a large and persistent sink, with estimates ranging from 0.3 - 0.9 Pg C yr<sup>-1</sup> <span class="citation">(<a href="supplemental-material.html#ref-hayes2012reconciling" role="doc-biblioref">Hayes et al. 2012</a>)</span>, with U.S. forests accounting for ~80% of the net uptake <span class="citation">(<a href="supplemental-material.html#ref-usgcrp2018soccr2" role="doc-biblioref">USGCRP 2018</a>)</span>. However, large uncertainties remain, largely stemming from the methodological approach used <span class="citation">(<a href="supplemental-material.html#ref-hayes2012reconciling" role="doc-biblioref">Hayes et al. 2012</a>)</span>. As ecosystems - and in particular forests - are increasingly looked to as a means of storing carbon through the implementation of natural climate solutions (NCS) <span class="citation">(<a href="supplemental-material.html#ref-fargione2018natural" role="doc-biblioref">Fargione et al. 2018</a>; <a href="supplemental-material.html#ref-griscom2017natural" role="doc-biblioref">Griscom et al. 2017</a>; <a href="supplemental-material.html#ref-cameron2017ecosystem" role="doc-biblioref">Cameron et al. 2017</a>)</span>, having robust tools which can quantify past and future changes in ecosystem carbon stocks and fluxes is critical for land managers and policy makers.</p>
-<p>Process-based ecosystem models (e.g. dynamic global vegetation models; DGVM’s) are designed to represent underlying biogeochemical processes, including a wide range of carbon dynamics. DGVMs are typically used to simulate vegetation responses to a range of controlling processes and applied at global to national scales. Benefits of this class of model includes the ability to understand the relative effects of major controlling processes through development of manipulative experiments. DGVMs can be applied across large geographic areas, and can be used to make future projections based on changes in drivers of ecosystem change <span class="citation">(<a href="supplemental-material.html#ref-huntzinger2012north" role="doc-biblioref">Huntzinger et al. 2012</a>)</span>. However, large uncertainties exist, due to the large number of relatively poorly understood processes and the quality of data used for model parameteization <span class="citation">(<a href="supplemental-material.html#ref-hayes2012reconciling" role="doc-biblioref">Hayes et al. 2012</a>; <a href="supplemental-material.html#ref-huntzinger2012north" role="doc-biblioref">Huntzinger et al. 2012</a>)</span>. In a review of 17 process-based ecosystem models, <span class="citation"><a href="supplemental-material.html#ref-hayes2012reconciling" role="doc-biblioref">Hayes et al.</a> (<a href="supplemental-material.html#ref-hayes2012reconciling" role="doc-biblioref">2012</a>)</span> estimated a mean forest carbon net sink of 157.6 Tg C yr<sup>-1</sup> with a standard deviation of 309.5 Tg C yr<sup>-1</sup>.Furthermore, ecosystem models can be limited in their ability to adequately represent sufficient variation in ecosystem types, often relying on generalization as a trade-off for computational efficiency. As an example, DGVM’s often generalize vegetation into a discrete set of plant functional types (PFTs), as opposed to using specific forest types or groups found in many forest inventories. Many DGVM approaches also lack the ability to characterize complex socioeconomic processes and their effect on ecosystem carbon dynamics, although this has been an recent area of intensive research <span class="citation">(<a href="supplemental-material.html#ref-bachelet2015projected" role="doc-biblioref">Bachelet et al. 2015</a>; <a href="supplemental-material.html#ref-liu2020critical" role="doc-biblioref">Liu et al. 2020</a>)</span>.</p>
-<p>Inventory-based approaches rely on field-based measurements and are generally used to estimate changes in carbon stocks between two successive time periods. Using the U.S. Department of Agriculture Forest Inventory and Analysis (FIA) data, estimates of carbon stock-change are produced annually for U.S. ecosystems and reported to the United Nations Framework Convention on Climate (UNFCC)<span class="citation">(<a href="supplemental-material.html#ref-epa2020inventory" role="doc-biblioref">U.S. EPA 2020</a>)</span>. FIA data provide a comprehensive set of plot-level data characterizing forest attributes including carbon stocks and net fluxes and have been used in a number of national studies aimed at quantifying the U.S. forest carbon sink <span class="citation">(<a href="supplemental-material.html#ref-birdsey1992carbon" role="doc-biblioref">Birdsey 1992</a>; <a href="supplemental-material.html#ref-birdsey1995carbon" role="doc-biblioref">Birdsey and Heath 1995</a>; <a href="supplemental-material.html#ref-woodbury2007carbon" role="doc-biblioref">Woodbury, Smith, and Heath 2007</a>; <a href="supplemental-material.html#ref-goodale2002forest" role="doc-biblioref">Goodale et al. 2002</a>; <a href="supplemental-material.html#ref-hayes2012reconciling" role="doc-biblioref">Hayes et al. 2012</a>)</span>.</p>
-<p>However, there are several limitations associated with inventory-based carbon accounting, including a) asseements across large geographic areas can be cost-prohibitive due to the need for repeated measurements across a large number of sample sites needed to represent ecosystem heterogeneity; b) inventory-based approaches are not spatially-explicit and often rely on extrapolation methods to develop estimates in areas where no inventory exists; c) stock-change methods do not capture many of the internal dynamics and fluxes of carbon within a system; and d) inventory-based methods are not easily turned into projections under a range of global change scenarios. However, a robust forest inventory program can be used to calibrate and validate ecosystem models which can be then be extended across large geographic areas spanning long temporal intervals <span class="citation">(<a href="supplemental-material.html#ref-kurz2009cbm" role="doc-biblioref">Kurz et al. 2009</a>; <a href="supplemental-material.html#ref-liu2020critical" role="doc-biblioref">Liu et al. 2020</a>)</span> . We have sought to bridge the gap between inventory and process-based approaches to develop a spatially-explicit ecosystem carbon monitoring and projection framework capable of providing near real-time spatially explicit estimates of carbon stocks and fluxes.</p>
-<p>The LUCAS model (Land Use and Carbon Scenario Simulator) is a spatially explicit state-and-transition simulation model with stocks and flows <span class="citation"><a href="supplemental-material.html#ref-daniel2018integrating" role="doc-biblioref">Daniel et al.</a> (<a href="supplemental-material.html#ref-daniel2018integrating" role="doc-biblioref">2018</a>)</span> developed to assess the impact of land use and land cover change, ecosystem disturbance, and climate change on carbon stocks and fluxes. The LUCAS model has been applied at local <span class="citation">(<a href="supplemental-material.html#ref-sleeter2017carbon" role="doc-biblioref">R. Sleeter et al. 2017</a>)</span>, state <span class="citation">(<a href="supplemental-material.html#ref-sleeter2019effects" role="doc-biblioref">Benjamin M. Sleeter et al. 2019</a>)</span>, and national <span class="citation">(<a href="supplemental-material.html#ref-sleeter2018effects" role="doc-biblioref">Benjamin M. Sleeter et al. 2018</a>)</span> scales as both spatially referenced and spatially-explicit models. LUCAS runs within the SyncroSim software modeling environment (<a href="http://syncrosim.com" class="uri">http://syncrosim.com</a>). For state and national-scale research, the LUCAS carbon model was parameterized with carbon turnover rates derived from the Integrated Biosphere Simulator (IBIS) dynamic global vegetation model <span class="citation">(<a href="supplemental-material.html#ref-liu2020critical" role="doc-biblioref">Liu et al. 2020</a>)</span>. Output from IBIS simulations was transformed into age and ecosystem-dependent carbon growth and turnover rates which were used within LUCAS to estimate total fluxes and stocks. However, IBIS is limited to a relatively small number of discrete vegetation classes (plant functional types), which in turn limit the ability to represent heterogeneity of ecosystems within LUCAS. Furthermore, IBIS is a computationally intensive model to run across large landscapes which limits the ability to run a series of calibration and spin-up simulation.</p>
-<p>The CBM-CFS3 model (Carbon Budget Model of the Canadian Forest Sector v3) is an IPCC Tier 3 spatially referenced model of carbon stocks and fluxes which can be applied at multiple scales (<span class="citation"><a href="supplemental-material.html#ref-kurz2009cbm" role="doc-biblioref">Kurz et al.</a> (<a href="supplemental-material.html#ref-kurz2009cbm" role="doc-biblioref">2009</a>)</span>). The approach relies on provincial level forest inventory data to model forest carbon fluxes and the response to a range of socio-environmental processes such as land use change, disturbance, and climate warming. User supplied merchantable volume curves are converted into carbon biomass through the use of species-specific biomass expansion factors. Turnover of live carbon and decay and decomposition of dead organic matter (DOM) are specified for each forest type and/or at a regional scale. CBM-CFS3 has been applied and adapted in many other countries using regionally-specific parameters <span class="citation">(<a href="supplemental-material.html#ref-pilli2013application" role="doc-biblioref">Pilli et al. 2013</a>, <a href="supplemental-material.html#ref-pilli2018carbon" role="doc-biblioref">2018</a>; <a href="supplemental-material.html#ref-kim2017estimating" role="doc-biblioref">Kim et al. 2017</a>; <a href="supplemental-material.html#ref-jevvsenak2020effect" role="doc-biblioref">Jevšenak, Klopčič, and Mali 2020</a>)</span>. It’s transparent approach and robust methodology, combined with the robustness of the FIA forest inventory data, make it an ideal model to adapt for the U.S. forest sector. However, the CBM-CFS3 is not spatially explicit and does not currently incorporate the effects of climate variabiilty and change on the growth of vegetation.</p>
+<div id="intro" class="section level1" number="8">
+<h1><span class="header-section-number">Chapter 8</span> Introduction</h1>
+<p>Forest ecosystems play a critical role in the global carbon cycle and represent the largest carbon sink in the terrestrial biosphere. Annually, the global forest sink has been estimated at ~1.1 Pg C yr<sup>-1</sup> <span class="citation">(<a href="intro.html#ref-pan2011large" role="doc-biblioref">Pan et al. 2011</a>)</span>, with more recent studies placing the sink as high as 2.0 Pg C yr<sup>-1</sup> although uncertainties in those estimates are substantial <span class="citation">(<a href="intro.html#ref-harris2021global" role="doc-biblioref">Harris et al. 2021</a>)</span>. Temperate forests of North America have been estimated as a large and persistent sink, with estimates ranging from 0.3 - 0.9 Pg C yr<sup>-1</sup> <span class="citation">(<a href="intro.html#ref-hayes2012reconciling" role="doc-biblioref">Hayes et al. 2012</a>)</span>, with U.S. forests accounting for ~80% of the net uptake <span class="citation">(<a href="intro.html#ref-usgcrp2018soccr2" role="doc-biblioref">USGCRP 2018</a>)</span>. However, large uncertainties remain, largely stemming from the methodological approach used <span class="citation">(<a href="intro.html#ref-hayes2012reconciling" role="doc-biblioref">Hayes et al. 2012</a>)</span>. As ecosystems - and in particular forests - are increasingly looked to as a means of storing carbon through the implementation of natural climate solutions (NCS) <span class="citation">(<a href="intro.html#ref-fargione2018natural" role="doc-biblioref">Fargione et al. 2018</a>; <a href="intro.html#ref-griscom2017natural" role="doc-biblioref">Griscom et al. 2017</a>; <a href="intro.html#ref-cameron2017ecosystem" role="doc-biblioref">Cameron et al. 2017</a>)</span>, having robust tools which can quantify past and future changes in ecosystem carbon stocks and fluxes is critical for land managers and policy makers.</p>
+<p>Process-based ecosystem models (e.g. dynamic global vegetation models; DGVM’s) are designed to represent underlying biogeochemical processes, including a wide range of carbon dynamics. DGVMs are typically used to simulate vegetation responses to a range of controlling processes and applied at global to national scales. Benefits of this class of model includes the ability to understand the relative effects of major controlling processes through development of manipulative experiments. DGVMs can be applied across large geographic areas, and can be used to make future projections based on changes in drivers of ecosystem change <span class="citation">(<a href="intro.html#ref-huntzinger2012north" role="doc-biblioref">Huntzinger et al. 2012</a>)</span>. However, large uncertainties exist, due to the large number of relatively poorly understood processes and the quality of data used for model parameteization <span class="citation">(<a href="intro.html#ref-hayes2012reconciling" role="doc-biblioref">Hayes et al. 2012</a>; <a href="intro.html#ref-huntzinger2012north" role="doc-biblioref">Huntzinger et al. 2012</a>)</span>. In a review of 17 process-based ecosystem models, <span class="citation"><a href="intro.html#ref-hayes2012reconciling" role="doc-biblioref">Hayes et al.</a> (<a href="intro.html#ref-hayes2012reconciling" role="doc-biblioref">2012</a>)</span> estimated a mean forest carbon net sink of 157.6 Tg C yr<sup>-1</sup> with a standard deviation of 309.5 Tg C yr<sup>-1</sup>.Furthermore, ecosystem models can be limited in their ability to adequately represent sufficient variation in ecosystem types, often relying on generalization as a trade-off for computational efficiency. As an example, DGVM’s often generalize vegetation into a discrete set of plant functional types (PFTs), as opposed to using specific forest types or groups found in many forest inventories. Many DGVM approaches also lack the ability to characterize complex socioeconomic processes and their effect on ecosystem carbon dynamics, although this has been an recent area of intensive research <span class="citation">(<a href="intro.html#ref-bachelet2015projected" role="doc-biblioref">Bachelet et al. 2015</a>; <a href="intro.html#ref-liu2020critical" role="doc-biblioref">Liu et al. 2020</a>)</span>.</p>
+<p>Inventory-based approaches rely on field-based measurements and are generally used to estimate changes in carbon stocks between two successive time periods. Using the U.S. Department of Agriculture Forest Inventory and Analysis (FIA) data, estimates of carbon stock-change are produced annually for U.S. ecosystems and reported to the United Nations Framework Convention on Climate (UNFCC)<span class="citation">(<a href="intro.html#ref-epa2020inventory" role="doc-biblioref">U.S. EPA 2020</a>)</span>. FIA data provide a comprehensive set of plot-level data characterizing forest attributes including carbon stocks and net fluxes and have been used in a number of national studies aimed at quantifying the U.S. forest carbon sink <span class="citation">(<a href="intro.html#ref-birdsey1992carbon" role="doc-biblioref">Birdsey 1992</a>; <a href="intro.html#ref-birdsey1995carbon" role="doc-biblioref">Birdsey and Heath 1995</a>; <a href="intro.html#ref-woodbury2007carbon" role="doc-biblioref">Woodbury, Smith, and Heath 2007</a>; <a href="intro.html#ref-goodale2002forest" role="doc-biblioref">Goodale et al. 2002</a>; <a href="intro.html#ref-hayes2012reconciling" role="doc-biblioref">Hayes et al. 2012</a>)</span>.</p>
+<p>However, there are several limitations associated with inventory-based carbon accounting, including a) asseements across large geographic areas can be cost-prohibitive due to the need for repeated measurements across a large number of sample sites needed to represent ecosystem heterogeneity; b) inventory-based approaches are not spatially-explicit and often rely on extrapolation methods to develop estimates in areas where no inventory exists; c) stock-change methods do not capture many of the internal dynamics and fluxes of carbon within a system; and d) inventory-based methods are not easily turned into projections under a range of global change scenarios. However, a robust forest inventory program can be used to calibrate and validate ecosystem models which can be then be extended across large geographic areas spanning long temporal intervals <span class="citation">(<a href="intro.html#ref-kurz2009cbm" role="doc-biblioref">Kurz et al. 2009</a>; <a href="intro.html#ref-liu2020critical" role="doc-biblioref">Liu et al. 2020</a>)</span> . We have sought to bridge the gap between inventory and process-based approaches to develop a spatially-explicit ecosystem carbon monitoring and projection framework capable of providing near real-time spatially explicit estimates of carbon stocks and fluxes.</p>
+<p>The LUCAS model (Land Use and Carbon Scenario Simulator) is a spatially explicit state-and-transition simulation model with stocks and flows <span class="citation"><a href="intro.html#ref-daniel2018integrating" role="doc-biblioref">Daniel et al.</a> (<a href="intro.html#ref-daniel2018integrating" role="doc-biblioref">2018</a>)</span> developed to assess the impact of land use and land cover change, ecosystem disturbance, and climate change on carbon stocks and fluxes. The LUCAS model has been applied at local <span class="citation">(<a href="intro.html#ref-sleeter2017carbon" role="doc-biblioref">R. Sleeter et al. 2017</a>)</span>, state <span class="citation">(<a href="intro.html#ref-sleeter2019effects" role="doc-biblioref">Benjamin M. Sleeter et al. 2019</a>)</span>, and national <span class="citation">(<a href="intro.html#ref-sleeter2018effects" role="doc-biblioref">Benjamin M. Sleeter et al. 2018</a>)</span> scales as both spatially referenced and spatially-explicit models. LUCAS runs within the SyncroSim software modeling environment (<a href="http://syncrosim.com" class="uri">http://syncrosim.com</a>). For state and national-scale research, the LUCAS carbon model was parameterized with carbon turnover rates derived from the Integrated Biosphere Simulator (IBIS) dynamic global vegetation model <span class="citation">(<a href="intro.html#ref-liu2020critical" role="doc-biblioref">Liu et al. 2020</a>)</span>. Output from IBIS simulations was transformed into age and ecosystem-dependent carbon growth and turnover rates which were used within LUCAS to estimate total fluxes and stocks. However, IBIS is limited to a relatively small number of discrete vegetation classes (plant functional types), which in turn limit the ability to represent heterogeneity of ecosystems within LUCAS. Furthermore, IBIS is a computationally intensive model to run across large landscapes which limits the ability to run a series of calibration and spin-up simulation.</p>
+<p>The CBM-CFS3 model (Carbon Budget Model of the Canadian Forest Sector v3) is an IPCC Tier 3 spatially referenced model of carbon stocks and fluxes which can be applied at multiple scales (<span class="citation"><a href="intro.html#ref-kurz2009cbm" role="doc-biblioref">Kurz et al.</a> (<a href="intro.html#ref-kurz2009cbm" role="doc-biblioref">2009</a>)</span>). The approach relies on provincial level forest inventory data to model forest carbon fluxes and the response to a range of socio-environmental processes such as land use change, disturbance, and climate warming. User supplied merchantable volume curves are converted into carbon biomass through the use of species-specific biomass expansion factors. Turnover of live carbon and decay and decomposition of dead organic matter (DOM) are specified for each forest type and/or at a regional scale. CBM-CFS3 has been applied and adapted in many other countries using regionally-specific parameters <span class="citation">(<a href="intro.html#ref-pilli2013application" role="doc-biblioref">Pilli et al. 2013</a>, <a href="intro.html#ref-pilli2018carbon" role="doc-biblioref">2018</a>; <a href="intro.html#ref-kim2017estimating" role="doc-biblioref">Kim et al. 2017</a>; <a href="intro.html#ref-jevvsenak2020effect" role="doc-biblioref">Jevšenak, Klopčič, and Mali 2020</a>)</span>. It’s transparent approach and robust methodology, combined with the robustness of the FIA forest inventory data, make it an ideal model to adapt for the U.S. forest sector. However, the CBM-CFS3 is not spatially explicit and does not currently incorporate the effects of climate variabiilty and change on the growth of vegetation.</p>
 <p>In this study our goal was to develop a land change and carbon monitoring system capable of producing near real-time estimates of carbon stocks and fluxes for any forested location in the conterminous United States. The objectives of the study were to 1) produce annual, spatially-explicit estimates of carbon stocks and fluxes for the period 2001-2020, 2) estimate the contribution of a wide range of LULC and disturbances, and 3) identify the major controlling forces on the magnitude and variability of the carbon sink. The approach relies on developing a methodological approach to link the CBM-CFS3 and LUCAS models while utilizing national forest inventory data, remote sensing data, and an exogenous model of vegetation productivity.</p>
 
+<div id="refs" class="references csl-bib-body hanging-indent">
+<div id="ref-bachelet2015projected" class="csl-entry">
+Bachelet, Dominique, Ken Ferschweiler, Timothy J Sheehan, Benjamin M Sleeter, and Zhiliang Zhu. 2015. <span>“Projected Carbon Stocks in the Conterminous USA with Land Use and Variable Fire Regimes.”</span> <em>Global Change Biology</em> 21 (12): 4548–60.
+</div>
+<div id="ref-bechtold2005enhanced" class="csl-entry">
+Bechtold, William A, and Paul L Patterson. 2005. <em>The Enhanced Forest Inventory and Analysis Program–National Sampling Design and Estimation Procedures</em>. Vol. 80. USDA Forest Service, Southern Research Station.
+</div>
+<div id="ref-birdsey1992carbon" class="csl-entry">
+Birdsey, Richard A. 1992. <em>Carbon Storage and Accumulation in United States Forest Ecosystems</em>. Vol. 59. US Department of Agriculture, Forest Service.
+</div>
+<div id="ref-birdsey1995carbon" class="csl-entry">
+Birdsey, Richard A, and Linda S Heath. 1995. <span>“Carbon Changes in US Forests.”</span> <em>United States Department of Agriculture Forest Service General Technical Report RM</em>, 56–70.
+</div>
+<div id="ref-cameron2017ecosystem" class="csl-entry">
+Cameron, D Richard, David C Marvin, Jonathan M Remucal, and Michelle C Passero. 2017. <span>“Ecosystem Management and Land Conservation Can Substantially Contribute to California’s Climate Mitigation Goals.”</span> <em>Proceedings of the National Academy of Sciences</em> 114 (48): 12833–38.
+</div>
+<div id="ref-ciais2008impact" class="csl-entry">
+Ciais, P, AV Borges, Gwenaël Abril, M Meybeck, G Folberth, Didier Hauglustaine, and IA Janssens. 2008. <span>“The Impact of Lateral Carbon Fluxes on the European Carbon Balance.”</span> <em>Biogeosciences</em> 5 (5): 1259–71.
+</div>
+<div id="ref-cook2020lower" class="csl-entry">
+Cook-Patton, Susan C, Trisha Gopalakrishna, Adam Daigneault, Sara M Leavitt, Jim Platt, Sabrina M Scull, Oyut Amarjargal, et al. 2020. <span>“Lower Cost and More Feasible Options to Restore Forest Cover in the Contiguous United States for Climate Mitigation.”</span> <em>One Earth</em> 3 (6): 739–52.
+</div>
+<div id="ref-d2019coupled" class="csl-entry">
+D’Aloia, Cassidy C, Ilona Naujokaitis-Lewis, Christopher Blackford, Cindy Chu, Janelle MR Curtis, Emily Darling, Frédéric Guichard, et al. 2019. <span>“Coupled Networks of Permanent Protected Areas and Dynamic Conservation Areas for Biodiversity Conservation Under Climate Change.”</span> <em>Frontiers in Ecology and Evolution</em> 7: 27.
+</div>
+<div id="ref-daniel2016state" class="csl-entry">
+Daniel, Colin J, Leonardo Frid, Benjamin M Sleeter, and Marie-Josée Fortin. 2016. <span>“State-and-Transition Simulation Models: A Framework for Forecasting Landscape Change.”</span> <em>Methods in Ecology and Evolution</em> 7 (11): 1413–23.
+</div>
+<div id="ref-daniel2018integrating" class="csl-entry">
+Daniel, Colin J, Benjamin M Sleeter, Leonardo Frid, and Marie-Josée Fortin. 2018. <span>“Integrating Continuous Stocks and Flows into State-and-Transition Simulation Models of Landscape Change.”</span> <em>Methods in Ecology and Evolution</em> 9 (4): 1133–43.
+</div>
+<div id="ref-fargione2018natural" class="csl-entry">
+Fargione, Joseph E, Steven Bassett, Timothy Boucher, Scott D Bridgham, Richard T Conant, Susan C Cook-Patton, Peter W Ellis, et al. 2018. <span>“Natural Climate Solutions for the United States.”</span> <em>Science Advances</em> 4 (11): eaat1869.
+</div>
+<div id="ref-ford2019tool" class="csl-entry">
+Ford, Paulette L, Matthew C Reeves, and Leonardo Frid. 2019. <span>“A Tool for Projecting Rangeland Vegetation Response to Management and Climate.”</span> <em>Rangelands</em> 41 (1): 49–60.
+</div>
+<div id="ref-goodale2002forest" class="csl-entry">
+Goodale, Christine L, Michael J Apps, Richard A Birdsey, Christopher B Field, Linda S Heath, Richard A Houghton, Jennifer C Jenkins, et al. 2002. <span>“Forest Carbon Sinks in the Northern Hemisphere.”</span> <em>Ecological Applications</em> 12 (3): 891–99.
+</div>
+<div id="ref-goward2012nacp" class="csl-entry">
+Goward, SN, C Huang, JG Masek, WB Cohen, GG Moisen, and K Schleeweis. 2012. <span>“NACP North American Forest Dynamics Project: Forest Disturbance and Regrowth Data.”</span> <em>ORNL DAAC</em>.
+</div>
+<div id="ref-griscom2017natural" class="csl-entry">
+Griscom, Bronson W, Justin Adams, Peter W Ellis, Richard A Houghton, Guy Lomax, Daniela A Miteva, William H Schlesinger, et al. 2017. <span>“Natural Climate Solutions.”</span> <em>Proceedings of the National Academy of Sciences</em> 114 (44): 11645–50.
+</div>
+<div id="ref-hansen2013high" class="csl-entry">
+Hansen, Matthew C, Peter V Potapov, Rebecca Moore, Matt Hancher, Svetlana A Turubanova, Alexandra Tyukavina, David Thau, et al. 2013. <span>“High-Resolution Global Maps of 21st-Century Forest Cover Change.”</span> <em>Science</em> 342 (6160): 850–53.
+</div>
+<div id="ref-harris2021global" class="csl-entry">
+Harris, Nancy L, David A Gibbs, Alessandro Baccini, Richard A Birdsey, Sytze De Bruin, Mary Farina, Lola Fatoyinbo, et al. 2021. <span>“Global Maps of Twenty-First Century Forest Carbon Fluxes.”</span> <em>Nature Climate Change</em>, 1–7.
+</div>
+<div id="ref-hayes2012reconciling" class="csl-entry">
+Hayes, Daniel J, David P Turner, Graham Stinson, A David McGuire, Yaxing Wei, Tristram O West, Linda S Heath, et al. 2012. <span>“Reconciling Estimates of the Contemporary North American Carbon Balance Among Terrestrial Biosphere Models, Atmospheric Inversions, and a New Approach for Estimating Net Ecosystem Exchange from Inventory-Based Data.”</span> <em>Global Change Biology</em> 18 (4): 1282–99.
+</div>
+<div id="ref-huntzinger2012north" class="csl-entry">
+Huntzinger, Deborah N, Wilfred M Post, Yaxing Wei, AM Michalak, Tristram O West, AR Jacobson, IT Baker, et al. 2012. <span>“North American Carbon Program (NACP) Regional Interim Synthesis: Terrestrial Biospheric Model Intercomparison.”</span> <em>Ecological Modelling</em> 232: 144–57.
+</div>
+<div id="ref-jarnevich2020assessing" class="csl-entry">
+Jarnevich, Catherine S, Nicholas E Young, Catherine Cullinane Thomas, Perry Grissom, Dana Backer, and Leonardo Frid. 2020. <span>“Assessing Ecological Uncertainty and Simulation Model Sensitivity to Evaluate an Invasive Plant Species’ Potential Impacts to the Landscape.”</span> <em>Scientific Reports</em> 10 (1): 1–13.
+</div>
+<div id="ref-jenkins2003national" class="csl-entry">
+Jenkins, Jennifer C, David C Chojnacky, Linda S Heath, and Richard A Birdsey. 2003. <span>“National-Scale Biomass Estimators for United States Tree Species.”</span> <em>Forest Science</em> 49 (1): 12–35.
+</div>
+<div id="ref-jevvsenak2020effect" class="csl-entry">
+Jevšenak, Jernej, Matija Klopčič, and Boštjan Mali. 2020. <span>“The Effect of Harvesting on National Forest Carbon Sinks up to 2050 Simulated by the CBM-Cfs3 Model: A Case Study from Slovenia.”</span> <em>Forests</em> 11 (10): 1090.
+</div>
+<div id="ref-kim2017estimating" class="csl-entry">
+Kim, Moonil, W Lee, W Kurz, D Kwak, Scott Morken, C Smyth, and Donghoon Ryu. 2017. <span>“Estimating Carbon Dynamics in Forest Carbon Pools Under IPCC Standards in South Korea Using CBM-Cfs3.”</span> <em>iForest-Biogeosciences and Forestry</em> 10: 83–92.
+</div>
+<div id="ref-kurz2009cbm" class="csl-entry">
+Kurz, WA, CC Dymond, TM White, G Stinson, CH Shaw, GJ Rampley, C Smyth, et al. 2009. <span>“CBM-Cfs3: A Model of Carbon-Dynamics in Forestry and Land-Use Change Implementing IPCC Standards.”</span> <em>Ecological Modelling</em> 220 (4): 480–504.
+</div>
+<div id="ref-liu2020critical" class="csl-entry">
+Liu, Jinxun, Benjamin M Sleeter, Zhiliang Zhu, Thomas R Loveland, Terry Sohl, Stephen M Howard, Carl H Key, et al. 2020. <span>“Critical Land Change Information Enhances the Understanding of Carbon Balance in the United States.”</span> <em>Global Change Biology</em> 26 (7): 3920–29.
+</div>
+<div id="ref-miller2015combining" class="csl-entry">
+Miller, Brian W, Leonardo Frid, Tony Chang, Nathan Piekielek, Andrew J Hansen, and Jeffrey T Morisette. 2015. <span>“Combining State-and-Transition Simulations and Species Distribution Models to Anticipate the Effects of Climate Change.”</span> <em>AIMS Environmental Science</em> 2 (2): 400–426.
+</div>
+<div id="ref-pan2011large" class="csl-entry">
+Pan, Yude, Richard A Birdsey, Jingyun Fang, Richard Houghton, Pekka E Kauppi, Werner A Kurz, Oliver L Phillips, et al. 2011. <span>“A Large and Persistent Carbon Sink in the World’s Forests.”</span> <em>Science</em> 333 (6045): 988–93.
+</div>
+<div id="ref-pilli2013application" class="csl-entry">
+Pilli, Roberto, Giacomo Grassi, Werner A Kurz, Carolyn E Smyth, and Viorel Blujdea. 2013. <span>“Application of the CBM-Cfs3 Model to Estimate Italy’s Forest Carbon Budget, 1995–2020.”</span> <em>Ecological Modelling</em> 266: 144–71.
+</div>
+<div id="ref-pilli2018carbon" class="csl-entry">
+Pilli, Roberto, Stephen J Kull, Viorel NB Blujdea, and Giacomo Grassi. 2018. <span>“The Carbon Budget Model of the Canadian Forest Sector (CBM-Cfs3): Customization of the Archive Index Database for European Union Countries.”</span> <em>Annals of Forest Science</em> 75 (3): 1–7.
+</div>
+<div id="ref-regnier2013anthropogenic" class="csl-entry">
+Regnier, Pierre, Pierre Friedlingstein, Philippe Ciais, Fred T Mackenzie, Nicolas Gruber, Ivan A Janssens, Goulven G Laruelle, et al. 2013. <span>“Anthropogenic Perturbation of the Carbon Fluxes from Land to Ocean.”</span> <em>Nature Geoscience</em> 6 (8): 597–607.
+</div>
+<div id="ref-sleeter2018effects" class="csl-entry">
+Sleeter, Benjamin M., Jinxun Liu, Colin Daniel, Bronwyn Rayfield, Jason Sherba, Todd J Hawbaker, Zhiliang Zhu, Paul C Selmants, and Thomas R Loveland. 2018. <span>“Effects of Contemporary Land-Use and Land-Cover Change on the Carbon Balance of Terrestrial Ecosystems in the United States.”</span> <em>Environmental Research Letters</em> 13 (4): 045006.
+</div>
+<div id="ref-sleeter2017projected" class="csl-entry">
+Sleeter, Benjamin M, Jinxun Liu, Colin J Daniel, Todd J Hawbaker, Tamara S Wilson, Lucas B Fortini, James D Jacobi, et al. 2017. <span>“Projected Future Carbon Storage and Carbon Fluxes in Terrestrial Ecosystems of Hawai ‘i from Changes in Climate, Land Use, and Disturbance.”</span> <em>Baseline and Projected Future Carbon Storage and Carbon Fluxes in Ecosystems of Hawai’i. US Geological Survey Professional Paper 1834. Reston, VA: US Department of the Interior, US Geological Survey: 107-128. Chapter 8</em> 1834: 107–28.
+</div>
+<div id="ref-sleeter2019effects" class="csl-entry">
+Sleeter, Benjamin M, David C Marvin, D Richard Cameron, Paul C Selmants, A LeRoy Westerling, Jason Kreitler, Colin J Daniel, Jinxun Liu, and Tamara S Wilson. 2019. <span>“Effects of 21st-Century Climate, Land Use, and Disturbances on Ecosystem Carbon Balance in California.”</span> <em>Global Change Biology</em> 25 (10): 3334–53.
+</div>
+<div id="ref-sleeter2017projecting" class="csl-entry">
+Sleeter, Benjamin M, Nathan J Wood, Christopher E Soulard, and Tamara S Wilson. 2017. <span>“Projecting Community Changes in Hazard Exposure to Support Long-Term Risk Reduction: A Case Study of Tsunami Hazards in the US Pacific Northwest.”</span> <em>International Journal of Disaster Risk Reduction</em> 22: 10–22.
+</div>
+<div id="ref-sleeter2017projecting" class="csl-entry">
+———. 2017. <span>“Projecting Community Changes in Hazard Exposure to Support Long-Term Risk Reduction: A Case Study of Tsunami Hazards in the US Pacific Northwest.”</span> <em>International Journal of Disaster Risk Reduction</em> 22: 10–22.
+</div>
+<div id="ref-sleeter2021enhanced" class="csl-entry">
+Sleeter, Rachel. in press. <em>Modeling the Impacts of Hydrology and Management on Carbon Balance at the Great Dismal Swamp, Virginia and North Carolina, USA</em>. Edited by Z. Zhu Kraus K. Geophysical Monograph Series. American Geophysical Union.
+</div>
+<div id="ref-sleeter2017carbon" class="csl-entry">
+Sleeter, Rachel, Benjamin M Sleeter, Brianna Williams, Dianna Hogan, Todd Hawbaker, and Zhiliang Zhu. 2017. <span>“A Carbon Balance Model for the Great Dismal Swamp Ecosystem.”</span> <em>Carbon Balance and Management</em> 12 (1): 2.
+</div>
+<div id="ref-smith2016large" class="csl-entry">
+Smith, W Kolby, Sasha C Reed, Cory C Cleveland, Ashley P Ballantyne, William RL Anderegg, William R Wieder, Yi Y Liu, and Steven W Running. 2016. <span>“Large Divergence of Satellite and Earth System Model Estimates of Global Terrestrial CO 2 Fertilization.”</span> <em>Nature Climate Change</em> 6 (3): 306.
+</div>
+<div id="ref-smith2016large" class="csl-entry">
+———. 2016. <span>“Large Divergence of Satellite and Earth System Model Estimates of Global Terrestrial CO 2 Fertilization.”</span> <em>Nature Climate Change</em> 6 (3): 306.
+</div>
+<div id="ref-smyth2014quantifying" class="csl-entry">
+Smyth, CE, G Stinson, E Neilson, TC Lemprière, M Hafer, GJ Rampley, and WA Kurz. 2014. <span>“Quantifying the Biophysical Climate Change Mitigation Potential of Canada’s Forest Sector.”</span> <em>Biogeosciences</em> 11 (13): 3515–29.
+</div>
+<div id="ref-stagg2020national" class="csl-entry">
+Stagg, Camille LaFosse, Eric Ward, Colin Daniel, Bronwyn Rayfield, Lisamarie Windham-Myers, Rachel Sleeter, Benjamin M Sleeter, et al. 2020. <span>“A National Assessment of Tidal Wetland Carbon Sequestration and GHG Emissions with Implications for Land Management in the United States.”</span> In <em>AGU Fall Meeting 2020</em>. AGU.
+</div>
+<div id="ref-epa2020inventory" class="csl-entry">
+U.S. EPA. 2020. <span>“Inventory of u.s. Greenhouse Gas Emissions and Sinks: 1990-2018.”</span>
+</div>
+<div id="ref-landfire2014disturbance" class="csl-entry">
+US Geological Survey (USGS) LandFire Program. 2014. <span>“<span>Annual Disturbance Layer 1.1.4</span>.”</span> <a href="http://landfire.cr.usgs.gov">http://landfire.cr.usgs.gov</a>.
+</div>
+<div id="ref-usgcrp2018soccr2" class="csl-entry">
+USGCRP. 2018. <span>“<span class="nocase">Second State of the Carbon Cycle Report (SOCCR2): A Sustained Assessment Report</span>.”</span> In, edited by N Cavallaro, G. Shrestha, R. Birdsey, M. A. Mayes, R. G. Najjar, S. C. Reed, P. Romero-Lankao, and Z. Zhu, 878. Washington, DC.
+</div>
+<div id="ref-white2008practical" class="csl-entry">
+White, Thomas, Nancy Luckai, Guy R Larocque, Werner A Kurz, and Carolyn Smyth. 2008. <span>“A Practical Approach for Assessing the Sensitivity of the Carbon Budget Model of the Canadian Forest Sector (CBM-Cfs3).”</span> <em>Ecological Modelling</em> 219 (3-4): 373–82.
+</div>
+<div id="ref-wilson2016future" class="csl-entry">
+Wilson, Tamara S, Benjamin M Sleeter, and D Richard Cameron. 2016. <span>“Future Land-Use Related Water Demand in California.”</span> <em>Environmental Research Letters</em> 11 (5): 054018.
+</div>
+<div id="ref-woodbury2007carbon" class="csl-entry">
+Woodbury, Peter B, James E Smith, and Linda S Heath. 2007. <span>“Carbon Sequestration in the US Forest Sector from 1990 to 2010.”</span> <em>Forest Ecology and Management</em> 241 (1-3): 14–27.
+</div>
+</div>
 </div>
             </section>
 
           </div>
         </div>
       </div>
-<a href="index.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-<a href="results.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+<a href="supplemental-material.html" class="navigation navigation-prev navigation-unique" aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>
@@ -182,7 +326,7 @@ gitbook.start({
 "size": 2
 },
 "edit": {
-"link": "https://github.com/rstudio/bookdown-demo/edit/master/01-intro.Rmd",
+"link": "https://github.com/rstudio/bookdown-demo/edit/master/lucas-cbm-v01.Rmd",
 "text": "Edit"
 },
 "history": {

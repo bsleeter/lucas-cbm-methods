@@ -1,0 +1,50 @@
+---
+title: "Spatially explicit estimates of carbon stocks and fluxes for the United States: a new approach linking the LUCAS and CBM-CFS3 models"
+bibliography: references.bib
+csl: apa.csl
+output:
+  bookdown::word_document2: default
+  html_notebook: default
+  html_document:
+    df_print: paged
+  pdf_document: default
+  md_document: github_document
+always_allow_html: yes
+fontsize: 12pt
+mainfont: Times New Roman
+header-includes:
+- \usepackage[left]{lineno}
+- \linenumbers
+- \usepackage{booktabs}
+- \usepackage{longtable}
+- \usepackage{array}
+- \usepackage{multirow}
+- \usepackage[table]{xcolor}
+- \usepackage{wrapfig}
+- \usepackage{float}
+- \usepackage{colortbl}
+- \usepackage{pdflscape}
+- \usepackage{tabu}
+- \usepackage{threeparttable}
+- \usepackage{threeparttablex}
+- \usepackage[normalem]{ulem}
+- \usepackage{makecell}
+- \floatplacement{figure}{H}
+- \usepackage{setspace}\doublespacing
+---
+
+# Introduction
+
+Forest ecosystems play a critical role in the global carbon cycle and represent the largest carbon sink in the terrestrial biosphere. Annually, the global forest sink has been estimated at \~1.1 Pg C yr^-1^ [@pan2011large], with more recent studies placing the sink as high as 2.0 Pg C yr^-1^ although uncertainties in those estimates are substantial [@harris2021global]. Temperate forests of North America have been estimated as a large and persistent sink, with estimates ranging from 0.3 - 0.9 Pg C yr^-1^ [@hayes2012reconciling], with U.S. forests accounting for \~80% of the net uptake [@usgcrp2018soccr2]. However, large uncertainties remain, largely stemming from the methodological approach used [@hayes2012reconciling]. As ecosystems - and in particular forests - are increasingly looked to as a means of storing carbon through the implementation of natural climate solutions (NCS) [@fargione2018natural; @griscom2017natural; @cameron2017ecosystem], having robust tools which can quantify past and future changes in ecosystem carbon stocks and fluxes is critical for land managers and policy makers.
+
+Process-based ecosystem models (e.g. dynamic global vegetation models; DGVM's) are designed to represent underlying biogeochemical processes, including a wide range of carbon dynamics. DGVMs are typically used to simulate vegetation responses to a range of controlling processes and applied at global to national scales. Benefits of this class of model includes the ability to understand the relative effects of major controlling processes through development of manipulative experiments. DGVMs can be applied across large geographic areas, and can be used to make future projections based on changes in drivers of ecosystem change [@huntzinger2012north]. However, large uncertainties exist, due to the large number of relatively poorly understood processes and the quality of data used for model parameteization [@hayes2012reconciling; @huntzinger2012north]. In a review of 17 process-based ecosystem models, @hayes2012reconciling estimated a mean forest carbon net sink of 157.6 Tg C yr^-1^ with a standard deviation of 309.5 Tg C yr^-1^.Furthermore, ecosystem models can be limited in their ability to adequately represent sufficient variation in ecosystem types, often relying on generalization as a trade-off for computational efficiency. As an example, DGVM's often generalize vegetation into a discrete set of plant functional types (PFTs), as opposed to using specific forest types or groups found in many forest inventories. Many DGVM approaches also lack the ability to characterize complex socioeconomic processes and their effect on ecosystem carbon dynamics, although this has been an recent area of intensive research [@bachelet2015projected; @liu2020critical].
+
+Inventory-based approaches rely on field-based measurements and are generally used to estimate changes in carbon stocks between two successive time periods. Using the U.S. Department of Agriculture Forest Inventory and Analysis (FIA) data, estimates of carbon stock-change are produced annually for U.S. ecosystems and reported to the United Nations Framework Convention on Climate (UNFCC)[@epa2020inventory]. FIA data provide a comprehensive set of plot-level data characterizing forest attributes including carbon stocks and net fluxes and have been used in a number of national studies aimed at quantifying the U.S. forest carbon sink [@birdsey1992carbon; @birdsey1995carbon; @woodbury2007carbon; @goodale2002forest; @hayes2012reconciling].
+
+However, there are several limitations associated with inventory-based carbon accounting, including a) asseements across large geographic areas can be cost-prohibitive due to the need for repeated measurements across a large number of sample sites needed to represent ecosystem heterogeneity; b) inventory-based approaches are not spatially-explicit and often rely on extrapolation methods to develop estimates in areas where no inventory exists; c) stock-change methods do not capture many of the internal dynamics and fluxes of carbon within a system; and d) inventory-based methods are not easily turned into projections under a range of global change scenarios. However, a robust forest inventory program can be used to calibrate and validate ecosystem models which can be then be extended across large geographic areas spanning long temporal intervals [@kurz2009cbm; @liu2020critical] . We have sought to bridge the gap between inventory and process-based approaches to develop a spatially-explicit ecosystem carbon monitoring and projection framework capable of providing near real-time spatially explicit estimates of carbon stocks and fluxes.
+
+The LUCAS model (Land Use and Carbon Scenario Simulator) is a spatially explicit state-and-transition simulation model with stocks and flows [@daniel2016state, @daniel2018integrating] developed to assess the impact of land use and land cover change, ecosystem disturbance, and climate change on carbon stocks and fluxes. The LUCAS model has been applied at local [@sleeter2017carbon], state [@sleeter2019effects], and national [@sleeter2018effects] scales as both spatially referenced and spatially-explicit models. LUCAS runs within the SyncroSim software modeling environment (<http://syncrosim.com>). For state and national-scale research, the LUCAS carbon model was parameterized with carbon turnover rates derived from the Integrated Biosphere Simulator (IBIS) dynamic global vegetation model [@liu2020critical]. Output from IBIS simulations was transformed into age and ecosystem-dependent carbon growth and turnover rates which were used within LUCAS to estimate total fluxes and stocks. However, IBIS is limited to a relatively small number of discrete vegetation classes (plant functional types), which in turn limit the ability to represent heterogeneity of ecosystems within LUCAS. Furthermore, IBIS is a computationally intensive model to run across large landscapes which limits the ability to run a series of calibration and spin-up simulation.
+
+The CBM-CFS3 model (Carbon Budget Model of the Canadian Forest Sector v3) is an IPCC Tier 3 spatially referenced model of carbon stocks and fluxes which can be applied at multiple scales (@kurz2009cbm). The approach relies on provincial level forest inventory data to model forest carbon fluxes and the response to a range of socio-environmental processes such as land use change, disturbance, and climate warming. User supplied merchantable volume curves are converted into carbon biomass through the use of species-specific biomass expansion factors. Turnover of live carbon and decay and decomposition of dead organic matter (DOM) are specified for each forest type and/or at a regional scale. CBM-CFS3 has been applied and adapted in many other countries using regionally-specific parameters [@pilli2013application; @kim2017estimating; @jevvsenak2020effect; @pilli2018carbon]. It's transparent approach and robust methodology, combined with the robustness of the FIA forest inventory data, make it an ideal model to adapt for the U.S. forest sector. However, the CBM-CFS3 is not spatially explicit and does not currently incorporate the effects of climate variabiilty and change on the growth of vegetation.
+
+In this study our goal was to develop a land change and carbon monitoring system capable of producing near real-time estimates of carbon stocks and fluxes for any forested location in the conterminous United States. The objectives of the study were to 1) produce annual, spatially-explicit estimates of carbon stocks and fluxes for the period 2001-2020, 2) estimate the contribution of a wide range of LULC and disturbances, and 3) identify the major controlling forces on the magnitude and variability of the carbon sink. The approach relies on developing a methodological approach to link the CBM-CFS3 and LUCAS models while utilizing national forest inventory data, remote sensing data, and an exogenous model of vegetation productivity.

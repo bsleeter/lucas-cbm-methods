@@ -3,7 +3,12 @@ title: "Spatially explicit estimates of carbon stocks and fluxes for the United 
 author: "Benjamin M. Sleeter"
 date: "`r Sys.Date()`"
 site: bookdown::bookdown_site
-output: bookdown::word_document2
+output:
+  bookdown::html_document2: default
+  bookdown::pdf_document2:
+    keep_tex: true
+  bookdown::word_document2:
+    toc: true
 documentclass: book
 bibliography: [book.bib, packages.bib, references.bib]
 biblio-style: apalike

@@ -10,8 +10,23 @@ bookdown::gitbook:
     download: ["pdf", "epub"]
 bookdown::pdf_book:
   includes:
-    in_header: preamble.tex
-  latex_engine: xelatex
-  citation_package: natbib
-  keep_tex: yes
-bookdown::epub_book: default
+    in_header: latex/preamble.tex # defines style and latex options
+    before_body: latex/before_body.tex # defines cover page
+  latex_engine: xelatex # lualatex or xelatex
+  citation_package: none # needs to be "none" in order to use the csl file
+  keep_tex: true # keeps the .tex file
+  dev: "cairo_pdf"
+  toc: false # deactivates default table of contents
+  highlight: pygments # code highlighting
+  pandoc_args: [ "--csl", "./csl/apa6.csl" ] # specifies the csl file to be used
+
+bookdown::word_document2:
+  pandoc_args: [
+    "--csl", "./csl/apa6.csl",
+    "--bibliography", "./bib/packages.bib",
+    "--bibliography", "./bib/thesis.bib",
+    #"--reference-doc", "./assets/2018-05-17-aim1-draft.docx",
+    "--filter", "pandoc-citeproc"
+    #"--filter", "./assets/fix-apa-ampersands.py"
+  ]
+
